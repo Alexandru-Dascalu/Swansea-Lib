@@ -395,17 +395,18 @@ public class RegisterController implements Initializable {
 	private void insertIntoUser(ActionEvent event) {
 
 		try {
-			Connection conn = DBHelper.getConnection();
-			PreparedStatement pstmt = conn.prepareStatement("INSERT INTO "
-					+ "users VALUES (?,?,?,?,?,?,?,0)");
-			pstmt.setString(1, username.getText());
-			pstmt.setString(2, firstName.getText());
-			pstmt.setString(3, lastName.getText());
-			pstmt.setString(4, phoneNumber.getText());
-			pstmt.setString(5, address.getText());
-			pstmt.setString(6, postCode.getText());
-			pstmt.setString(7, avatarPath);
-			pstmt.executeUpdate();// This can return a value to tell you if it was successful.
+			Connection dbConnection = DBHelper.getConnection();
+			PreparedStatement sqlStatement = dbConnection.prepareStatement("INSERT INTO "
+					+ "users VALUES (?,?,?,?,?,?,?,0,?)");
+			sqlStatement.setString(1, username.getText());
+			sqlStatement.setString(2, firstName.getText());
+			sqlStatement.setString(3, lastName.getText());
+			sqlStatement.setString(4, phoneNumber.getText());
+			sqlStatement.setString(5, address.getText());
+			sqlStatement.setString(6, postCode.getText());
+			sqlStatement.setString(7, avatarPath);
+			sqlStatement.setString(8, "1900-01-01 00:00:00");
+			sqlStatement.executeUpdate();// This can return a value to tell you if it was successful.
 
 		} catch (SQLException e) {
 			e.printStackTrace();
