@@ -12,7 +12,6 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
@@ -29,7 +28,7 @@ import model.User;
 /**
  * Recommend controller is a class that deals with showing our extra feature,
  * the recommended resource feature.
- * @author Unknown.
+ * @author Kane.
  *
  */
 
@@ -177,14 +176,6 @@ public class RecommendedController {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			
-			
-			
-		}
-		
-		
-		
-	}
-	
-	
-	}
+		}	
+	}	
+}
