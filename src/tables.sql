@@ -46,7 +46,7 @@ DROP TABLE IF EXISTS `system`;
 CREATE TABLE IF NOT EXISTS `system` (
 	`ver`	INTEGER
 );
-INSERT INTO `system` VALUES (10);
+INSERT INTO `system` VALUES (12);
 
 DROP TABLE IF EXISTS `resource`;
 CREATE TABLE IF NOT EXISTS `resource` (
@@ -292,6 +292,7 @@ INSERT INTO `reviews` (reviewId, resourceId, username, star, review) VALUES (5, 
 INSERT INTO `reviews` (reviewId, resourceId, username, star, review) VALUES (6, 7, 'Steveo', 4, 'Incredible');
 INSERT INTO `reviews` (reviewId, resourceId, username, star, review) VALUES (7, 8, 'Jackie', 3, 'Ok but could do with more mayo');
 
+DROP TABLE IF EXISTS `majorStat`;
 CREATE TABLE `majorStat` (
 	`statId`	INTEGER PRIMARY KEY AUTOINCREMENT UNIQUE,
 	`resource`	INTEGER NOT NULL,

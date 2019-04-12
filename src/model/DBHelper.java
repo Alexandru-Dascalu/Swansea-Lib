@@ -17,7 +17,7 @@ import java.util.Scanner;
  */
 public class DBHelper {
 
-    private static int VERSION = 10; // Version number for database
+    private static int VERSION = 12; // Version number for database
     private static String LINK = "jdbc:sqlite:test.db"; // database connection string
     private static String SQL = "src/tables.sql"; // database connection string
 
@@ -121,7 +121,7 @@ public class DBHelper {
                 results.close();
                 System.out.println("Table is at " + databaseVersion 
                 		+ " program is at " + VERSION);
-                if (databaseVersion != VERSION) {
+                if (databaseVersion < VERSION) {
                     createTables();
                     System.out.println("Updating database");
                 }
