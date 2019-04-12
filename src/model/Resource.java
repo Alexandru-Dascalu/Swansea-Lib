@@ -295,7 +295,6 @@ public abstract class Resource {
          * If there are free copies, mark a copy as borrowed and reserve it for
          * the user.
          */
-  
         if (!freeCopies.isEmpty()) {
         
             Copy copyToBorrow = freeCopies.removeFirst();
@@ -1164,34 +1163,7 @@ public abstract class Resource {
         }
         catch (SQLException e) {
             e.printStackTrace();
-        } finally {
-            if (sqlStatement != null) {
-                try {
-                    sqlStatement.close();
-                }
-                catch (SQLException e) {
-                    e.printStackTrace();
-                }
-            }
-
-            if (statement != null) {
-                try {
-                    statement.close();
-                }
-                catch (SQLException e) {
-                    e.printStackTrace();
-                }
-            }
-            
-            if (dbConnection != null) {
-                try {
-                    dbConnection.close();
-                }
-                catch (SQLException e) {
-                    e.printStackTrace();
-                }
-            }
-        }
+        } 
     }
 
     /**

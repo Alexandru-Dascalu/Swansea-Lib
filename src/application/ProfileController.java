@@ -685,9 +685,6 @@ public class ProfileController {
 	//
 	//Staff: Copies Explorer
 	//
-
-	// To check if the user have return a item before requesting for a new one.
-	private boolean goodForNewItem;
 	
 	@FXML
 	private void displayAll() {
@@ -779,9 +776,11 @@ public class ProfileController {
 		try {
 			Connection conn = DBHelper.getConnection();
 			Statement stmt = conn.createStatement();
-			ResultSet rs = stmt.executeQuery("SELECT * FROM requestsToApprove, "
-					+ "users where requestsToApprove.userName = users.username");
+			/*ResultSet rs = stmt.executeQuery("SELECT * FROM requestsToApprove, "
+					+ "users where requestsToApprove.userName = users.username");*/
 
+			ResultSet rs = stmt.executeQuery("SELECT * FROM requestsToApprove");
+			
 			while(rs.next()) {
 				copiesList.add(new ExplorerRow(
 						rs.getString(2),
@@ -852,36 +851,50 @@ public class ProfileController {
 		String username = row.getKeeper();
 
 		User user = (User)Person.loadPerson(username);
-		if(!Resource.getResource(resourceID).loanToUser(user)) {
-			AlertBox.showInfoAlert("Waiting for free copy");
-		}else {
-			
-			if(goodForNewItem == true) {
-				if (user.exceedLimit(Resource.getResource(resourceID)) == true) {
-					// blank out the approve button and display text showing the user
-					// has over requested
-				}
-				else {
-					try {
-						Connection conn = DBHelper.getConnection();
-						PreparedStatement sqlStatement = conn.prepareStatement("DELETE"
-								+ " FROM requestsToApprove WHERE rID = ? AND userName = ?");
-						sqlStatement.setInt(1, resourceID);
-						sqlStatement.setString(2, username);
-						sqlStatement.executeUpdate();
-						
-						goodForNewItem = false;
+        if (!Resource.getResource(resourceID).loanToUser(user)) {
+            AlertBox.showInfoAlert("Waiting for free copy");
+        }
+        else {
 
-					} catch (SQLException e) {
-						e.printStackTrace();
-					}
-				}
-			}
-			else {
-				// blank out the approve button and display text informing the user to return an
-				// item before requesting for a new one.
-			}
-		}
+            if (user.exceedLimit(Resource.getResource(resourceID)) == true) {
+                // blank out the approve button and display text showing the
+                // user
+                // has over requested
+            }
+            else {
+                try {
+                    Connection conn = DBHelper.getConnection();
+                    PreparedStatement test = conn
+                        .prepareStatement("SELECT * FROM requestsToApprove");
+                    ResultSet rs = test.executeQuery();
+
+                    while (rs.next()) {
+                        System.out
+                            .println(rs.getInt(1) + " " + rs.getString(2));
+                    }
+
+                    PreparedStatement sqlStatement = conn
+                        .prepareStatement("DELETE" +
+                            " FROM requestsToApprove WHERE rID = ? AND userName = ?");
+                    sqlStatement.setInt(1, resourceID);
+                    sqlStatement.setString(2, username);
+                    sqlStatement.executeUpdate();
+
+                    test = conn
+                        .prepareStatement("SELECT * FROM requestsToApprove");
+                    rs = test.executeQuery();
+
+                    while (rs.next()) {
+                        System.out
+                            .println(rs.getInt(1) + " " + rs.getString(2));
+                    }
+
+                }
+                catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
 
 		System.out.println("Approved copy!");
 		displayRequested();
@@ -900,10 +913,6 @@ public class ProfileController {
 			for (Copy copy : res.getCopies()) {
 				if (copy.getCopyID() == copyID) {
 					res.processReturn(copy);
-					
-					// set request to true once user returned a copy and the user can request
-					// for a new resource.
-					goodForNewItem = true;
 				}
 			}
 		}
