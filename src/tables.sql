@@ -46,7 +46,7 @@ DROP TABLE IF EXISTS `system`;
 CREATE TABLE IF NOT EXISTS `system` (
 	`ver`	INTEGER
 );
-INSERT INTO `system` VALUES (12);
+INSERT INTO `system` VALUES (13);
 
 DROP TABLE IF EXISTS `resource`;
 CREATE TABLE IF NOT EXISTS `resource` (
@@ -129,6 +129,7 @@ INSERT INTO `game` VALUES ('Valve','First-Person Shooter','18+',"Yes",13);
 INSERT INTO `game` VALUES ('Rockstar Games','Action-Adventure','18+',"Yes",14);
 INSERT INTO `game` VALUES ('Epic Games','Battle Royale','12',"Yes",15);
 
+DROP TABLE IF EXISTS `events`;
 CREATE TABLE IF NOT EXISTS `events` (
 	`eID`		INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT UNIQUE,
 	`title`		TEXT,
@@ -136,6 +137,8 @@ CREATE TABLE IF NOT EXISTS `events` (
 	`date`		TEXT,
 	`maxAllowed` INTEGER
 );
+
+INSERT INTO `events` VALUES (1,'Zilele ASMI','Jocuri sociale si training ASMI','2019-04-18 13:00', 30);
 
 DROP TABLE IF EXISTS `dvd`;
 CREATE TABLE IF NOT EXISTS `dvd` (
