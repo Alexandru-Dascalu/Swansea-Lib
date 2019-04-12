@@ -46,7 +46,7 @@ DROP TABLE IF EXISTS `system`;
 CREATE TABLE IF NOT EXISTS `system` (
 	`ver`	INTEGER
 );
-INSERT INTO `system` VALUES (13);
+INSERT INTO `system` VALUES (15);
 
 DROP TABLE IF EXISTS `resource`;
 CREATE TABLE IF NOT EXISTS `resource` (
@@ -139,6 +139,10 @@ CREATE TABLE IF NOT EXISTS `events` (
 );
 
 INSERT INTO `events` VALUES (1,'Zilele ASMI','Jocuri sociale si training ASMI','2019-04-18 13:00', 30);
+INSERT INTO `events` VALUES (2,'Cardiff Varsity Cup Theft','We are going to sneak into Cardiff University 
+and steal the Varsity Cup and Shield and escape to 
+bring it back to Swanse. We just need 20 good men.
+#FuckCardiff','2019-04-16 11:00', 20);
 
 DROP TABLE IF EXISTS `dvd`;
 CREATE TABLE IF NOT EXISTS `dvd` (
@@ -165,6 +169,7 @@ create table if not exists `subtitles` (
 	foreign key (dvdID) references `dvd`(`rID`) ON UPDATE CASCADE ON DELETE CASCADE
 );
 
+drop table if exists `userEvents`;
 create table if not exists `userEvents` (
 	`eID` INTEGER,
 	`username` TEXT,
