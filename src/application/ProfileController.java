@@ -864,31 +864,12 @@ public class ProfileController {
             else {
                 try {
                     Connection conn = DBHelper.getConnection();
-                    PreparedStatement test = conn
-                        .prepareStatement("SELECT * FROM requestsToApprove");
-                    ResultSet rs = test.executeQuery();
 
-                    while (rs.next()) {
-                        System.out
-                            .println(rs.getInt(1) + " " + rs.getString(2));
-                    }
-
-                    PreparedStatement sqlStatement = conn
-                        .prepareStatement("DELETE" +
+                    PreparedStatement sqlStatement = conn.prepareStatement("DELETE" +
                             " FROM requestsToApprove WHERE rID = ? AND userName = ?");
                     sqlStatement.setInt(1, resourceID);
                     sqlStatement.setString(2, username);
                     sqlStatement.executeUpdate();
-
-                    test = conn
-                        .prepareStatement("SELECT * FROM requestsToApprove");
-                    rs = test.executeQuery();
-
-                    while (rs.next()) {
-                        System.out
-                            .println(rs.getInt(1) + " " + rs.getString(2));
-                    }
-
                 }
                 catch (SQLException e) {
                     e.printStackTrace();
