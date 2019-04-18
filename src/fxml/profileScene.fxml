@@ -1,11 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import javafx.geometry.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.image.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Accordion?>
 <?import javafx.scene.control.Button?>
@@ -30,7 +24,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane focusTraversable="true" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="400.0" minWidth="600.0" prefHeight="1080.0" prefWidth="1920.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.ProfileController">
+<BorderPane focusTraversable="true" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="400.0" minWidth="600.0" prefHeight="1080.0" prefWidth="1920.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.ProfileController">
 
    <center>
       <TabPane fx:id="tabs" prefHeight="972.0" prefWidth="1920.0" BorderPane.alignment="CENTER">
@@ -245,7 +239,7 @@
                                                       <Button fx:id="staffRequestedFilter" mnemonicParsing="false" onMouseClicked="#displayRequested" text="Requested" />
                                                       <Label text="Search:" />
                                                       <TextField fx:id="staffCopyIDField" promptText="CopyID" />
-                                                      <Button fx:id="staffHistoryFind" mnemonicParsing="false" onMouseClicked="#displayHistory" text="Copy History" />
+                                                      <Button fx:id="staffHistoryFind" mnemonicParsing="false" onMouseClicked="#displayCopyHistory" text="Copy History" />
                                                       <Button fx:id="staffReturnCopy" mnemonicParsing="false" onMouseClicked="#returnCopy" text="Return Copy" />
                                                       <Button fx:id="staffApproveCopy" mnemonicParsing="false" onMouseClicked="#approveCopy" text="Approve" />
                                                    </items>

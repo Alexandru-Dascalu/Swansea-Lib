@@ -1,7 +1,4 @@
 package application;
-
-import java.sql.Date;
-
 /**
  * Class used to store attributes for filling in the Copies explorer table
  * in the staff tab.

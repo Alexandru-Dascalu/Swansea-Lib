@@ -800,7 +800,7 @@ public class ProfileController {
 	 * prints display history
 	 */
 	@FXML
-	private void displayHistory() {
+	private void displayCopyHistory() {
 		String copyID = staffCopyIDField.getText();
 		if (copyID.equals("")) {
 			System.out.println("No copyID entered!");
@@ -890,10 +890,10 @@ public class ProfileController {
 				staffCopiesExplorerTable.getSelectionModel().getSelectedItem();
 		int copyID = row.getCopyID();
 
-		for (Resource res : Resource.getResources()) {
-			for (Copy copy : res.getCopies()) {
+		for (Resource resource : Resource.getResources()) {
+			for (Copy copy : resource.getCopies()) {
 				if (copy.getCopyID() == copyID) {
-					res.processReturn(copy);
+					resource.processReturn(copy);
 				}
 			}
 		}
