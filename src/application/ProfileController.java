@@ -498,7 +498,7 @@ public class ProfileController {
 	}
 
 	@FXML
-	private void reloadVisuals(Event e) throws ParseException {
+	private void reloadVisuals(Event event) throws ParseException {
 
 		vResourceBox.getChildren().clear();
 		vResourceBox.getChildren().add(new HBox());
@@ -508,11 +508,19 @@ public class ProfileController {
 		}
 		
 		Resource.loadDatabaseResources();
-		loadUserInformation();
-		loadCopies();
-		loadRequested();
-		loadBorrowHistory();
-		loadResourceImages();
+		
+		try
+		{
+			loadUserInformation();
+			loadCopies();
+			loadRequested();
+			loadBorrowHistory();
+			loadResourceImages();
+		}
+		catch(NullPointerException e)
+		{
+			System.out.println("Caught stupind null pointer exception caused by JavaFX.");
+		}	
 	}
 
 
