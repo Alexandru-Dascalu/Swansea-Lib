@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="558.0" prefWidth="576.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.EventCreationController">
+   <children>
+      <Label layoutX="14.0" layoutY="14.0" text="All Events:" AnchorPane.bottomAnchor="508.0" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="396.0" AnchorPane.topAnchor="14.0">
+         <font>
+            <Font size="25.0" />
+         </font>
+      </Label>
+      <ScrollPane layoutX="14.0" layoutY="50.0" prefHeight="200.0" prefWidth="200.0">
+        <content>
+          <AnchorPane fx:id="eventScrollBox" minHeight="0.0" minWidth="0.0" prefHeight="500.0" prefWidth="554.0" />
+        </content>
+      </ScrollPane>
+   </children>
+</AnchorPane>

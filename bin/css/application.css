@@ -1,0 +1,24 @@
+/* JavaFX CSS - Leave this comment until you have at least create one rule which uses -fx-Property */
+
+.tab-header-background {
+    -fx-background-color: #FFFFFF ;
+}
+
+.text-field {
+    -fx-background-color: -fx-text-box-border, -fx-background ;
+    -fx-background-insets: 0, 0 0 1 0 ;
+    -fx-background-radius: 0 0 0 0 ;
+}
+
+#searchBar {
+    -fx-background-color: -fx-text-box-border, -fx-background ;
+    -fx-background-insets: 0, 0 0 1 0 ;
+    -fx-background-radius: 5 5 5 5 ;
+}
+
+#searchButton {
+    -fx-background-radius: 0 5 5 0 ;
+}
+
+.scroll-bar { -fx-font-size: 15; }
+

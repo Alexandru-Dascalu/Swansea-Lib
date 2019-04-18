@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.ResourceAdderController">
+   <children>
+      <HBox prefHeight="100.0" prefWidth="200.0">
+         <children>
+            <Button mnemonicParsing="false" onAction="#addBook" text="Add book" />
+            <Button mnemonicParsing="false" onAction="#addDVD" text="Add DVD" />
+            <Button mnemonicParsing="false" onAction="#addLaptop" text="Add Laptop" />
+            <Button mnemonicParsing="false" onAction="#addGame" text="Add Game" />
+         </children>
+      </HBox>
+   </children>
+</VBox>
