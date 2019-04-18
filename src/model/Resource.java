@@ -878,7 +878,7 @@ public abstract class Resource {
             String oldDescription = "Borrow Date:" + normalDateFormat.format(
                 copyToBorrow.getBorrowDate());
             
-            String newDescription = oldDescription + "Return Date: " + 
+            String newDescription = oldDescription + " Return Date: " + 
                 normalDateFormat.format(new Date());
             
             sqlStatement.setString(1, newDescription);
