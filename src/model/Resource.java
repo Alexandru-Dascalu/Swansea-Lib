@@ -269,13 +269,26 @@ public abstract class Resource {
          */
         else {
             User firstRequest = userRequestQueue.peek();
-
+            
             returnedCopy.resetDates();
             returnedCopy.setBorrower(firstRequest);
             returnedCopy.setBorrowDate(new Date());
             saveCopyToDB(returnedCopy);
-
             noDueDateCopies.add(returnedCopy);
+            
+            try {
+                Connection conn = DBHelper.getConnection();
+
+                PreparedStatement sqlStatement = conn.prepareStatement("DELETE" +
+                        " FROM requestsToApprove WHERE rID = ? AND userName = ?");
+                sqlStatement.setInt(1, uniqueID);
+                sqlStatement.setString(2, firstRequest.getUsername());
+                sqlStatement.executeUpdate();
+            }
+            catch (SQLException e) {
+                e.printStackTrace();
+            }
+            
             firstRequest.addBorrowedCopy(returnedCopy);
             userRequestQueue.dequeue();
             
