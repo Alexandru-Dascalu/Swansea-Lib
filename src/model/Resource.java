@@ -458,13 +458,13 @@ public abstract class Resource {
      *         copy of this resource.
      */
     public String getCopyInformation() {
-        String copiesInfo = "";
+        String copieInfo = "";
 
         for (Copy c : copyList) {
-            copiesInfo += c.toString();
+            copieInfo += c.toString();
         }
 
-        return copiesInfo;
+        return copieInfo;
     }
 
     /**
