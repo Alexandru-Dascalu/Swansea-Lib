@@ -849,10 +849,13 @@ public class ProfileController {
 	}
 
 	/**
-	 * Approves the loaning of a copy to a user from the Staff Copies Explorer
+	 * Approves the loaning of a copy to a user from the Staff Copies Explorer.
+	 * @throws IllegalStateException if this method is called when the user is 
+	 * over the request limit. The request button should not have been available
+	 * in the first place.
 	 */
 	@FXML
-	private void approveCopy() {
+	private void approveCopy() throws IllegalStateException{
 		ExplorerRow row  = (ExplorerRow)
 				staffCopiesExplorerTable.getSelectionModel().getSelectedItem();
 		int resourceID = row.getResourceID();
@@ -861,15 +864,12 @@ public class ProfileController {
 		User user = (User)Person.loadPerson(username);
         if (!Resource.getResource(resourceID).loanToUser(user)) {
             AlertBox.showInfoAlert("Waiting for free copy");
-        }
-        else {
-
-            if (user.exceedLimit(Resource.getResource(resourceID)) == true) {
-                // blank out the approve button and display text showing the
-                // user
-                // has over requested
-            }
-            else {
+        } else {
+        	Resource resourceOfCopy = Resource.getResource(resourceID);
+            if (user.getBorrowLoad() + resourceOfCopy.getLimitAmount() <= 5) {
+                throw new IllegalStateException("approveCopy should not have "
+                		+ "been called if user is over request limit.");
+            } else {
                 try {
                     Connection conn = DBHelper.getConnection();
 
