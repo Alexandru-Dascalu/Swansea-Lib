@@ -21,6 +21,10 @@ public class MainFX extends Application {
 	private final int MIN_WIDTH = 600;
 	private final int MIN_HEIGHT = 400;
 
+	public static void main(String args[]) {
+		launch();
+	}
+	
 	/**
 	 * Initialises stage object and shows login scene on start-up.
 	 * @param primaryStage stage the main screen.
