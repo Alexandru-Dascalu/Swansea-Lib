@@ -17,7 +17,7 @@ import java.util.Scanner;
  */
 public class DBHelper {
 
-    private static int VERSION = 22; // Version number for database
+    private static int VERSION = 25; // Version number for database
     private static String LINK = "jdbc:sqlite:test.db"; // database connection string
     private static String SQL = "src/tables.sql"; // database connection string
 

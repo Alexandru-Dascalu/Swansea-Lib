@@ -47,7 +47,7 @@ DROP TABLE IF EXISTS `system`;
 CREATE TABLE IF NOT EXISTS `system` (
 	`ver`	INTEGER
 );
-INSERT INTO `system` VALUES (22);
+INSERT INTO `system` VALUES (25);
 
 DROP TABLE IF EXISTS `resource`;
 CREATE TABLE IF NOT EXISTS `resource` (
@@ -73,7 +73,17 @@ INSERT INTO `resource`(rID,title,year,thumbnail) VALUES (12,'Lenovo',2017,'/grap
 INSERT INTO `resource`(rID,title,year,thumbnail) VALUES (13,'Counter-Strike: Global Offensive',2012,'/graphics/csgo.jpg');
 INSERT INTO `resource`(rID,title,year,thumbnail) VALUES (14,'Grand Theft Auto V',2013,'/graphics/gta-v.jpg');
 INSERT INTO `resource`(rID,title,year,thumbnail) VALUES (15,'Fortnite',2017,'/graphics/fortnite.jpg');
-
+INSERT INTO `resource`(rID,title,year,thumbnail) VALUES (16,'Mario Kart 8',2014,'/graphics/mario.jpg');
+INSERT INTO `resource`(rID,title,year,thumbnail) VALUES (17,'Far Cry 3 Blood Dragon',2013,'/graphics/fc3 blood dragon.jpg');
+INSERT INTO `resource`(rID,title,year,thumbnail) VALUES (18,'Far Cry 4',2014,'/graphics/far cry 4.jpg');
+INSERT INTO `resource`(rID,title,year,thumbnail) VALUES (19,'DOOM',2016,'/graphics/doom-cover.jpg');
+INSERT INTO `resource`(rID,title,year,thumbnail) VALUES (20,'Avengers Infinity War',2018,'/graphics/Avengers Infinity War.jpg');
+INSERT INTO `resource`(rID,title,year,thumbnail) VALUES (21,'Guardians of the Galaxy',2014,'/graphics/Guardians of the Galaxy.jpg');
+INSERT INTO `resource`(rID,title,year,thumbnail) VALUES (22,'Spider-Man into the Spider-Verse',2018,'/graphics/into the spider-verse.jpg');
+INSERT INTO `resource`(rID,title,year,thumbnail) VALUES (23,'Terminator 2: Judgement Day',1991,'/graphics/Terminator 2.jpg');
+INSERT INTO `resource`(rID,title,year,thumbnail) VALUES (24,'The Lord of the Rings - The Fellowship of the Ring',2001,'/graphics/The Fellowship of the Ring.jpg');
+INSERT INTO `resource`(rID,title,year,thumbnail) VALUES (25,'The Lord of the Rings - The Two Towers',2002,'/graphics/the two towers.jpg');
+INSERT INTO `resource`(rID,title,year,thumbnail) VALUES (26,'The Lord of the Rings - The Return of the King',2003,'/graphics/return of the king.jpg');
 
 DROP TABLE IF EXISTS `fines`;
 CREATE TABLE IF NOT EXISTS `fines` (
@@ -128,7 +138,11 @@ CREATE TABLE IF NOT EXISTS `game` (
 
 INSERT INTO `game` VALUES ('Valve','First-Person Shooter','18+',"Yes",13);
 INSERT INTO `game` VALUES ('Rockstar Games','Action-Adventure','18+',"Yes",14);
-INSERT INTO `game` VALUES ('Epic Games','Battle Royale','12',"Yes",15);
+INSERT INTO `game` VALUES ('Epic Games','Battle Royale','12+',"Yes",15);
+INSERT INTO `game` VALUES ('Nintendo','kart racing','3+',"Yes",16);
+INSERT INTO `game` VALUES ('Ubisoft','First-Person Shooter','18+',"No",17);
+INSERT INTO `game` VALUES ('Ubisoft','First-Person Shooter','18+',"Yes",18);
+INSERT INTO `game` VALUES ('DOOM','Bethesda Softworks','18+',"Yes",19);
 
 DROP TABLE IF EXISTS `events`;
 CREATE TABLE IF NOT EXISTS `events` (
@@ -161,6 +175,13 @@ INSERT INTO `dvd` VALUES ('Kenneth Branagh',115,'english',4);
 INSERT INTO `dvd` VALUES ('Steven Caple Jr',130,'english',5);
 INSERT INTO `dvd` VALUES ('Ryan Coogler',133,'english',6);
 INSERT INTO `dvd` VALUES ('Jon Favreau',131,'english',11);
+INSERT INTO `dvd` VALUES ('Anthony and Joe Russo',149,'english',20);
+INSERT INTO `dvd` VALUES ('James Gunn',122,'english',21);
+INSERT INTO `dvd` VALUES ('Peter Ramsey',117,'english',22);
+INSERT INTO `dvd` VALUES ('James Cameron',137,'english',23);
+INSERT INTO `dvd` VALUES ('Peter Jackson',178,'english',24);
+INSERT INTO `dvd` VALUES ('Peter Jackson',180,'english',25);
+INSERT INTO `dvd` VALUES ('Peter Jackson',201,'english',26);
 
 drop table if exists `subtitles`;
 create table if not exists `subtitles` (
@@ -179,8 +200,8 @@ create table if not exists `userEvents` (
 );
 
 
-INSERT INTO `subtitles` VALUES (1,'romanian');
-INSERT INTO `subtitles` VALUES (1,'greek');
+INSERT INTO `subtitles` VALUES (4,'romanian');
+INSERT INTO `subtitles` VALUES (4,'greek');
 INSERT INTO `subtitles` VALUES (2,'welsh');
 
 DROP TABLE IF EXISTS `laptop`;
