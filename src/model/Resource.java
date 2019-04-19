@@ -730,27 +730,26 @@ public abstract class Resource {
     /**
      * Method to check if user last login compared to resource added timestamp
      * @param person current user
-     * @return true is user last login was before resource added time, false otherwise.
+     * @return true if user last login was before resource added time, false otherwise.
      * @throws ParseException
      */
     public boolean compareTimeDifference(Person person) throws ParseException {
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         Date resourceDate = formatter.parse(this.timestamp);
+        long timeDifference = 0;
         try {
-        Date loginDate = formatter.parse(person.getLastLogin());
-        long timeDifference = loginDate.getTime() - resourceDate.getTime();
-        
-            if (timeDifference < 0) {
-                return true;
-            }
-            else {
-                return false;
-            }
+	        Date loginDate = formatter.parse(person.getLastLogin());
+	        timeDifference = loginDate.getTime() - resourceDate.getTime();
         }
-        catch (NullPointerException e){
-        	//TODO: Find alternative to catch this, bit spammy atm
-            System.out.println("Null pointer exception caught, try log in a second time.");
+        catch (NullPointerException | ParseException e) {
+        	timeDifference = Long.MIN_VALUE;
+        }
+        
+        if (timeDifference < 0) {
             return true;
+        }
+        else {
+            return false;
         }
     }
     

@@ -405,7 +405,7 @@ public class RegisterController implements Initializable {
 			sqlStatement.setString(5, address.getText());
 			sqlStatement.setString(6, postCode.getText());
 			sqlStatement.setString(7, avatarPath);
-			sqlStatement.setString(8, "1900-01-01 00:00:00");
+			sqlStatement.setString(8, "NULL");
 			sqlStatement.executeUpdate();// This can return a value to tell you if it was successful.
 
 		} catch (SQLException e) {
