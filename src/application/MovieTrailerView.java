@@ -98,13 +98,19 @@ public class MovieTrailerView {
         
         if(movieDescription != null) {
             trailerDescription = getTrailerFromTMDB(movieDescription);
+        } else {
+        	AlertBox.showErrorAlert("The movie could not be found in the "
+        			+ "TMDB database.");
         }
         
         if(trailerDescription !=null) {
             youtubeView = new WebView();
             youtubeView.getEngine().load(YOUTUBE_URL + trailerDescription.getKey());
             youtubeView.setPrefSize(TRAILER_VIEW_WIDTH, TRAILER_VIEW_HEIGHT);
-        }
+        } else {
+	    	AlertBox.showErrorAlert("There is no trailer for this a movie with"
+	    			+ " this exact name.");
+	    }
     }
     
     /**
@@ -141,7 +147,8 @@ public class MovieTrailerView {
         catch (IOException e) 
         {
             e.printStackTrace();
-            AlertBox.showErrorAlert("Reading the result from the TMDB web database failed.");
+            AlertBox.showErrorAlert("The result from the TMDB web database is "
+            		+ "not in correct JSON format.");
             return null;
         }
       
