@@ -47,7 +47,7 @@ DROP TABLE IF EXISTS `system`;
 CREATE TABLE IF NOT EXISTS `system` (
 	`ver`	INTEGER
 );
-INSERT INTO `system` VALUES (25);
+INSERT INTO `system` VALUES (26);
 
 DROP TABLE IF EXISTS `resource`;
 CREATE TABLE IF NOT EXISTS `resource` (
@@ -57,6 +57,7 @@ CREATE TABLE IF NOT EXISTS `resource` (
 	`thumbnail`	TEXT,
 	`timestamp` DATETIME DEFAULT CURRENT_TIMESTAMP
 );
+
 INSERT INTO `resource`(rID,title,year,thumbnail) VALUES (1,'Homo Deus',2017,'/graphics/homoDeus.png');
 INSERT INTO `resource`(rID,title,year,thumbnail) VALUES (2,'Iron Man',2008,'/graphics/ironMan.jpg');
 INSERT INTO `resource`(rID,title,year,thumbnail) VALUES (3,'Captain America: The Winter Soldier',2014,'/graphics/winterSoldier.jpg');
@@ -77,13 +78,20 @@ INSERT INTO `resource`(rID,title,year,thumbnail) VALUES (16,'Mario Kart 8',2014,
 INSERT INTO `resource`(rID,title,year,thumbnail) VALUES (17,'Far Cry 3 Blood Dragon',2013,'/graphics/fc3 blood dragon.jpg');
 INSERT INTO `resource`(rID,title,year,thumbnail) VALUES (18,'Far Cry 4',2014,'/graphics/far cry 4.jpg');
 INSERT INTO `resource`(rID,title,year,thumbnail) VALUES (19,'DOOM',2016,'/graphics/doom-cover.jpg');
-INSERT INTO `resource`(rID,title,year,thumbnail) VALUES (20,'Avengers Infinity War',2018,'/graphics/Avengers Infinity War.jpg');
+INSERT INTO `resource`(rID,title,year,thumbnail) VALUES (20,'Avengers: Infinity War',2018,'/graphics/Avengers Infinity War.jpg');
 INSERT INTO `resource`(rID,title,year,thumbnail) VALUES (21,'Guardians of the Galaxy',2014,'/graphics/Guardians of the Galaxy.jpg');
-INSERT INTO `resource`(rID,title,year,thumbnail) VALUES (22,'Spider-Man into the Spider-Verse',2018,'/graphics/into the spider-verse.jpg');
+INSERT INTO `resource`(rID,title,year,thumbnail) VALUES (22,'Spider-Man: Into the Spider-Verse',2018,'/graphics/into the spider-verse.jpg');
 INSERT INTO `resource`(rID,title,year,thumbnail) VALUES (23,'Terminator 2: Judgement Day',1991,'/graphics/Terminator 2.jpg');
-INSERT INTO `resource`(rID,title,year,thumbnail) VALUES (24,'The Lord of the Rings - The Fellowship of the Ring',2001,'/graphics/The Fellowship of the Ring.jpg');
-INSERT INTO `resource`(rID,title,year,thumbnail) VALUES (25,'The Lord of the Rings - The Two Towers',2002,'/graphics/the two towers.jpg');
-INSERT INTO `resource`(rID,title,year,thumbnail) VALUES (26,'The Lord of the Rings - The Return of the King',2003,'/graphics/return of the king.jpg');
+INSERT INTO `resource`(rID,title,year,thumbnail) VALUES (24,'The Lord of the Rings: The Fellowship of the Ring',2001,'/graphics/The Fellowship of the Ring.jpg');
+INSERT INTO `resource`(rID,title,year,thumbnail) VALUES (25,'The Lord of the Rings: The Two Towers',2002,'/graphics/the two towers.jpg');
+INSERT INTO `resource`(rID,title,year,thumbnail) VALUES (26,'The Lord of the Rings: The Return of the King',2003,'/graphics/return of the king.jpg');
+INSERT INTO `resource`(rID,title,year,thumbnail) VALUES (27,'Star Wars: Episode III - Revenge of the Sith',2005,'/graphics/revenge of the Sith.jpg');
+INSERT INTO `resource`(rID,title,year,thumbnail) VALUES (28,'Moromeţii 2',2018,'/graphics/morometii 2.jpg');
+INSERT INTO `resource`(rID,title,year,thumbnail) VALUES (29,'A Dance with Dragons',2011,'/graphics/a dance with dragons.jpg');
+INSERT INTO `resource`(rID,title,year,thumbnail) VALUES (30,'A Game of Thrones',1996,'/graphics/a game of thrones.jpg');
+INSERT INTO `resource`(rID,title,year,thumbnail) VALUES (31,'The Mysterious Island',1874,'/graphics/mysterious island.jpg');
+INSERT INTO `resource`(rID,title,year,thumbnail) VALUES (32,'Ion',1920,'/graphics/ion.jpg');
+INSERT INTO `resource`(rID,title,year,thumbnail) VALUES (33,'Software Engineering (10th Edition)',2015,'/graphics/soft eng sommerville.jpg');
 
 DROP TABLE IF EXISTS `fines`;
 CREATE TABLE IF NOT EXISTS `fines` (
@@ -98,6 +106,7 @@ CREATE TABLE IF NOT EXISTS `fines` (
 	FOREIGN KEY(`username`) REFERENCES `users`(`username`),
 	FOREIGN KEY(`rID`) REFERENCES `resource`(`rID`)
 );
+
 INSERT INTO `fines` VALUES (1,"Manny",1,3,5.0,'hi',0,"2019-03-10 11:01:01");
 INSERT INTO `fines` VALUES (2,"Steveo",2,100,10.0,'always',0,"2019-03-10 01:01:01");
 INSERT INTO `fines` VALUES (3,"Manny",1,3,5.0,'hi',1,"2019-03-10 01:01:01");
@@ -124,6 +133,11 @@ INSERT INTO `book` VALUES ('Andy Weir','Harvill Secker','Fiction','978-191-070-1
 INSERT INTO `book` VALUES ('Yuval Noah Harari','Harvill Secker','Non-Fiction','978-191-070-187-5','English',8);
 INSERT INTO `book` VALUES ('Unknown Author','Harvill Secker','Fiction','978-191-070-187-6','English',9);
 INSERT INTO `book` VALUES ('Neil Gaimen','Harvill Secker','Fiction','978-191-070-187-7','English',10);
+INSERT INTO `book` VALUES ('George R. R. Martin','Bantam Spectra','Fantasy','9780007456376','English',29);
+INSERT INTO `book` VALUES ('George R. R. Martin','Bantam Spectra','Epic Fantasy','9780007456376','English',30);
+INSERT INTO `book` VALUES ('Jules Verne','Pierre-Jules Hetzel','Adventure novel','978-0812972122','English',31);
+INSERT INTO `book` VALUES ('Liviu Rebreanu','Viața Românească','Realist novel','978-973-1898-21-6','Romanian',32);
+INSERT INTO `book` VALUES ('Ian Sommerville','Pearson','Computer Science','978-0133943030','English',33);
 
 DROP TABLE IF EXISTS `game`;
 CREATE TABLE IF NOT EXISTS `game` (
@@ -182,6 +196,8 @@ INSERT INTO `dvd` VALUES ('James Cameron',137,'english',23);
 INSERT INTO `dvd` VALUES ('Peter Jackson',178,'english',24);
 INSERT INTO `dvd` VALUES ('Peter Jackson',180,'english',25);
 INSERT INTO `dvd` VALUES ('Peter Jackson',201,'english',26);
+INSERT INTO `dvd` VALUES ('George Lucas',140,'english',27);
+INSERT INTO `dvd` VALUES ('Stere Gulea',157,'romanian',28);
 
 drop table if exists `subtitles`;
 create table if not exists `subtitles` (
