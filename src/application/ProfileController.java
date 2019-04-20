@@ -238,11 +238,8 @@ public class ProfileController {
 
 	//may remove fixed size resource images
 	//when dealing with window resizing.
-	private final int RES_IMG_WIDTH = 150;
-	private final int RES_IMG_HEIGHT = 250;
-
-	private final int COPY_IMG_WIDTH = 195;
-	private final int COPY_IMG_HEIGHT = 325;
+	private final int RES_IMG_WIDTH = 195;
+	private final int RES_IMG_HEIGHT = 325;
 
 	private Person currentUser;
 	private ArrayList<Resource> resources;
@@ -551,10 +548,10 @@ public class ProfileController {
 			if(search(i)) {
 				StackPane imagePane;
 				
-				if(resources.get(i).compareTimeDifference(currentUser) == true) {
-					imagePane = createImage(resources.get(i), COPY_IMG_WIDTH, COPY_IMG_HEIGHT);
+				if(resources.get(i).compareTimeDifference(currentUser)) {
+					imagePane = createImage(resources.get(i), RES_IMG_WIDTH, RES_IMG_HEIGHT);
 
-					((ImageView) imagePane.getChildren().get(2)).setFitWidth(COPY_IMG_WIDTH);
+					((ImageView) imagePane.getChildren().get(2)).setFitWidth(RES_IMG_WIDTH);
 					((ImageView) imagePane.getChildren().get(2)).setImage(
 						new Image("/graphics/" + "New.png")); //TODO: Possible bug: 'java.lang.OutOfMemoryError: Java heap space'
 					((ImageView) imagePane.getChildren().get(2)).setPreserveRatio(true);
@@ -605,9 +602,9 @@ public class ProfileController {
 
 		for(Resource resource : resources) {
 
-			StackPane imagePane = createImage(resource, COPY_IMG_WIDTH, COPY_IMG_HEIGHT);
+			StackPane imagePane = createImage(resource, RES_IMG_WIDTH, RES_IMG_HEIGHT);
 
-			((ImageView) imagePane.getChildren().get(2)).setFitWidth(COPY_IMG_WIDTH);
+			((ImageView) imagePane.getChildren().get(2)).setFitWidth(RES_IMG_WIDTH);
 			((ImageView) imagePane.getChildren().get(2)).setImage(
 				new Image("/graphics/" + bannerName));
 			((ImageView) imagePane.getChildren().get(2)).setPreserveRatio(true);

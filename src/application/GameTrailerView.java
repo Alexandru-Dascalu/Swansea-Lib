@@ -36,7 +36,7 @@ public class GameTrailerView {
     
     /**The string added to the name of the video game so we will get a launch 
      * trailer of this game.*/
-    private static final String KEYWORD_ADD_ON = " PC Launch Trailer";
+    private static final String KEYWORD_ADD_ON = " Launch Trailer";
     
     /**The timeout period of the connection until an exception is thrown if 
      * the server has not responded.*/
