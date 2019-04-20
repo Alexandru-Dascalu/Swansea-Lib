@@ -47,7 +47,7 @@ DROP TABLE IF EXISTS `system`;
 CREATE TABLE IF NOT EXISTS `system` (
 	`ver`	INTEGER
 );
-INSERT INTO `system` VALUES (26);
+INSERT INTO `system` VALUES (30);
 
 DROP TABLE IF EXISTS `resource`;
 CREATE TABLE IF NOT EXISTS `resource` (
@@ -69,7 +69,7 @@ INSERT INTO `resource`(rID,title,year,thumbnail) VALUES (8,'Sapiens',2015,'/grap
 INSERT INTO `resource`(rID,title,year,thumbnail) VALUES (9,'Waking Gods',2015,'/graphics/wakingGods.jpg');
 INSERT INTO `resource`(rID,title,year,thumbnail) VALUES (10,'American Gods',2015,'/graphics/americanGods.jpg');
 INSERT INTO `resource`(rID,title,year,thumbnail) VALUES (11,'Iron Man 3',2013,'/graphics/ironMan3.jpg');
-INSERT INTO `resource`(rID,title,year,thumbnail) VALUES (12,'Lenovo',2017,'/graphics/laptop.jpg');
+INSERT INTO `resource`(rID,title,year,thumbnail) VALUES (12,'Lenovo ThinkPad E580',2017,'/graphics/laptop.jpg');
 
 INSERT INTO `resource`(rID,title,year,thumbnail) VALUES (13,'Counter-Strike: Global Offensive',2012,'/graphics/csgo.jpg');
 INSERT INTO `resource`(rID,title,year,thumbnail) VALUES (14,'Grand Theft Auto V',2013,'/graphics/gta-v.jpg');
@@ -81,17 +81,20 @@ INSERT INTO `resource`(rID,title,year,thumbnail) VALUES (19,'DOOM',2016,'/graphi
 INSERT INTO `resource`(rID,title,year,thumbnail) VALUES (20,'Avengers: Infinity War',2018,'/graphics/Avengers Infinity War.jpg');
 INSERT INTO `resource`(rID,title,year,thumbnail) VALUES (21,'Guardians of the Galaxy',2014,'/graphics/Guardians of the Galaxy.jpg');
 INSERT INTO `resource`(rID,title,year,thumbnail) VALUES (22,'Spider-Man: Into the Spider-Verse',2018,'/graphics/into the spider-verse.jpg');
-INSERT INTO `resource`(rID,title,year,thumbnail) VALUES (23,'Terminator 2: Judgement Day',1991,'/graphics/Terminator 2.jpg');
+INSERT INTO `resource`(rID,title,year,thumbnail) VALUES (23,'Terminator 2: Judgment Day',1991,'/graphics/Terminator 2.jpg');
 INSERT INTO `resource`(rID,title,year,thumbnail) VALUES (24,'The Lord of the Rings: The Fellowship of the Ring',2001,'/graphics/The Fellowship of the Ring.jpg');
 INSERT INTO `resource`(rID,title,year,thumbnail) VALUES (25,'The Lord of the Rings: The Two Towers',2002,'/graphics/the two towers.jpg');
 INSERT INTO `resource`(rID,title,year,thumbnail) VALUES (26,'The Lord of the Rings: The Return of the King',2003,'/graphics/return of the king.jpg');
 INSERT INTO `resource`(rID,title,year,thumbnail) VALUES (27,'Star Wars: Episode III - Revenge of the Sith',2005,'/graphics/revenge of the Sith.jpg');
-INSERT INTO `resource`(rID,title,year,thumbnail) VALUES (28,'Moromeţii 2',2018,'/graphics/morometii 2.jpg');
+INSERT INTO `resource`(rID,title,year,thumbnail) VALUES (28,'Moromete Family: On the Edge of Time',2018,'/graphics/morometii 2.jpg');
 INSERT INTO `resource`(rID,title,year,thumbnail) VALUES (29,'A Dance with Dragons',2011,'/graphics/a dance with dragons.jpg');
 INSERT INTO `resource`(rID,title,year,thumbnail) VALUES (30,'A Game of Thrones',1996,'/graphics/a game of thrones.jpg');
 INSERT INTO `resource`(rID,title,year,thumbnail) VALUES (31,'The Mysterious Island',1874,'/graphics/mysterious island.jpg');
 INSERT INTO `resource`(rID,title,year,thumbnail) VALUES (32,'Ion',1920,'/graphics/ion.jpg');
 INSERT INTO `resource`(rID,title,year,thumbnail) VALUES (33,'Software Engineering (10th Edition)',2015,'/graphics/soft eng sommerville.jpg');
+INSERT INTO `resource`(rID,title,year,thumbnail) VALUES (34,'Acer Aspire VX 15',2017,'/graphics/acer vx 15.jpg');
+INSERT INTO `resource`(rID,title,year,thumbnail) VALUES (35,'Acer Swift 1',2016,'/graphics/acer swift 1.png');
+INSERT INTO `resource`(rID,title,year,thumbnail) VALUES (36,'Lenovo IdeaPad 530S',2018,'/graphics/lenovo ideapad.jpg');
 
 DROP TABLE IF EXISTS `fines`;
 CREATE TABLE IF NOT EXISTS `fines` (
@@ -223,14 +226,17 @@ INSERT INTO `subtitles` VALUES (2,'welsh');
 DROP TABLE IF EXISTS `laptop`;
 CREATE TABLE IF NOT EXISTS `laptop` (
 	`manufacturer`	TEXT,
-	`model`			INTEGER,
+	`model`			TEXT,
 	`os`			TEXT,
 	`rID`			INTEGER,
 	PRIMARY KEY (rID),
 	FOREIGN KEY (rID) REFERENCES `resource`(`rID`) ON UPDATE CASCADE ON DELETE CASCADE
 );
 
-INSERT INTO `laptop` VALUES ('Lenovo',1,'Windows `10',12);
+INSERT INTO `laptop` VALUES ('Lenovo','E580','Fedora Linux',12);
+INSERT INTO `laptop` VALUES ('Acer','VX5-591G-7061','Windows 10',34);
+INSERT INTO `laptop` VALUES ('Acer','SF114-32','Windows 7',35);
+INSERT INTO `laptop` VALUES ('Lenovo','530S IKB','Windows 10',36);
 
 DROP TABLE IF EXISTS `copies`;
 CREATE TABLE IF NOT EXISTS `copies` (
