@@ -238,8 +238,8 @@ public class ProfileController {
 
 	//may remove fixed size resource images
 	//when dealing with window resizing.
-	private final int RES_IMG_WIDTH = 195;
-	private final int RES_IMG_HEIGHT = 325;
+	private final int RES_IMG_WIDTH = 220;
+	private final int RES_IMG_HEIGHT = 330;
 
 	private Person currentUser;
 	private ArrayList<Resource> resources;
