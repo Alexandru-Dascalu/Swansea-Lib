@@ -47,7 +47,7 @@ DROP TABLE IF EXISTS `system`;
 CREATE TABLE IF NOT EXISTS `system` (
 	`ver`	INTEGER
 );
-INSERT INTO `system` VALUES (32);
+INSERT INTO `system` VALUES (33);
 
 DROP TABLE IF EXISTS `resource`;
 CREATE TABLE IF NOT EXISTS `resource` (
@@ -389,7 +389,7 @@ INSERT INTO `borrowRecords`('borrowId','copyId','username','description') VALUES
 INSERT INTO `borrowRecords`('borrowId','copyId','username','description') VALUES (5,10,'Manny','Returned on 08/12/2018');
 INSERT INTO `borrowRecords`('borrowId','copyId','username','description') VALUES (6,1,'Jackie','Returned on 08/12/2018');
 INSERT INTO `borrowRecords`('borrowId','copyId','username','description') VALUES (7,26,'Manny','Returned on 08/12/2018');
-INSERT INTO `borrowRecords`('borrowId','copyId','username','description') VALUES (8,27,'Steveo','Returned on 08/12/2018');
+INSERT INTO `borrowRecords`('borrowId','copyId','username','description') VALUES (8,28,'Steveo','Returned on 08/12/2018');
 INSERT INTO `borrowRecords`('borrowId','copyId','username','description') VALUES (9,28,'Jackie','Returned on 08/12/2018');
 
 DROP TABLE IF EXISTS `requestsToApprove`;
@@ -424,11 +424,9 @@ CREATE TABLE IF NOT EXISTS `reviews` (
 		FOREIGN KEY (username) REFERENCES 'users' (`username`) ON UPDATE CASCADE ON DELETE CASCADE
 );
 INSERT INTO `reviews` (reviewId, resourceId, username, star, review) VALUES (1, 2, 'Jackie', 1, 'Massive oof');
-INSERT INTO `reviews` (reviewId, resourceId, username, star, review) VALUES (2, 2, 'Steveo', 5, 'Square root of oof');
 INSERT INTO `reviews` (reviewId, resourceId, username, star, review) VALUES (3, 2, 'Manny', 3, 'Just a weird flex but ok');
 INSERT INTO `reviews` (reviewId, resourceId, username, star, review) VALUES (4, 1, 'Jackie', 5, 'Book of the century');
 INSERT INTO `reviews` (reviewId, resourceId, username, star, review) VALUES (5, 12, 'Manny', 2, 'Too cold');
-INSERT INTO `reviews` (reviewId, resourceId, username, star, review) VALUES (6, 7, 'Steveo', 4, 'Incredible');
 INSERT INTO `reviews` (reviewId, resourceId, username, star, review) VALUES (7, 8, 'Jackie', 3, 'Ok but could do with more mayo');
 
 DROP TABLE IF EXISTS `majorStat`;
