@@ -2,6 +2,7 @@ package application;
 
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -214,6 +215,7 @@ public class AvatarDrawingController implements Initializable {
 		path = path.substring(0, path.length() - 2) + 
 				"/src/SavedAvatars/" + fileName;
 
+		AlertBox.showInfoAlert(path);
 		// Create the file that will be saved.
 		File file = new File(path);
 
@@ -230,11 +232,11 @@ public class AvatarDrawingController implements Initializable {
 				ImageIO.write(bImage, "png", file);
 				//ProfileImage.changeUserAvatar(file);
 				
-			} catch (Exception e) {
+			} catch (IOException e) {
 				/*
 				 * If an exception is caused, print the error message on the console.
 				 */
-				System.err.println(e.getMessage());
+				AlertBox.showErrorAlert(e.getMessage());
 			}
 		}
 		return bImage;
