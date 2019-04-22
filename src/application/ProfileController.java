@@ -863,7 +863,7 @@ public class ProfileController {
             AlertBox.showInfoAlert("Waiting for free copy");
         } else {
         	Resource resourceOfCopy = Resource.getResource(resourceID);
-            if (user.getBorrowLoad() + resourceOfCopy.getLimitAmount() <= 5) {
+            if (user.getBorrowLoad() + resourceOfCopy.getLimitAmount() > 5) {
                 throw new IllegalStateException("approveCopy should not have "
                 		+ "been called if user is over request limit.");
             } else {
