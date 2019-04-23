@@ -47,7 +47,7 @@ DROP TABLE IF EXISTS `system`;
 CREATE TABLE IF NOT EXISTS `system` (
 	`ver`	INTEGER
 );
-INSERT INTO `system` VALUES (34);
+INSERT INTO `system` VALUES (35);
 
 DROP TABLE IF EXISTS `resource`;
 CREATE TABLE IF NOT EXISTS `resource` (
@@ -175,6 +175,7 @@ INSERT INTO `events` VALUES (2,'Cardiff Varsity Cup Theft','We are going to snea
 and steal the Varsity Cup and Shield and escape to 
 bring it back to Swansea. We just need 20 good men.
 #FuckCardiff #UppaSwans','2019-05-16 11:00', 20);
+INSERT INTO `events` VALUES (3,'Examen auto','Iau carnetul in sfarsit.','2019-04-25 11:00', 2);
 
 DROP TABLE IF EXISTS `dvd`;
 CREATE TABLE IF NOT EXISTS `dvd` (
