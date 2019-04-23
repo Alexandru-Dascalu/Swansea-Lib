@@ -1308,13 +1308,13 @@ public class ProfileController {
 			//set upcoming event table cell property value to event attribute names.
 			eventTitleField.setCellValueFactory(new PropertyValueFactory<>("title"));
 			eventDetailsField.setCellValueFactory(new PropertyValueFactory<>("details"));
-			eventTimeField.setCellValueFactory(new PropertyValueFactory<>("date"));
+			eventTimeField.setCellValueFactory(new PropertyValueFactory<>("dateTime"));
 			eventSpacesField.setCellValueFactory(new PropertyValueFactory<>("maxAttending"));
 			
 			//set user event table cell property value to event attribute names.
 			userEventTitleField.setCellValueFactory(new PropertyValueFactory<>("title"));
 			userEventDetailsField.setCellValueFactory(new PropertyValueFactory<>("details"));
-			userEventTimeField.setCellValueFactory(new PropertyValueFactory<>("date"));
+			userEventTimeField.setCellValueFactory(new PropertyValueFactory<>("dateTime"));
 			userEventSpacesField.setCellValueFactory(new PropertyValueFactory<>("maxAttending"));
 			
 			ObservableList<model.Event> tableData = FXCollections.observableArrayList();
