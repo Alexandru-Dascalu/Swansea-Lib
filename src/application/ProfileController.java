@@ -1385,9 +1385,6 @@ public class ProfileController {
 		model.Event.addUserEventInDB(ScreenManager.getCurrentUser().getUsername(), selectedEvent.getID());
 		
 		loadEventTable(); //reload tables.
-		
-		
-		
 	}
 	
 	/**
