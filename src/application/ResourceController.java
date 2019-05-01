@@ -17,6 +17,7 @@ import model.DBHelper;
 import model.DVD;
 import model.Game;
 import model.Laptop;
+import model.Notification;
 import model.Resource;
 import model.ResourceNotification;
 
@@ -87,7 +88,7 @@ public class ResourceController {
 					authorField.getText(), publishField.getText(), 
 					genreField.getText(), iField.getText(), 
 					languageField.getText(), imgField.getText());
-			makeNewNotification(book);
+			Notification.makeNewNotification(book);
 		});
 		resourceBlock.getChildren().addAll(titleBox,yearBox,
 				authorBox,publishBox,genreBox,iBox,languageBox,imgBox,button);
@@ -144,7 +145,7 @@ public class ResourceController {
 			updateGame(titleField.getText(), yearField.getText(), publishField.getText(), 
 					genreField.getText(), ratingField.getText(), 
 					multiField.getText(), imgField.getText());
-			makeNewNotification(game);
+			Notification.makeNewNotification(game);
 		});
 		resourceBlock.getChildren().addAll(titleBox,yearBox,
 				publishBox,genreBox,ratingBox,multiBox,imgBox,button);
@@ -210,7 +211,7 @@ public class ResourceController {
 					directorField.getText(),runtimeField.getText(),
 					langField.getText(),subtitlesField.getText(),
 					imgField.getText());
-			makeNewNotification(dvd);
+			Notification.makeNewNotification(dvd);
 		});
 		resourceBlock.getChildren().addAll(titleBox,yearBox,
 				directorBox,runtimeBox,langBox,subtitlesBox,imgBox,button);
@@ -261,7 +262,7 @@ public class ResourceController {
 			updateLaptop(titleField.getText(),yearField.getText(),
 					manuField.getText(),modelField.getText(),OSField.getText(),
 					imgField.getText());
-			makeNewNotification(laptop);
+			Notification.makeNewNotification(laptop);
 		});
 		resourceBlock.getChildren().addAll(titleBox,yearBox,manuBox,modelBox,
 				OSBox,imgBox,button);
@@ -472,21 +473,6 @@ public class ResourceController {
 			resource.setRuntime(Integer.parseInt(runtime));
 			
 			AlertBox.showInfoAlert("Updated!");
-		}
-	}
-	
-	private void makeNewNotification(Resource resource) {
-		try {
-			Connection dbConnection = DBHelper.getConnection();
-			PreparedStatement insertStatement = dbConnection.prepareStatement(
-					"INSERT INTO notification (message, image) VALUES (?, ?)");
-			
-			insertStatement.setString(1, ResourceNotification.getNewAdditionMsg(resource));
-			insertStatement.setString(2, resource.getThumbnail().impl_getUrl());
-			insertStatement.executeUpdate();
-		} catch (SQLException e) {
-			e.printStackTrace();
-			System.exit(-1);
 		}
 	}
 	
