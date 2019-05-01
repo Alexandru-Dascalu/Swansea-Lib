@@ -85,7 +85,7 @@ public class EventCreationController {
             int maxAttending = Integer.parseInt(maxAttendingField.getText());
             
             //set values in prepared statement.
-            sqlStatement.setInt(1, Event.getTotalEventNo());
+            sqlStatement.setInt(1, Event.getTotalEventNo() + 1);
             sqlStatement.setString(2, eventName);
             sqlStatement.setString(3, eventDetails);
             sqlStatement.setString(4, eventDate);
