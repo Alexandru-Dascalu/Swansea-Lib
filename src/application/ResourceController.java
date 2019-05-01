@@ -1,21 +1,24 @@
 package application;
 
 import java.io.File;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 
 import javafx.fxml.FXML;
-import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
-import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import model.Book;
+import model.DBHelper;
 import model.DVD;
 import model.Game;
 import model.Laptop;
 import model.Resource;
+import model.ResourceNotification;
 
 /**
 * Resource Controller is a class that setups up the resources and updates them.
@@ -84,6 +87,7 @@ public class ResourceController {
 					authorField.getText(), publishField.getText(), 
 					genreField.getText(), iField.getText(), 
 					languageField.getText(), imgField.getText());
+			makeNewNotification(book);
 		});
 		resourceBlock.getChildren().addAll(titleBox,yearBox,
 				authorBox,publishBox,genreBox,iBox,languageBox,imgBox,button);
@@ -140,6 +144,7 @@ public class ResourceController {
 			updateGame(titleField.getText(), yearField.getText(), publishField.getText(), 
 					genreField.getText(), ratingField.getText(), 
 					multiField.getText(), imgField.getText());
+			makeNewNotification(game);
 		});
 		resourceBlock.getChildren().addAll(titleBox,yearBox,
 				publishBox,genreBox,ratingBox,multiBox,imgBox,button);
@@ -205,6 +210,7 @@ public class ResourceController {
 					directorField.getText(),runtimeField.getText(),
 					langField.getText(),subtitlesField.getText(),
 					imgField.getText());
+			makeNewNotification(dvd);
 		});
 		resourceBlock.getChildren().addAll(titleBox,yearBox,
 				directorBox,runtimeBox,langBox,subtitlesBox,imgBox,button);
@@ -255,6 +261,7 @@ public class ResourceController {
 			updateLaptop(titleField.getText(),yearField.getText(),
 					manuField.getText(),modelField.getText(),OSField.getText(),
 					imgField.getText());
+			makeNewNotification(laptop);
 		});
 		resourceBlock.getChildren().addAll(titleBox,yearBox,manuBox,modelBox,
 				OSBox,imgBox,button);
@@ -468,6 +475,20 @@ public class ResourceController {
 		}
 	}
 	
+	private void makeNewNotification(Resource resource) {
+		try {
+			Connection dbConnection = DBHelper.getConnection();
+			PreparedStatement insertStatement = dbConnection.prepareStatement(
+					"INSERT INTO notification (message, image) VALUES (?, ?)");
+			
+			insertStatement.setString(1, ResourceNotification.getNewAdditionMsg(resource));
+			insertStatement.setString(2, resource.getThumbnail().impl_getUrl());
+			insertStatement.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+			System.exit(-1);
+		}
+	}
 	
 	/**
 	 * Initalize method that creates the resource on start up depending on the resource.

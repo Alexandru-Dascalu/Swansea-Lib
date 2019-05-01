@@ -28,6 +28,5 @@ public class AnnouncementNotification extends Notification {
 		} else {
 			return "-fx-background-color: aquamarine;";
 		}
-		
 	}
 }

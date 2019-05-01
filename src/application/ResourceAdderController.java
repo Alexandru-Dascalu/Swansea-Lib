@@ -98,15 +98,15 @@ public class ResourceAdderController {
 		try {
 			connection = DBHelper.getConnection();
 		
-		PreparedStatement statement = connection.prepareStatement("INSERT INTO "
-				+ "resource(thumbnail) values('/graphics/logo.png') ");
-		statement.executeUpdate(); 
-		ResultSet result = statement.getGeneratedKeys();
-		addActualGame(result.getInt(1));
+			PreparedStatement statement = connection.prepareStatement("INSERT INTO "
+					+ "resource(thumbnail) values('/graphics/logo.png') ");
+			statement.executeUpdate(); 
+			ResultSet result = statement.getGeneratedKeys();
+			addActualGame(result.getInt(1));
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-	}
+		}
 	}
 	
 	/**
@@ -117,35 +117,33 @@ public class ResourceAdderController {
 		Connection connection;
 		try {
 			connection = DBHelper.getConnection();
-		
-		PreparedStatement statement = connection.prepareStatement("INSERT INTO "
-				+ "book(rID) values(?) ");
-		statement.setInt(1,ID);
-		statement.executeUpdate(); 
 
-		Resource.loadDatabaseResources();
-		
-		ScreenManager.setCurrentResource(Resource.getResource(ID));
-		
-		try {
-			FXMLLoader fxmlLoader = new FXMLLoader(
-					getClass().getResource("/fxml/copyScene.fxml"));
-            Parent root1 = (Parent) fxmlLoader.load();
-            Stage stage = new Stage();
-            stage.initModality(Modality.APPLICATION_MODAL);
-            //stage.initStyle(StageStyle.UNDECORATED);
-            stage.setTitle("Resource Information");
-            stage.setScene(new Scene(root1));  
-            stage.show();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
+			PreparedStatement statement = connection.prepareStatement("INSERT INTO " + "book(rID) values(?) ");
+			statement.setInt(1, ID);
+			statement.executeUpdate();
+
+			Resource.loadDatabaseResources();
+
+			ScreenManager.setCurrentResource(Resource.getResource(ID));
+
+			try {
+				FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/copyScene.fxml"));
+				Parent root1 = (Parent) fxmlLoader.load();
+				Stage stage = new Stage();
+				stage.initModality(Modality.APPLICATION_MODAL);
+				// stage.initStyle(StageStyle.UNDECORATED);
+				stage.setTitle("Resource Information");
+				stage.setScene(new Scene(root1));
+				stage.show();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-	}
+		}
 	}
 	
 	/**
