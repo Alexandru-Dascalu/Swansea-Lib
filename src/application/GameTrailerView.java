@@ -27,7 +27,7 @@ public class GameTrailerView {
     /**The URL to the Youtube Web API method with parameters needed to search 
      * for a video based on some keywords.*/
     private static final String YOUTUBE_API_SEARCH_URL = "https://www.google" + 
-            "apis.com/youtube/v3/search?part=snippet&maxResults=1&type=video&q=";
+            "apis.com/youtube/v3/search?part=snippet&maxResults=1&order=relevance&q=";
     
     /**The Youtube API key needed to access the API, written as an argument in
      * a URL.*/
@@ -36,7 +36,7 @@ public class GameTrailerView {
     
     /**The string added to the name of the video game so we will get a launch 
      * trailer of this game.*/
-    private static final String KEYWORD_ADD_ON = " Launch Trailer";
+    private static final String KEYWORD_ADD_ON = " PC Launch Trailer";
     
     /**The timeout period of the connection until an exception is thrown if 
      * the server has not responded.*/
@@ -71,6 +71,7 @@ public class GameTrailerView {
          * or it returned invalid data, so we check it is not to avoid an
          * exception.*/
         if(firstResult != null) {
+            videoName = firstResult.getJSONObject("snippet").getString("title");
             youtubeKey = firstResult.getJSONObject("id").getString("videoId");
             
             youtubeView = new WebView();
@@ -111,7 +112,6 @@ public class GameTrailerView {
  
         String jsonResultString = resultsDocument.text();
         JSONObject resultJsonObject = (JSONObject) new JSONTokener(jsonResultString).nextValue();
-        System.out.println(resultJsonObject.getJSONArray("items").length());
         JSONObject firstResult = resultJsonObject.getJSONArray("items").getJSONObject(0);
         
         return firstResult;
