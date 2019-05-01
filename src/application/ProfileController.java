@@ -52,6 +52,7 @@ import model.DVD;
 import model.Game;
 import model.Laptop;
 import model.Librarian;
+import model.Notification;
 import model.Person;
 import model.Resource;
 import model.User;
@@ -857,13 +858,13 @@ public class ProfileController {
 				staffCopiesExplorerTable.getSelectionModel().getSelectedItem();
 		int resourceID = row.getResourceID();
 		String username = row.getKeeper();
-
+		Resource resourceToLoan = Resource.getResource(resourceID);
+		
 		User user = (User)Person.loadPerson(username);
-        if (!Resource.getResource(resourceID).loanToUser(user)) {
+        if (!resourceToLoan.loanToUser(user)) {
             AlertBox.showInfoAlert("Waiting for free copy");
         } else {
-        	Resource resourceOfCopy = Resource.getResource(resourceID);
-            if (user.getBorrowLoad() + resourceOfCopy.getLimitAmount() > 5) {
+            if (user.getBorrowLoad() + resourceToLoan.getLimitAmount() > 5) {
                 throw new IllegalStateException("approveCopy should not have "
                 		+ "been called if user is over request limit.");
             } else {
@@ -884,6 +885,7 @@ public class ProfileController {
 
 		System.out.println("Approved copy!");
 		displayRequested();
+		Notification.makeNewNotification(resourceToLoan, false);
 	}
 
 	/**
