@@ -14,7 +14,7 @@ public class AnnouncementNotification extends Notification {
 		if(isCritical) {
 			iconImage = new Image("src\\graphics\\warning.png", 30, 50, true, true);
 		} else {
-			iconImage = new Image("src\\graphics\\announcement.png", 30, 50, true, true);
+			iconImage = new Image("src\\graphics\\info.png", 30, 50, true, true);
 		}
 	}
 	
