@@ -47,7 +47,7 @@ DROP TABLE IF EXISTS `system`;
 CREATE TABLE IF NOT EXISTS `system` (
 	`ver`	INTEGER
 );
-INSERT INTO `system` VALUES (35);
+INSERT INTO `system` VALUES (1);
 
 DROP TABLE IF EXISTS `resource`;
 CREATE TABLE IF NOT EXISTS `resource` (
@@ -170,12 +170,12 @@ CREATE TABLE IF NOT EXISTS `events` (
 	`maxAllowed` INTEGER
 );
 
-INSERT INTO `events` VALUES (1,'Zilele ASMI','Jocuri sociale si training ASMI','2019-04-29 13:00', 30);
+INSERT INTO `events` VALUES (1,'Zilele ASMI','Jocuri sociale si training ASMI','2019-05-29 13:00', 30);
 INSERT INTO `events` VALUES (2,'Cardiff Varsity Cup Theft','We are going to sneak into Cardiff University 
 and steal the Varsity Cup and Shield and escape to 
 bring it back to Swansea. We just need 20 good men.
 #FuckCardiff #UppaSwans','2019-05-16 11:00', 20);
-INSERT INTO `events` VALUES (3,'Examen auto','Iau carnetul in sfarsit.','2019-04-25 11:00', 2);
+INSERT INTO `events` VALUES (3,'Examen auto','Iau carnetul in sfarsit.','2019-05-25 11:00', 2);
 
 DROP TABLE IF EXISTS `dvd`;
 CREATE TABLE IF NOT EXISTS `dvd` (
@@ -436,6 +436,23 @@ CREATE TABLE `majorStat` (
 	`resource`	INTEGER NOT NULL,
 	`timestamp` DATETIME DEFAULT CURRENT_TIMESTAMP,
 	FOREIGN KEY (resource) REFERENCES `resource` (`rID`) ON UPDATE CASCADE ON DELETE CASCADE);
+	
+DROP TABLE IF EXISTS `notification`;
+CREATE TABLE `notification` (
+	`id`	INTEGER PRIMARY KEY AUTOINCREMENT,
+	`message` TEXT,
+	`image`	TEXT,
+	`date`	DATETIME
+);
 
+DROP TABLE IF EXISTS `userNotifications`;
+CREATE TABLE `userNotifications` (
+	`nID`	INTEGER ,
+	`username` TEXT,
+	`seen` BOOLEAN,
+	PRIMARY KEY (nID,username),
+	FOREIGN KEY (nID) REFERENCES `notification` (`id`) ON UPDATE CASCADE ON DELETE CASCADE,
+	FOREIGN KEY (username) REFERENCES `users` (`username`) ON UPDATE CASCADE ON DELETE CASCADE
+);
 
 COMMIT;
