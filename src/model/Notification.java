@@ -8,13 +8,18 @@ public abstract class Notification {
 	
 	private final String message;
 	
-	public static void makeNewNotification(Resource resource) {
+	public static void makeNewNotification(Resource resource, boolean newAddition) {
 		try {
 			Connection dbConnection = DBHelper.getConnection();
 			PreparedStatement insertStatement = dbConnection.prepareStatement(
 					"INSERT INTO notification (message, image) VALUES (?, ?)");
 			
-			insertStatement.setString(1, ResourceNotification.getNewAdditionMsg(resource));
+			if(newAddition) {
+				insertStatement.setString(1, ResourceNotification.getNewAdditionMsg(resource));
+			} else {
+				insertStatement.setString(1, ResourceNotification.getRequestApprvlMsg(resource));
+			}
+			
 			insertStatement.setString(2, resource.getThumbnail().impl_getUrl());
 			insertStatement.executeUpdate();
 		} catch (SQLException e) {

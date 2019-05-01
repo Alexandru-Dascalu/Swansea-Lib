@@ -88,7 +88,7 @@ public class ResourceController {
 					authorField.getText(), publishField.getText(), 
 					genreField.getText(), iField.getText(), 
 					languageField.getText(), imgField.getText());
-			Notification.makeNewNotification(book);
+			Notification.makeNewNotification(book, true);
 		});
 		resourceBlock.getChildren().addAll(titleBox,yearBox,
 				authorBox,publishBox,genreBox,iBox,languageBox,imgBox,button);
@@ -145,7 +145,7 @@ public class ResourceController {
 			updateGame(titleField.getText(), yearField.getText(), publishField.getText(), 
 					genreField.getText(), ratingField.getText(), 
 					multiField.getText(), imgField.getText());
-			Notification.makeNewNotification(game);
+			Notification.makeNewNotification(game, true);
 		});
 		resourceBlock.getChildren().addAll(titleBox,yearBox,
 				publishBox,genreBox,ratingBox,multiBox,imgBox,button);
@@ -211,7 +211,7 @@ public class ResourceController {
 					directorField.getText(),runtimeField.getText(),
 					langField.getText(),subtitlesField.getText(),
 					imgField.getText());
-			Notification.makeNewNotification(dvd);
+			Notification.makeNewNotification(dvd, true);
 		});
 		resourceBlock.getChildren().addAll(titleBox,yearBox,
 				directorBox,runtimeBox,langBox,subtitlesBox,imgBox,button);
@@ -262,7 +262,7 @@ public class ResourceController {
 			updateLaptop(titleField.getText(),yearField.getText(),
 					manuField.getText(),modelField.getText(),OSField.getText(),
 					imgField.getText());
-			Notification.makeNewNotification(laptop);
+			Notification.makeNewNotification(laptop, true);
 		});
 		resourceBlock.getChildren().addAll(titleBox,yearBox,manuBox,modelBox,
 				OSBox,imgBox,button);
