@@ -28,6 +28,26 @@ public abstract class Notification {
 		}
 	}
 	
+	public static void makeNewNotification(Event event, boolean newAddition) {
+		try {
+			Connection dbConnection = DBHelper.getConnection();
+			PreparedStatement insertStatement = dbConnection.prepareStatement(
+					"INSERT INTO notification (message, date) VALUES (?, ?)");
+			
+			if(newAddition) {
+				insertStatement.setString(1, EventNotification.getNewEventMsg(event));
+			} else {
+				insertStatement.setString(1, EventNotification.getNearingEventMsg(event));
+			}
+			
+			insertStatement.setString(2, event.getDateTime());
+			insertStatement.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+			System.exit(-1);
+		}
+	}
+	
 	public Notification(String message) {
 		this.message = message;
 	}

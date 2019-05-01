@@ -5,10 +5,15 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.concurrent.TimeUnit;
+
 import application.ScreenManager;
 
 /**
@@ -153,8 +158,10 @@ public class Event {
 	 * @param date date and time of event
 	 * @param maxAllowed total number of people who can attend the event
 	 */
-	public static void addEvent(String title, String details, String date, int maxAllowed) {
-		allEvents.add(new Event(title, details, date, maxAllowed));
+	public static Event addEvent(String title, String details, String date, int maxAllowed) {
+		Event newEvent = new Event(title, details, date, maxAllowed);
+		allEvents.add(newEvent);
+		return newEvent;
 	}
 
 	/**
@@ -235,6 +242,20 @@ public class Event {
 	 */
 	public void setMaxAttending(int maxAttending) {
 		this.maxAttending = maxAttending;
+	}
+	
+	public int getDaysUntilEvent() {
+		SimpleDateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+		Date eventDate = null;
+		try {
+			eventDate = dateFormatter.parse(dateTime);
+		} catch (ParseException e) {
+			e.printStackTrace();
+			System.exit(-1);
+		}
+		
+		long timeUntilEvent = eventDate.getTime() - System.currentTimeMillis();
+		return (int) TimeUnit.DAYS.convert(timeUntilEvent, TimeUnit.MILLISECONDS);
 	}
 	
 	/**

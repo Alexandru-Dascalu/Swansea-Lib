@@ -20,6 +20,7 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import model.DBHelper;
 import model.Event;
+import model.Notification;
 
 /**
  * Controller class for Event Creation Scene.
@@ -97,7 +98,8 @@ public class EventCreationController {
             //increment total event number.
             Event.setTotalEventNo(Event.getTotalEventNo() + 1);
             //add event to allEvents.
-            Event.addEvent(eventName, eventDetails, eventDate, maxAttending);
+            Event newEvent = Event.addEvent(eventName, eventDetails, eventDate, maxAttending);
+            Notification.makeNewNotification(newEvent, true);
             //close the stage.
             Stage stage = (Stage) createEventButton.getScene().getWindow();
     	    stage.close();

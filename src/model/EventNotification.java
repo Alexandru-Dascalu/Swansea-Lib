@@ -9,9 +9,10 @@ public class EventNotification extends Notification {
 				+ event.getTitle() + ".";
 	}
 	
-	public static String getNearingEventMsg(Event event, int days) {
-		if(days != 0) {
-			return "You have one event that will be held in " + days + " days: " 
+	public static String getNearingEventMsg(Event event) {
+		int days = event.getDaysUntilEvent();
+		if(days > 1) {
+			return "You have one event that will be held in " + days + " days: "
 					+ event.getTitle() + ".";
 		} else {
 			return "You have one event that will be held tomorrow: " 
