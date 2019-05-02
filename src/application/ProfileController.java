@@ -49,6 +49,7 @@ import model.Book;
 import model.Copy;
 import model.DBHelper;
 import model.DVD;
+import model.EventNotification;
 import model.Game;
 import model.Laptop;
 import model.Librarian;
@@ -667,7 +668,7 @@ public class ProfileController {
 	 */
 	@FXML
 	 public void initialize() throws ParseException {
-
+	    
 		currentUser = ScreenManager.getCurrentUser();
 		resources = ScreenManager.getResources();
 
@@ -681,7 +682,9 @@ public class ProfileController {
 		joinEventButton.setDisable(ScreenManager.getCurrentUser() instanceof Librarian);
 
 		scrollPane.setHvalue(0.5);
-
+		if(ScreenManager.getCurrentUser() instanceof User) {
+		    EventNotification.checkForNearingEvents((User)ScreenManager.getCurrentUser());
+		}
 	 }
 
 	//
