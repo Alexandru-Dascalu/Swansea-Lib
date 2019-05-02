@@ -662,30 +662,34 @@ public class ProfileController {
 		}
 	}
 
-	/**
-	 * intialize method that starts when the scene is intialized
-	 * @throws ParseException 
-	 */
-	@FXML
-	 public void initialize() throws ParseException {
-	    
-		currentUser = ScreenManager.getCurrentUser();
-		resources = ScreenManager.getResources();
+    /**
+     * intialize method that starts when the scene is intialized
+     * 
+     * @throws ParseException
+     */
+    @FXML
+    public void initialize() throws ParseException {
 
-		loadUserTableColumns();
-		displayAll();
+        currentUser = ScreenManager.getCurrentUser();
+        resources = ScreenManager.getResources();
 
-		loadResourceImages();
-		loadEventTable();
-		
-		createEventButton.setDisable(ScreenManager.getCurrentUser() instanceof User);
-		joinEventButton.setDisable(ScreenManager.getCurrentUser() instanceof Librarian);
+        loadUserTableColumns();
+        displayAll();
 
-		scrollPane.setHvalue(0.5);
-		if(ScreenManager.getCurrentUser() instanceof User) {
-		    EventNotification.checkForNearingEvents((User)ScreenManager.getCurrentUser());
-		}
-	 }
+        loadResourceImages();
+        loadEventTable();
+
+        createEventButton
+            .setDisable(ScreenManager.getCurrentUser() instanceof User);
+        joinEventButton
+            .setDisable(ScreenManager.getCurrentUser() instanceof Librarian);
+
+        scrollPane.setHvalue(0.5);
+        if (ScreenManager.getCurrentUser() instanceof User) {
+            EventNotification
+                .checkForNearingEvents((User) ScreenManager.getCurrentUser());
+        }
+    }
 
 	//
 	//Staff Profile -----------------------------------------------------------
