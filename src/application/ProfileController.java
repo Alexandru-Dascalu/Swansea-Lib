@@ -324,7 +324,7 @@ public class ProfileController {
 			
 			//WARNING: the '�' character differs in GIT and in Java
 			//TODO: Maybe set GIT & Java to UTF-8?
-			accountBalance.setText("�" + Double.toString(userBalance));
+			accountBalance.setText("\u00a3" + Double.toString(userBalance));
 			
 			userAvatarView.setImage(new Image(currentUser.getAvatar()));
 		}else {
