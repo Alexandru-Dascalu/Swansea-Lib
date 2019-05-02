@@ -1,5 +1,11 @@
 package model;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+
 import javafx.scene.image.Image;
 
 public class FineNotification extends Notification {
@@ -12,6 +18,24 @@ public class FineNotification extends Notification {
 				+ resource.getClass().getName() +" you are currently borrowing: "
 				+ resource.getTitle() +".";
 	}
+	
+    public static void makeNotification(Copy copy) {
+        try {
+            Connection dbConnection = DBHelper.getConnection();
+            PreparedStatement insertStatement = dbConnection.prepareStatement(
+                "INSERT INTO notification (message, image, date) VALUES (?, ?, ?)");
+            
+            int daysUntilDue = copy.getDaysUntilDue();
+            SimpleDateFormat dateFormatter = new SimpleDateFormat("dd/mm/yyyy");
+            
+            insertStatement.setString(1, getFineMsg(copy.getResource(), daysUntilDue));
+            insertStatement.setString(2, copy.getResource().getThumbnail().impl_getUrl());
+            insertStatement.setString(3, dateFormatter.format(copy.getDueDate()));
+        } catch (SQLException e) {
+            e.printStackTrace();
+            System.exit(-1);
+        }
+    }
 	
 	public FineNotification(String message, String date, String imagePath) {
 		super(message);

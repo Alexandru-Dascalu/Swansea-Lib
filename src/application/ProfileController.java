@@ -686,8 +686,9 @@ public class ProfileController {
 
         scrollPane.setHvalue(0.5);
         if (ScreenManager.getCurrentUser() instanceof User) {
-            EventNotification.checkForNearingEvents((User) 
-                ScreenManager.getCurrentUser());
+            User currentUser = (User) ScreenManager.getCurrentUser();
+            currentUser.checkForNearingEvents();
+            currentUser.checkImminentFines();
         }
     }
 

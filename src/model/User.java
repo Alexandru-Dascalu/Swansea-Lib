@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
+import application.AlertBox;
 import application.ScreenManager;
 
 /**
@@ -201,6 +202,45 @@ public class User extends Person {
             e.printStackTrace();
         }
         return false;
+    }
+    
+    public void checkForNearingEvents() {
+        try {
+            Connection connectionToDB = DBHelper.getConnection();
+            PreparedStatement selectionStmt = connectionToDB.prepareStatement(
+                "SELECT title, details, date, maxAllowed FROM userEvents, events" +
+                " WHERE events.eID = userEvents.eID AND username=?");
+            selectionStmt.setString(1, getUsername());
+            ResultSet userEvents = selectionStmt.executeQuery();
+            
+            while(userEvents.next()) {
+                Event userEvent = new Event(userEvents.getString(1), userEvents.getString(2), 
+                    userEvents.getString(3), userEvents.getInt(4));
+                
+                int daysUntil = userEvent.getDaysUntilEvent();
+                if(daysUntil < 4 && daysUntil > -1) {
+                    Notification.makeNewNotification(userEvent, false);
+                }
+            }
+        }
+        catch (SQLException e) {
+            e.printStackTrace();
+            AlertBox.showErrorAlert(e.getMessage());
+        }
+    }
+    
+    public void checkImminentFines() {
+        ArrayList<Copy> borrowedCopies = getBorrowedCopies();
+
+        for (Copy copy : borrowedCopies) {
+            if (copy.getDueDate() != null) {
+                int daysUntilDue = copy.getDaysUntilDue();
+
+                if (daysUntilDue < 3 && daysUntilDue > -1) {
+                    FineNotification.makeNotification(copy);
+                }
+            }
+        }
     }
     
     public ArrayList<Integer> getUserEvents(){

@@ -3,8 +3,10 @@ package model;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.concurrent.TimeUnit;
 
 /**
  * This class represents a copy of a particular resource within the system.
@@ -282,6 +284,15 @@ public class Copy implements Comparable<Copy> {
 
     }
 
+    /**
+     * Calculates how many days are left until this book is due.
+     * @return the number of days until the book is due.
+     */
+    public int getDaysUntilDue() {
+        long timeUntilDue = dueDate.getTime() - System.currentTimeMillis();
+        return (int) TimeUnit.DAYS.convert(timeUntilDue, TimeUnit.MILLISECONDS);
+    }
+    
     /**
      * Returns a string representation of this copy suitable to display to any
      * user browsing the library. For this reason, it only says the copy ID
