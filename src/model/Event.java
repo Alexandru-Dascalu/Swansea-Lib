@@ -114,6 +114,9 @@ public class Event {
 		
 		connectionToDB.close();
 		
+		User user = (User)ScreenManager.getCurrentUser();
+		user.checkForNearingEvents();
+		user.checkImminentFines();
 	}
 	
 	/**

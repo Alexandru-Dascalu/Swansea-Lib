@@ -7,7 +7,7 @@ public class ResourceNotification extends Notification {
 	private final Image resourceImage;
 	
 	public static String getNewAdditionMsg(Resource resource) {
-		return "A new " + resource.getClass().getName() + "has been added "
+		return "A new " + getResourceType(resource) + " has been added "
 				+ "since your last log in! " + resource.getTitle() + 
 				" is now in the library!";
 	}
@@ -15,7 +15,7 @@ public class ResourceNotification extends Notification {
 	public static String getRequestApprvlMsg(Resource resource) {
 		return "Your request to borrow " + resource.getTitle() + " has"
 				+ " been approved! You are now borrowing said " + 
-				resource.getClass().getName() +".";
+				getResourceType(resource) + ".";
 	}
 	
 	public ResourceNotification(String message, String imagePath) {
@@ -29,5 +29,11 @@ public class ResourceNotification extends Notification {
 	
 	public String getStyle() {
 		return "-fx-background-color: gold;";
+	}
+	
+	private static String getResourceType(Resource resource) {
+	    String className = resource.getClass().getName();
+	    className = className.substring(6);
+	    return className;
 	}
 }

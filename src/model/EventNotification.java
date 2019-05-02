@@ -12,7 +12,7 @@ public class EventNotification extends Notification {
 	private final String date;
 	
 	public static String getNewEventMsg(Event event) {
-		return " A new event has been added: since your last login" 
+		return " A new event has been added since your last login: " 
 				+ event.getTitle() + ".";
 	}
 	

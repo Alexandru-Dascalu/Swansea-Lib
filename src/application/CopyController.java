@@ -1,6 +1,11 @@
 package application;
 
 import java.io.IOException;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.text.SimpleDateFormat;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -22,6 +27,7 @@ import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import model.Book;
+import model.DBHelper;
 import model.DVD;
 import model.Game;
 import model.Laptop;
@@ -302,6 +308,23 @@ public class CopyController {
     public void showTrailerWindow(ActionEvent actionEvent) {
         Resource currentResource = ScreenManager.currentResource;
 
+        try {
+            Connection dbConnection = DBHelper.getConnection();
+            PreparedStatement insertStatement = dbConnection.prepareStatement(
+                "SELECT * FROM notification");
+            ResultSet rs = insertStatement.executeQuery();
+            
+            while(rs.next()) {
+                System.out.println(rs.getInt(1));
+                System.out.println(rs.getString(2));
+                System.out.println(rs.getString(3));
+                System.out.println(rs.getString(4));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            System.exit(-1);
+        }
+        
         if (currentResource.getClass() == DVD.class) {
             DVD currentMovie = (DVD) currentResource;
 

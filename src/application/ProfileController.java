@@ -685,11 +685,11 @@ public class ProfileController {
             instanceof Librarian);
 
         scrollPane.setHvalue(0.5);
-        if (ScreenManager.getCurrentUser() instanceof User) {
+        /*if (ScreenManager.getCurrentUser() instanceof User) {
             User currentUser = (User) ScreenManager.getCurrentUser();
             currentUser.checkForNearingEvents();
             currentUser.checkImminentFines();
-        }
+        }*/
     }
 
 	//

@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.LinkedList;
 
 import application.AlertBox;
 import application.ScreenManager;
@@ -208,6 +209,7 @@ public class User extends Person {
      * from the current date, and if so makes a new notification for this in 
      * the database.*/
     public void checkForNearingEvents() {
+        LinkedList<Event> nearEvents = new LinkedList<>();
         try {
             Connection connectionToDB = DBHelper.getConnection();
             PreparedStatement selectionStmt = connectionToDB.prepareStatement(
@@ -222,13 +224,19 @@ public class User extends Person {
                 
                 int daysUntil = userEvent.getDaysUntilEvent();
                 if(daysUntil < 4 && daysUntil > -1) {
-                    Notification.makeNewNotification(userEvent, false);
+                    nearEvents.add(userEvent);
                 }
             }
+            
+            connectionToDB.close();
         }
         catch (SQLException e) {
             e.printStackTrace();
             AlertBox.showErrorAlert(e.getMessage());
+        }
+        
+        for(Event e: nearEvents) {
+            Notification.makeNewNotification(e, false);
         }
     }
     
