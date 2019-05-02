@@ -313,7 +313,7 @@ public class CopyController {
             PreparedStatement insertStatement = dbConnection.prepareStatement(
                 "SELECT * FROM notification");
             ResultSet rs = insertStatement.executeQuery();
-            
+            System.out.println("test");
             while(rs.next()) {
                 System.out.println(rs.getInt(1));
                 System.out.println(rs.getString(2));

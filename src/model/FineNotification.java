@@ -31,6 +31,8 @@ public class FineNotification extends Notification {
             insertStatement.setString(1, getFineMsg(copy.getResource(), daysUntilDue));
             insertStatement.setString(2, copy.getResource().getThumbnail().impl_getUrl());
             insertStatement.setString(3, dateFormatter.format(copy.getDueDate()));
+            
+            insertStatement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
             System.exit(-1);

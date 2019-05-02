@@ -508,6 +508,10 @@ public class ProfileController {
 		
 		Resource.loadDatabaseResources();
 		
+		if(ScreenManager.getCurrentUser() instanceof User) {
+		    ((User) ScreenManager.getCurrentUser()).loadUserCopies();
+		}
+		
 		try
 		{
 			loadUserInformation();
@@ -626,7 +630,6 @@ public class ProfileController {
 	private void loadCopies() {
 
 		if(currentUser instanceof User) {
-			((User) currentUser).loadUserCopies();
 			ArrayList<Copy> userCopies = ((User) currentUser).getBorrowedCopies();
 			ArrayList<Resource> copyResources = new ArrayList<Resource>();
 
@@ -636,8 +639,6 @@ public class ProfileController {
 
 			loadCopyImages(copyResources, "borrowed.png");
 		}
-
-
 	}
 
 	/**
