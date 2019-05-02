@@ -679,15 +679,15 @@ public class ProfileController {
         loadResourceImages();
         loadEventTable();
 
-        createEventButton
-            .setDisable(ScreenManager.getCurrentUser() instanceof User);
-        joinEventButton
-            .setDisable(ScreenManager.getCurrentUser() instanceof Librarian);
+        createEventButton.setDisable(ScreenManager.getCurrentUser() 
+            instanceof User);
+        joinEventButton.setDisable(ScreenManager.getCurrentUser() 
+            instanceof Librarian);
 
         scrollPane.setHvalue(0.5);
         if (ScreenManager.getCurrentUser() instanceof User) {
-            EventNotification
-                .checkForNearingEvents((User) ScreenManager.getCurrentUser());
+            EventNotification.checkForNearingEvents((User) 
+                ScreenManager.getCurrentUser());
         }
     }
 
