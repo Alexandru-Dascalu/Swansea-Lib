@@ -204,6 +204,9 @@ public class User extends Person {
         return false;
     }
     
+    /**Checks if any events that this user will be attending are within 3 days 
+     * from the current date, and if so makes a new notification for this in 
+     * the database.*/
     public void checkForNearingEvents() {
         try {
             Connection connectionToDB = DBHelper.getConnection();
@@ -229,6 +232,9 @@ public class User extends Person {
         }
     }
     
+    /**Checks if this user has any borrowed copies that are due to be returned 
+     * in less than 3 days, and if so makes a notification for that copy in 
+     * the database.*/
     public void checkImminentFines() {
         ArrayList<Copy> borrowedCopies = getBorrowedCopies();
 
