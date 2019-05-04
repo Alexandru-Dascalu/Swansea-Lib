@@ -29,7 +29,7 @@ public class FineNotification extends Notification {
         try {
             Connection dbConnection = DBHelper.getConnection();
             PreparedStatement insertStatement = dbConnection.prepareStatement(
-                "INSERT INTO notification (message, image, date) VALUES (?, ?, ?)");
+                "INSERT INTO notification (message, image, date, read) VALUES (?, ?, ?, false)");
             
             int daysUntilDue = copy.getDaysUntilDue();
             SimpleDateFormat dateFormatter = new SimpleDateFormat("dd/mm/yyyy");

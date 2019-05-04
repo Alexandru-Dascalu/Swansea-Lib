@@ -442,7 +442,8 @@ CREATE TABLE `notification` (
 	`id`	INTEGER PRIMARY KEY AUTOINCREMENT,
 	`message` TEXT,
 	`image`	TEXT,
-	`date`	DATETIME
+	`date`	DATETIME,
+	`read` BOOLEAN
 );
 
 DROP TABLE IF EXISTS `userNotifications`;
