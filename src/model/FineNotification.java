@@ -45,8 +45,8 @@ public class FineNotification extends Notification {
         }
     }
 	
-	public FineNotification(String message, String date, String imagePath) {
-		super(message);
+	public FineNotification(String message, String date, boolean isRead, String imagePath) {
+		super(message, isRead);
 		this.date = date;
 		image = new Image(imagePath, 30, 50, true, true);
 	}

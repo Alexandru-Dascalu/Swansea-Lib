@@ -18,8 +18,8 @@ public class ResourceNotification extends Notification {
 				getResourceType(resource) + ".";
 	}
 	
-	public ResourceNotification(String message, String imagePath) {
-		super(message);
+	public ResourceNotification(String message, boolean isRead, String imagePath) {
+		super(message, isRead);
 		this.resourceImage = new Image(imagePath, 30, 50, true, true);
 	}
 	

@@ -27,8 +27,8 @@ public class EventNotification extends Notification {
 		}
 	}
 	
-	public EventNotification(String message, String date) {
-		super(message);
+	public EventNotification(String message, boolean isRead, String date) {
+		super(message, isRead);
 		this.date = date;
 	}
 	

@@ -7,8 +7,8 @@ public class AnnouncementNotification extends Notification {
 	private boolean isCritical;
 	private Image iconImage;
 	
-	public AnnouncementNotification(String message, boolean isCritical) {
-		super(message);
+	public AnnouncementNotification(String message, boolean isRead, boolean isCritical) {
+		super(message, isRead);
 		this.isCritical = isCritical;
 		
 		if(isCritical) {
