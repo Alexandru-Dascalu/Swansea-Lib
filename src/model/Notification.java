@@ -13,7 +13,7 @@ public abstract class Notification {
 		try {
 			Connection dbConnection = DBHelper.getConnection();
 			PreparedStatement insertStatement = dbConnection.prepareStatement(
-					"INSERT INTO notification (message, image, read) VALUES (?, ?, false)");
+					"INSERT INTO notification (message, image) VALUES (?, ?)");
 			
 			if(newAddition) {
 				insertStatement.setString(1, ResourceNotification.getNewAdditionMsg(resource));
@@ -33,7 +33,7 @@ public abstract class Notification {
 		try {
 			Connection dbConnection = DBHelper.getConnection();
 			PreparedStatement insertStatement = dbConnection.prepareStatement(
-					"INSERT INTO notification (message, date, read) VALUES (?, ?, false)");
+					"INSERT INTO notification (message, date) VALUES (?, ?)");
 			
 			if(newAddition) {
 				insertStatement.setString(1, EventNotification.getNewEventMsg(event));

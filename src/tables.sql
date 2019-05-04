@@ -443,7 +443,6 @@ CREATE TABLE `notification` (
 	`message` TEXT,
 	`image`	TEXT,
 	`date`	DATETIME,
-	`read` BOOLEAN
 );
 
 DROP TABLE IF EXISTS `userNotifications`;
