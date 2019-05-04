@@ -174,8 +174,8 @@ INSERT INTO `events` VALUES (1,'Zilele ASMI','Jocuri sociale si training ASMI','
 INSERT INTO `events` VALUES (2,'Cardiff Varsity Cup Theft','We are going to sneak into Cardiff University 
 and steal the Varsity Cup and Shield and escape to 
 bring it back to Swansea. We just need 20 good men.
-#FuckCardiff #UppaSwans','2019-05-16 11:00', 20);
-INSERT INTO `events` VALUES (3,'Examen auto','Iau carnetul in sfarsit.','2019-05-25 11:00', 2);
+#FuckCardiff #UppaSwans','2019-05-06 11:00', 20);
+INSERT INTO `events` VALUES (3,'Examen auto','Iau carnetul in sfarsit.','2019-04-25 11:00', 2);
 
 DROP TABLE IF EXISTS `dvd`;
 CREATE TABLE IF NOT EXISTS `dvd` (
@@ -253,7 +253,7 @@ CREATE TABLE IF NOT EXISTS `copies` (
 );
 
 INSERT INTO `copies` VALUES (1,1,'Manny',8,'09/12/2018','17/12/2018',NULL);
-INSERT INTO `copies` VALUES (3,1,'Alexandru',7,'20/04/2019','27/04/2019','04/05/2019');
+INSERT INTO `copies` VALUES (3,1,'Alexandru',7,'22/04/2019','29/04/2019','06/05/2019');
 INSERT INTO `copies` VALUES (4,1,NULL,7,NULL,NULL,NULL);
 INSERT INTO `copies` VALUES (5,1,NULL,7,NULL,NULL,NULL);
 

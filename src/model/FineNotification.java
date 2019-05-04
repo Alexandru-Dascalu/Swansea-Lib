@@ -15,8 +15,14 @@ public class FineNotification extends Notification {
 	
 	public static String getFineMsg(Resource resource, int days) {
 		return "Warning! You are about to receive a fine in " + days + " days for a "
-				+ resource.getClass().getName() +" you are currently borrowing: "
+				+ getClassName(resource) +" you are currently borrowing: "
 				+ resource.getTitle() +".";
+	}
+	
+	private static String getClassName(Resource resource) {
+	    String className = resource.getClass().getName();
+	    className = className.substring(6);
+	    return className;
 	}
 	
     public static void makeNotification(Copy copy) {
