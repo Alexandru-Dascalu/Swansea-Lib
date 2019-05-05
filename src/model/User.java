@@ -263,7 +263,7 @@ public class User extends Person {
     	return this.eventsList;
     }
 
-    public ArrayList<Integer> loadUserEvents() throws SQLException{
+    public ArrayList<Integer> loadUserEvents() throws SQLException {
     	
     	try {
     		Connection dbConnection = DBHelper.getConnection();
@@ -339,6 +339,43 @@ public class User extends Person {
         }
         catch (SQLException e) {
             System.out.println("Failed to load copies into user.");
+            e.printStackTrace();
+        }
+    }
+    
+    public void loadNotifications() {
+        notifications.clear();
+
+        try {
+            Connection dbConnection = DBHelper.getConnection();
+            PreparedStatement selectStatement = dbConnection.prepareStatement(
+                "SELECT message, image, date, seen FROM notification, " +
+                "userNotifications WHERE nID = id AND username = ?");
+            selectStatement.setString(1, username);
+            ResultSet notificationData = selectStatement.executeQuery();
+
+            while (notificationData.next()) {
+                String message = notificationData.getString(1);
+                String imagePath = notificationData.getString(2);
+                String date = notificationData.getString(3);
+                boolean isRead = notificationData.getBoolean(4);
+
+                if (imagePath != null && date != null) {
+                    notifications.add(new FineNotification(message, isRead,
+                        date, imagePath));
+                } else if (imagePath != null && date == null) {
+                    notifications.add(new ResourceNotification(message, isRead,
+                        imagePath));
+                } else if (imagePath == null && date != null) {
+                    notifications.add(new EventNotification(message, isRead, 
+                        date));
+                } else {
+                    throw new IllegalStateException();
+                }
+            }
+        } catch (SQLException e) {
+            System.out.println(
+                "Failed to load notifications for user " + username + ".");
             e.printStackTrace();
         }
     }

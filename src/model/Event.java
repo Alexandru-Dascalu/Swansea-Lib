@@ -113,12 +113,6 @@ public class Event {
 		
 		
 		connectionToDB.close();
-		
-		if(ScreenManager.getCurrentUser() instanceof User) {
-		    User user = (User)ScreenManager.getCurrentUser();
-	        user.checkForNearingEvents();
-	        user.checkImminentFines();
-		}
 	}
 	
 	/**

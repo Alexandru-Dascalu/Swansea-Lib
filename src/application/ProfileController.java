@@ -244,7 +244,7 @@ public class ProfileController {
 	private final int RES_IMG_WIDTH = 220;
 	private final int RES_IMG_HEIGHT = 330;
 
-	private Person currentUser;
+	private Person currentPerson;
 	private ArrayList<Resource> resources;
 
 	/**
@@ -308,30 +308,30 @@ public class ProfileController {
 		if (ScreenManager.getCurrentUser() instanceof User) {
 
 			//change text in labels to appropriate user information.
-			userLabel.setText(currentUser.getUsername());
-			fullnameLabel.setText("Full Name: " + currentUser.getFirstName() + " "
-			+ currentUser.getLastName());
-			addressLabel.setText("Address: " + currentUser.getAddress());
-			postcodeLabel.setText("Post Code: " + currentUser.getPostcode());
-			phoneLabel.setText("Phone Number: " + currentUser.getPhoneNumber());
-			lastLoginLabel1.setText("Last Login: " + currentUser.getLastLogin());
+			userLabel.setText(currentPerson.getUsername());
+			fullnameLabel.setText("Full Name: " + currentPerson.getFirstName() + " "
+			+ currentPerson.getLastName());
+			addressLabel.setText("Address: " + currentPerson.getAddress());
+			postcodeLabel.setText("Post Code: " + currentPerson.getPostcode());
+			phoneLabel.setText("Phone Number: " + currentPerson.getPhoneNumber());
+			lastLoginLabel1.setText("Last Login: " + currentPerson.getLastLogin());
 			
 			try {
-				((User) currentUser).loadUserEvents();
+				((User) currentPerson).loadUserEvents();
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
 
-			Double userBalance = ((User) currentUser).getAccountBalance();
+			Double userBalance = ((User) currentPerson).getAccountBalance();
 			
 			//WARNING: the '�' character differs in GIT and in Java
 			//TODO: Maybe set GIT & Java to UTF-8?
 			accountBalance.setText("\u00a3" + Double.toString(userBalance));
 			
-			userAvatarView.setImage(new Image(currentUser.getAvatar()));
+			userAvatarView.setImage(new Image(currentPerson.getAvatar()));
 		}else {
 			//get all information in about user from ScreenManager class.
-			Librarian staff = (Librarian) currentUser;
+			Librarian staff = (Librarian) currentPerson;
 			String fullname = staff.getFirstName() + " " + staff.getLastName();
 
 			userLabel1.setText(staff.getUsername());
@@ -350,7 +350,7 @@ public class ProfileController {
 			lastLoginLabel2.setText("Last login: " +
 					" " + staff.getLastLogin());
 
-			staffAvatarView.setImage(new Image(currentUser.getAvatar()));
+			staffAvatarView.setImage(new Image(currentPerson.getAvatar()));
 		}
 	}
 
@@ -510,7 +510,9 @@ public class ProfileController {
 		Resource.loadDatabaseResources();
 		
 		if(ScreenManager.getCurrentUser() instanceof User) {
-		    ((User) ScreenManager.getCurrentUser()).loadUserCopies();
+		    User currentUser = (User) ScreenManager.getCurrentUser();
+		    currentUser.loadUserCopies();
+		   // currentUser
 		}
 		
 		try
@@ -555,7 +557,7 @@ public class ProfileController {
 			if(search(i)) {
 				StackPane imagePane;
 				
-				if(resources.get(i).compareTimeDifference(currentUser)) {
+				if(resources.get(i).compareTimeDifference(currentPerson)) {
 					imagePane = createImage(resources.get(i), RES_IMG_WIDTH, RES_IMG_HEIGHT);
 
 					((ImageView) imagePane.getChildren().get(2)).setFitWidth(RES_IMG_WIDTH);
@@ -630,8 +632,8 @@ public class ProfileController {
 	 */
 	private void loadCopies() {
 
-		if(currentUser instanceof User) {
-			ArrayList<Copy> userCopies = ((User) currentUser).getBorrowedCopies();
+		if(currentPerson instanceof User) {
+			ArrayList<Copy> userCopies = ((User) currentPerson).getBorrowedCopies();
 			ArrayList<Resource> copyResources = new ArrayList<Resource>();
 
 			for(Copy copy : userCopies) {
@@ -647,9 +649,9 @@ public class ProfileController {
 	 */
 	@FXML
 	private void loadRequested() {
-		if(currentUser instanceof User) {
+		if(currentPerson instanceof User) {
 			ArrayList<Resource> requestedResources =
-					((User) currentUser).getRequestedResources();
+					((User) currentPerson).getRequestedResources();
 			loadCopyImages(requestedResources, "requested.png");
 		}
 
@@ -657,9 +659,9 @@ public class ProfileController {
 
 	@FXML
 	private void loadBorrowHistory() {
-		if(currentUser instanceof User) {
+		if(currentPerson instanceof User) {
 			ArrayList<Resource> borrowHistory =
-					((User) currentUser).loadUserHistory();
+					((User) currentPerson).loadUserHistory();
 			loadCopyImages(borrowHistory, "returned.png");
 		}
 	}
@@ -672,9 +674,16 @@ public class ProfileController {
     @FXML
     public void initialize() throws ParseException {
 
-        currentUser = ScreenManager.getCurrentUser();
+        currentPerson = ScreenManager.getCurrentUser();
         resources = ScreenManager.getResources();
 
+        if(currentPerson instanceof User) {
+            User currentUser = (User) currentPerson;
+            currentUser.checkForNearingEvents();
+            currentUser.checkImminentFines();
+            currentUser.loadNotifications();
+        }
+        
         loadUserTableColumns();
         displayAll();
 
@@ -687,11 +696,6 @@ public class ProfileController {
             instanceof Librarian);
 
         scrollPane.setHvalue(0.5);
-        /*if (ScreenManager.getCurrentUser() instanceof User) {
-            User currentUser = (User) ScreenManager.getCurrentUser();
-            currentUser.checkForNearingEvents();
-            currentUser.checkImminentFines();
-        }*/
     }
 
 	//
@@ -970,8 +974,8 @@ public class ProfileController {
 
 		    ScreenManager.getCurrentUser().setAvatar(
 		    		new File(file.getAbsolutePath()).toURI().toString());
-		    userAvatarView.setImage(new Image(currentUser.getAvatar()));
-		    staffAvatarView.setImage(new Image(currentUser.getAvatar()));
+		    userAvatarView.setImage(new Image(currentPerson.getAvatar()));
+		    staffAvatarView.setImage(new Image(currentPerson.getAvatar()));
 
 	}
 
@@ -982,8 +986,8 @@ public class ProfileController {
     public void changeUserAvatar(File imageFile) {
             ScreenManager.getCurrentUser().setAvatar(new
                 File(imageFile.getAbsolutePath()).toURI().toString());
-            userAvatarView.setImage(new Image(currentUser.getAvatar()));
-            staffAvatarView.setImage(new Image(currentUser.getAvatar()));
+            userAvatarView.setImage(new Image(currentPerson.getAvatar()));
+            staffAvatarView.setImage(new Image(currentPerson.getAvatar()));
     }
 
 	@FXML
