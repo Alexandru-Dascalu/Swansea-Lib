@@ -498,17 +498,26 @@ public abstract class Resource {
                     try {
                         SimpleDateFormat normalDateFormat = new SimpleDateFormat(
                             "dd/MM/yyyy");
-                        borrowDate = new SimpleDateFormat("dd/MM/yyyy")
-                            .parse(savedCopies.getString("borrowDate"));
+                        borrowDate = normalDateFormat.parse(savedCopies.getString("borrowDate"));
 
                         String dbLastRenewal = savedCopies.getString("lastRenewal");
                         if (dbLastRenewal != null) {
+                            
                             lastRenewalDate = normalDateFormat.parse(dbLastRenewal);
                         }
 
                         String dbDueDate = savedCopies.getString("dueDate");
                         if (dbDueDate != null) {
+                            
+                            if(uniqueID == 1) {
+                                System.out.println(dbDueDate);
+                            }
                             dueDate = normalDateFormat.parse(dbDueDate);
+                            
+                            if(uniqueID == 1) {
+                                System.out.println(normalDateFormat.format(dueDate));
+                            }
+                            
                         }
                     }
                     catch (ParseException e) {
@@ -516,9 +525,10 @@ public abstract class Resource {
                             "Failed to load a date for a copy from the database.");
                     }
 
-                    copyList.add(new Copy(this, savedCopies.getInt("copyID"),
+                    Copy c= new Copy(this, savedCopies.getInt("copyID"),
                         borrower, savedCopies.getInt("loanDuration"),
-                        borrowDate, lastRenewalDate, dueDate));
+                        borrowDate, lastRenewalDate, dueDate);
+                    copyList.add(c);
                 }
                 else {
                     Copy freeCopy = new Copy(this, savedCopies.getInt("copyID"),

@@ -33,12 +33,12 @@ public class FineNotification extends Notification {
                 "INSERT INTO notification (message, image, date) VALUES (?, ?, ?)");
             
             int daysUntilDue = copy.getDaysUntilDue();
-            SimpleDateFormat dateFormatter = new SimpleDateFormat("dd/mm/yyyy");
+            SimpleDateFormat dateFormatter = new SimpleDateFormat("dd/MM/yyyy");
             
             insertStatement.setString(1, getFineMsg(copy.getResource(), daysUntilDue));
             insertStatement.setString(2, copy.getResource().getThumbnail().impl_getUrl());
+            System.out.println("fine date:" + dateFormatter.format(copy.getDueDate()));
             insertStatement.setString(3, dateFormatter.format(copy.getDueDate()));
-            
             insertStatement.executeUpdate();
             
             int notificationID = insertStatement.getGeneratedKeys().getInt(1);
