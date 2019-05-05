@@ -29,6 +29,8 @@ public class User extends Person {
     private ArrayList<Copy> copiesList = new ArrayList<Copy>();
     
     private ArrayList<Integer> eventsList = new ArrayList<Integer>();
+    
+    private LinkedList<Notification> notifications = new LinkedList<>();
 
     /**
      * Creates a new User object from the given arguments.
@@ -236,7 +238,7 @@ public class User extends Person {
         }
         
         for(Event e: nearEvents) {
-            Notification.makeNewNotification(e, false);
+            EventNotification.makeNearingEventNotification(e);
         }
     }
     

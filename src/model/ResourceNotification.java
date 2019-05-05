@@ -1,5 +1,11 @@
 package model;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+
 import javafx.scene.image.Image;
 
 public class ResourceNotification extends Notification {
@@ -17,6 +23,94 @@ public class ResourceNotification extends Notification {
 				+ " been approved! You are now borrowing said " + 
 				getResourceType(resource) + ".";
 	}
+	
+	public static void makeNewRsrcNotification(Resource resource) {
+	    try {
+            Connection dbConnection = DBHelper.getConnection();
+            PreparedStatement insertStatement = dbConnection.prepareStatement(
+                "INSERT INTO notification (message, image) VALUES (?, ?)");
+
+            insertStatement.setString(1,
+                ResourceNotification.getNewAdditionMsg(resource));
+
+            insertStatement.setString(2, resource.getThumbnail().impl_getUrl());
+            insertStatement.executeUpdate();
+            
+            int notificationID = insertStatement.getGeneratedKeys().getInt(1);
+            insertStatement = dbConnection.prepareStatement(
+                "INSERT INTO " + "userNotifications VALUES (?, ?, false)");
+
+            for (String username : getNewNotificationUsers()) {
+                insertStatement.setInt(1, notificationID);
+                insertStatement.setString(2, username);
+                insertStatement.executeUpdate();
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            System.exit(-1);
+        }
+	}
+	
+	public static void makeApprovalNotification(Resource resource) {
+	    try {
+            Connection dbConnection = DBHelper.getConnection();
+            PreparedStatement insertStatement = dbConnection.prepareStatement(
+                "INSERT INTO notification (message, image) VALUES (?, ?)");
+            insertStatement.setString(1,
+                ResourceNotification.getRequestApprvlMsg(resource));
+
+            insertStatement.setString(2, resource.getThumbnail().impl_getUrl());
+            insertStatement.executeUpdate();
+        }
+        catch (SQLException e) {
+            e.printStackTrace();
+            System.exit(-1);
+        }
+	}
+    
+    public static ArrayList<String> getNewNotificationUsers() {
+        ArrayList<String> notificationUsers = new ArrayList<>();
+        
+        Connection dbConnection;
+        try {
+            dbConnection = DBHelper.getConnection();
+            PreparedStatement insertStatement = dbConnection.prepareStatement(
+                    "SELECT username FROM users");
+            ResultSet usernames = insertStatement.executeQuery();
+            
+            while(usernames.next()) {
+                notificationUsers.add(usernames.getString(1));
+            }
+        }
+        catch (SQLException e) {
+            e.printStackTrace();
+            System.exit(-1);
+        }
+     
+        return notificationUsers;
+    }
+    
+    public static ArrayList<String> getApprovalNotificationUsers() {
+ArrayList<String> notificationUsers = new ArrayList<>();
+        
+        Connection dbConnection;
+        try {
+            dbConnection = DBHelper.getConnection();
+            PreparedStatement insertStatement = dbConnection.prepareStatement(
+                    "SELECT username FROM users");
+            ResultSet usernames = insertStatement.executeQuery();
+            
+            while(usernames.next()) {
+                notificationUsers.add(usernames.getString(1));
+            }
+        }
+        catch (SQLException e) {
+            e.printStackTrace();
+            System.exit(-1);
+        }
+     
+        return notificationUsers;
+    }
 	
 	public ResourceNotification(String message, boolean isRead, String imagePath) {
 		super(message, isRead);

@@ -320,11 +320,18 @@ public class CopyController {
                 System.out.println(rs.getString(3));
                 System.out.println(rs.getString(4));
             }
+            
+            insertStatement = dbConnection.prepareStatement("SELECT username FROM userNotifications");
+            rs = insertStatement.executeQuery();
+            
+            while(rs.next()) {
+                System.out.println(rs.getString(1));
+            }
         } catch (SQLException e) {
             e.printStackTrace();
             System.exit(-1);
         }
-        
+        /*
         if (currentResource.getClass() == DVD.class) {
             DVD currentMovie = (DVD) currentResource;
 
@@ -371,7 +378,7 @@ public class CopyController {
                 trailerWindow.setScene(trailerScene);
                 trailerWindow.show();
             }
-        }
+        }*/
     }
 
     /**

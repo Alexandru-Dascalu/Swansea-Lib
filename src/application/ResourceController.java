@@ -15,6 +15,7 @@ import javafx.scene.text.Text;
 import model.Book;
 import model.DBHelper;
 import model.DVD;
+import model.EventNotification;
 import model.Game;
 import model.Laptop;
 import model.Notification;
@@ -88,7 +89,7 @@ public class ResourceController {
 					authorField.getText(), publishField.getText(), 
 					genreField.getText(), iField.getText(), 
 					languageField.getText(), imgField.getText());
-			Notification.makeNewNotification(book, true);
+			ResourceNotification.makeNewRsrcNotification(book);
 		});
 		resourceBlock.getChildren().addAll(titleBox,yearBox,
 				authorBox,publishBox,genreBox,iBox,languageBox,imgBox,button);
@@ -145,7 +146,7 @@ public class ResourceController {
 			updateGame(titleField.getText(), yearField.getText(), publishField.getText(), 
 					genreField.getText(), ratingField.getText(), 
 					multiField.getText(), imgField.getText());
-			Notification.makeNewNotification(game, true);
+			ResourceNotification.makeNewRsrcNotification(game);
 		});
 		resourceBlock.getChildren().addAll(titleBox,yearBox,
 				publishBox,genreBox,ratingBox,multiBox,imgBox,button);
@@ -211,7 +212,7 @@ public class ResourceController {
 					directorField.getText(),runtimeField.getText(),
 					langField.getText(),subtitlesField.getText(),
 					imgField.getText());
-			Notification.makeNewNotification(dvd, true);
+			ResourceNotification.makeNewRsrcNotification(dvd);
 		});
 		resourceBlock.getChildren().addAll(titleBox,yearBox,
 				directorBox,runtimeBox,langBox,subtitlesBox,imgBox,button);
@@ -262,7 +263,7 @@ public class ResourceController {
 			updateLaptop(titleField.getText(),yearField.getText(),
 					manuField.getText(),modelField.getText(),OSField.getText(),
 					imgField.getText());
-			Notification.makeNewNotification(laptop, true);
+			ResourceNotification.makeNewRsrcNotification(laptop);
 		});
 		resourceBlock.getChildren().addAll(titleBox,yearBox,manuBox,modelBox,
 				OSBox,imgBox,button);

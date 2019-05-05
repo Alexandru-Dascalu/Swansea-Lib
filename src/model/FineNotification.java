@@ -2,6 +2,7 @@ package model;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -45,6 +46,27 @@ public class FineNotification extends Notification {
         }
     }
 	
+    public static ArrayList<String> getNotificationUsers() {
+        ArrayList<String> notificationUsers = new ArrayList<>();
+        
+        try {
+            Connection dbConnection = DBHelper.getConnection();
+            PreparedStatement insertStatement = dbConnection
+                .prepareStatement("SELECT username FROM users");
+            ResultSet usernames = insertStatement.executeQuery();
+
+            while (usernames.next()) {
+                notificationUsers.add(usernames.getString(1));
+            }
+        }
+        catch (SQLException e) {
+            e.printStackTrace();
+            System.exit(-1);
+        }
+        
+        return notificationUsers;
+    }
+    
 	public FineNotification(String message, String date, boolean isRead, String imagePath) {
 		super(message, isRead);
 		this.date = date;

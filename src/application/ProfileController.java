@@ -56,6 +56,7 @@ import model.Librarian;
 import model.Notification;
 import model.Person;
 import model.Resource;
+import model.ResourceNotification;
 import model.User;
 
 /**
@@ -894,7 +895,7 @@ public class ProfileController {
 
 		System.out.println("Approved copy!");
 		displayRequested();
-		Notification.makeNewNotification(resourceToLoan, false);
+		ResourceNotification.makeApprovalNotification(resourceToLoan);;
 	}
 
 	/**

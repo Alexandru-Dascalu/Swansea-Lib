@@ -20,6 +20,7 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import model.DBHelper;
 import model.Event;
+import model.EventNotification;
 import model.Notification;
 
 /**
@@ -99,7 +100,7 @@ public class EventCreationController {
             Event.setTotalEventNo(Event.getTotalEventNo() + 1);
             //add event to allEvents.
             Event newEvent = Event.addEvent(eventName, eventDetails, eventDate, maxAttending);
-            Notification.makeNewNotification(newEvent, true);
+            EventNotification.makeNewEventNotification(newEvent);
             //close the stage.
             Stage stage = (Stage) createEventButton.getScene().getWindow();
     	    stage.close();
