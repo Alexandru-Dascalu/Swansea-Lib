@@ -509,15 +509,7 @@ public abstract class Resource {
                         String dbDueDate = savedCopies.getString("dueDate");
                         if (dbDueDate != null) {
                             
-                            if(uniqueID == 1) {
-                                System.out.println(dbDueDate);
-                            }
                             dueDate = normalDateFormat.parse(dbDueDate);
-                            
-                            if(uniqueID == 1) {
-                                System.out.println(normalDateFormat.format(dueDate));
-                            }
-                            
                         }
                     }
                     catch (ParseException e) {
