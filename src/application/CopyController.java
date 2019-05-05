@@ -321,11 +321,13 @@ public class CopyController {
                 System.out.println(rs.getString(4));
             }
             
-            insertStatement = dbConnection.prepareStatement("SELECT username FROM userNotifications");
+            insertStatement = dbConnection.prepareStatement("SELECT * FROM userNotifications");
             rs = insertStatement.executeQuery();
             
             while(rs.next()) {
-                System.out.println(rs.getString(1));
+                System.out.println(rs.getString(2));
+                System.out.println(rs.getInt(1));
+                System.out.println(rs.getBoolean(3));
             }
         } catch (SQLException e) {
             e.printStackTrace();
