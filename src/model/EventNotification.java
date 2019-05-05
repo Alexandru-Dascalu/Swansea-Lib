@@ -37,6 +37,16 @@ public class EventNotification extends Notification {
             
             insertStatement.setString(2, event.getDateTime());
             insertStatement.executeUpdate();
+            
+            int notificationID = insertStatement.getGeneratedKeys().getInt(1);
+            insertStatement = dbConnection.prepareStatement(
+                "INSERT INTO userNotifications VALUES (?, ?, false)");
+
+            for (String username : getNewNotificationUsers()) {
+                insertStatement.setInt(1, notificationID);
+                insertStatement.setString(2, username);
+                insertStatement.executeUpdate();
+            }
         } catch (SQLException e) {
             e.printStackTrace();
             System.exit(-1);
@@ -53,6 +63,16 @@ public class EventNotification extends Notification {
             
             insertStatement.setString(2, event.getDateTime());
             insertStatement.executeUpdate();
+            
+            int notificationID = insertStatement.getGeneratedKeys().getInt(1);
+            insertStatement = dbConnection.prepareStatement(
+                "INSERT INTO userNotifications VALUES (?, ?, false)");
+
+            for (String username : getNearingNotificationUsers()) {
+                insertStatement.setInt(1, notificationID);
+                insertStatement.setString(2, username);
+                insertStatement.executeUpdate();
+            }
         } catch (SQLException e) {
             e.printStackTrace();
             System.exit(-1);

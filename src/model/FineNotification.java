@@ -40,13 +40,23 @@ public class FineNotification extends Notification {
             insertStatement.setString(3, dateFormatter.format(copy.getDueDate()));
             
             insertStatement.executeUpdate();
+            
+            int notificationID = insertStatement.getGeneratedKeys().getInt(1);
+            insertStatement = dbConnection.prepareStatement(
+                "INSERT INTO userNotifications VALUES (?, ?, false)");
+
+            for (String username : getFineNotificationUsers()) {
+                insertStatement.setInt(1, notificationID);
+                insertStatement.setString(2, username);
+                insertStatement.executeUpdate();
+            }
         } catch (SQLException e) {
             e.printStackTrace();
             System.exit(-1);
         }
     }
 	
-    public static ArrayList<String> getNotificationUsers() {
+    public static ArrayList<String> getFineNotificationUsers() {
         ArrayList<String> notificationUsers = new ArrayList<>();
         
         try {

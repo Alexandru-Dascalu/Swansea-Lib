@@ -38,7 +38,7 @@ public class ResourceNotification extends Notification {
             
             int notificationID = insertStatement.getGeneratedKeys().getInt(1);
             insertStatement = dbConnection.prepareStatement(
-                "INSERT INTO " + "userNotifications VALUES (?, ?, false)");
+                "INSERT INTO userNotifications VALUES (?, ?, false)");
 
             for (String username : getNewNotificationUsers()) {
                 insertStatement.setInt(1, notificationID);
@@ -61,6 +61,16 @@ public class ResourceNotification extends Notification {
 
             insertStatement.setString(2, resource.getThumbnail().impl_getUrl());
             insertStatement.executeUpdate();
+            
+            int notificationID = insertStatement.getGeneratedKeys().getInt(1);
+            insertStatement = dbConnection.prepareStatement(
+                "INSERT INTO userNotifications VALUES (?, ?, false)");
+
+            for (String username : getApprovalNotificationUsers()) {
+                insertStatement.setInt(1, notificationID);
+                insertStatement.setString(2, username);
+                insertStatement.executeUpdate();
+            }
         }
         catch (SQLException e) {
             e.printStackTrace();
