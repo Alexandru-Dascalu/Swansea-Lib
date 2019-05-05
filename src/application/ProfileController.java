@@ -512,7 +512,6 @@ public class ProfileController {
 		if(ScreenManager.getCurrentUser() instanceof User) {
 		    User currentUser = (User) ScreenManager.getCurrentUser();
 		    currentUser.loadUserCopies();
-		   // currentUser
 		}
 		
 		try
