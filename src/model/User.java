@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.LinkedList;
+import java.util.List;
 
 import application.AlertBox;
 import application.ScreenManager;
@@ -496,6 +497,10 @@ public class User extends Person {
 		}
 		
 		return requestLimit;
+	}
+	
+	public List<Notification> getNotifications() {
+	    return notifications;
 	}
 	
     /**
