@@ -238,6 +238,9 @@ public class ProfileController {
 	
 	@FXML
 	private Button staffStatsButton;
+	
+	@FXML
+	private Button notificationsButton;
 
 	//may remove fixed size resource images
 	//when dealing with window resizing.
