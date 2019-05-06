@@ -688,6 +688,8 @@ public class ProfileController {
             currentUser.checkForNearingEvents();
             currentUser.checkImminentFines();
             currentUser.loadNotifications();
+        } else {
+            notificationStack.setVisible(false);
         }
         
         loadUserTableColumns();
