@@ -582,8 +582,8 @@ public class ProfileController {
 				if(!latestHBox.getChildren().isEmpty()) {
 					//if the number of resources in resource HBox is more than
 					//the width of the resource VBox / the width of a resource image
-					if(latestHBox.getChildren().size() > (vResourceBox.getPrefWidth()
-					- RES_IMG_WIDTH) / RES_IMG_WIDTH) {
+					if(latestHBox.getChildren().size() > (vResourceBox.getPrefWidth() 
+					        - RES_IMG_WIDTH) / RES_IMG_WIDTH) {
 						//create new HBox below last HBox
 						HBox hResourceBox = new HBox();
 						hResourceBox.setSpacing(5);
