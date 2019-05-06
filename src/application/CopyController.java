@@ -334,7 +334,7 @@ public class CopyController {
             e.printStackTrace();
             System.exit(-1);
         }
-        /*
+        
         if (currentResource.getClass() == DVD.class) {
             DVD currentMovie = (DVD) currentResource;
 
@@ -381,7 +381,7 @@ public class CopyController {
                 trailerWindow.setScene(trailerScene);
                 trailerWindow.show();
             }
-        }*/
+        }
     }
 
     /**
