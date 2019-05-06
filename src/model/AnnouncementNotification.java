@@ -1,6 +1,10 @@
 package model;
 
+import javafx.scene.control.Label;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.HBox;
+import javafx.scene.text.Text;
 
 public class AnnouncementNotification extends Notification {
 	
@@ -29,4 +33,13 @@ public class AnnouncementNotification extends Notification {
 			return "-fx-background-color: aquamarine;";
 		}
 	}
+	
+	public HBox getNotificationBox() {
+        HBox notificationBox = new HBox();
+        notificationBox.setSpacing(30);
+        
+        notificationBox.getChildren().add(new Text(message));
+        notificationBox.getChildren().add(new ImageView(iconImage));
+        return notificationBox;
+    }
 }

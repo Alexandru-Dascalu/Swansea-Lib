@@ -1,8 +1,10 @@
 package model;
 
+import javafx.scene.layout.HBox;
+
 public abstract class Notification {
 	
-	private final String message;
+	protected final String message;
 	private boolean isRead;
 	
 	public Notification(String message, boolean isRead) {
@@ -27,4 +29,6 @@ public abstract class Notification {
 	}
 	
 	public abstract String getStyle();
+	
+	public abstract HBox getNotificationBox();
 }

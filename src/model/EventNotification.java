@@ -7,6 +7,10 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 import application.AlertBox;
+import javafx.scene.control.Label;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.HBox;
+import javafx.scene.text.Text;
 
 public class EventNotification extends Notification {
 	
@@ -135,4 +139,14 @@ public class EventNotification extends Notification {
 	public String getStyle() {
 		return "-fx-background-color: deepskyblue;";
 	}
+	
+	public HBox getNotificationBox() {
+        HBox notificationBox = new HBox();
+        notificationBox.setSpacing(30);
+        
+        notificationBox.getChildren().add(new Text(message));
+        notificationBox.getChildren().add(new Label("Event date:"));
+        notificationBox.getChildren().add(new Text(date));
+        return notificationBox;
+    }
 }

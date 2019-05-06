@@ -7,6 +7,9 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.HBox;
+import javafx.scene.text.Text;
 
 public class ResourceNotification extends Notification {
 	
@@ -133,6 +136,15 @@ ArrayList<String> notificationUsers = new ArrayList<>();
 	
 	public String getStyle() {
 		return "-fx-background-color: gold;";
+	}
+	
+	public HBox getNotificationBox() {
+	    HBox notificationBox = new HBox();
+	    notificationBox.setSpacing(30);
+	    notificationBox.getChildren().add(new ImageView(resourceImage));
+	    notificationBox.getChildren().add(new Text(message));
+	    notificationBox.setStyle(getStyle());
+	    return notificationBox;
 	}
 	
 	private static String getResourceType(Resource resource) {

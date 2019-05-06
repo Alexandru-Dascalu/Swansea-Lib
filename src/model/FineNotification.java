@@ -7,7 +7,11 @@ import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
+import javafx.scene.control.Label;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.HBox;
+import javafx.scene.text.Text;
 
 public class FineNotification extends Notification {
 	
@@ -93,4 +97,15 @@ public class FineNotification extends Notification {
 	public String getStyle() {
 		return "-fx-background-color: firebrick;";
 	}
+	
+	public HBox getNotificationBox() {
+        HBox notificationBox = new HBox();
+        notificationBox.setSpacing(30);
+        notificationBox.getChildren().add(new ImageView(image));
+        notificationBox.getChildren().add(new Text(message));
+        notificationBox.getChildren().add(new Label("Fine date:"));
+        notificationBox.getChildren().add(new Text(date));
+        notificationBox.setStyle(getStyle());
+        return notificationBox;
+    }
 }
