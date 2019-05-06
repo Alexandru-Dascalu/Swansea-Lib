@@ -30,28 +30,61 @@ public class FineNotification extends Notification {
 	    return className;
 	}
 	
-    public static void makeNotification(Copy copy) {
+    public static void makeNotification(Copy copy, User user) {
+        int daysUntilDue = copy.getDaysUntilDue();
+        String fineMessage = getFineMsg(copy.getResource(), daysUntilDue);
+        
+        SimpleDateFormat dateFormatter = new SimpleDateFormat("dd/MM/yyyy");
+        String fineDate = dateFormatter.format(copy.getDueDate());
+        
         try {
             Connection dbConnection = DBHelper.getConnection();
-            PreparedStatement insertStatement = dbConnection.prepareStatement(
-                "INSERT INTO notification (message, image, date) VALUES (?, ?, ?)");
+            PreparedStatement selectStatement = dbConnection.prepareStatement("" +
+                "SELECT * FROM notification WHERE message = ? AND date = ?");
+            selectStatement.setString(1, fineMessage);
+            selectStatement.setString(2, fineDate);
+            ResultSet existingNotification = selectStatement.executeQuery();
             
-            int daysUntilDue = copy.getDaysUntilDue();
-            SimpleDateFormat dateFormatter = new SimpleDateFormat("dd/MM/yyyy");
-            
-            insertStatement.setString(1, getFineMsg(copy.getResource(), daysUntilDue));
-            insertStatement.setString(2, copy.getResource().getThumbnail().impl_getUrl());
-            insertStatement.setString(3, dateFormatter.format(copy.getDueDate()));
-            insertStatement.executeUpdate();
-            
-            int notificationID = insertStatement.getGeneratedKeys().getInt(1);
-            insertStatement = dbConnection.prepareStatement(
-                "INSERT INTO userNotifications VALUES (?, ?, false)");
+            if (!existingNotification.next()) {
+                PreparedStatement insertStatement = dbConnection.prepareStatement(
+                    "INSERT INTO notification (message, image, date) VALUES (?, ?, ?)");
 
-            for (String username : getFineNotificationUsers()) {
-                insertStatement.setInt(1, notificationID);
-                insertStatement.setString(2, username);
+                insertStatement.setString(1, getFineMsg(copy.getResource(), 
+                    daysUntilDue));
+                insertStatement.setString(2, copy.getResource().getThumbnail().
+                    impl_getUrl());
+                insertStatement.setString(3, dateFormatter.format(
+                    copy.getDueDate()));
                 insertStatement.executeUpdate();
+
+                int notificationID = insertStatement.getGeneratedKeys().getInt(1);
+                insertStatement = dbConnection.prepareStatement(
+                    "INSERT INTO userNotifications VALUES (?, ?, false)");
+
+                insertStatement.setInt(1, notificationID);
+                insertStatement.setString(2, user.getUsername());
+                insertStatement.executeUpdate();
+            } else {
+                int notificationID = existingNotification.getInt(1);
+                selectStatement = dbConnection.prepareStatement("SELECT * FROM userNotifications WHERE nID = ? AND username = ?");
+                selectStatement.setInt(1, notificationID);
+                selectStatement.setString(2, user.getUsername());
+                
+                existingNotification = selectStatement.executeQuery();
+                
+                if(!existingNotification.next()) {
+                    PreparedStatement insertStatement = dbConnection.prepareStatement(
+                            "INSERT INTO userNotifications VALUES (?, ?, false)");
+
+                    existingNotification.close();
+                    selectStatement.close();
+                    
+                    while(!existingNotification.isClosed() && !selectStatement.isClosed()) {}
+                    
+                    insertStatement.setInt(1, notificationID);
+                    insertStatement.setString(2, user.getUsername());
+                    insertStatement.executeUpdate();
+                }
             }
         } catch (SQLException e) {
             e.printStackTrace();

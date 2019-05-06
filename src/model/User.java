@@ -254,7 +254,7 @@ public class User extends Person {
                 int daysUntilDue = copy.getDaysUntilDue();
 
                 if (daysUntilDue < 3 && daysUntilDue > -1) {
-                    FineNotification.makeNotification(copy);
+                    FineNotification.makeNotification(copy, this);
                 }
             }
         }
@@ -264,26 +264,6 @@ public class User extends Person {
     	return this.eventsList;
     }
 
-    public ArrayList<Integer> loadUserEvents() throws SQLException {
-    	
-    	try {
-    		Connection dbConnection = DBHelper.getConnection();
-        	Statement stmt = dbConnection.createStatement();
-        	ResultSet rs = stmt.executeQuery("SELECT eID, username FROM userEvents WHERE username = '" +
-        	ScreenManager.getCurrentUser().getUsername() + "'");
-            
-            while(rs.next()) {
-            	eventsList.add(rs.getInt(1));
-            }
-            
-    	}  catch (SQLException e) {
-    		System.out.println("Failed to load user events;");
-            e.printStackTrace();
-    	}
-        return eventsList;
-    }
-
-    
     /**
      * Method that loads the users borrow history.
      * @return The list of all resources whose copies this user has ever borrowed
@@ -382,6 +362,26 @@ public class User extends Person {
     }
     
     
+    public ArrayList<Integer> loadUserEvents() throws SQLException {
+    	
+    	try {
+    		Connection dbConnection = DBHelper.getConnection();
+        	Statement stmt = dbConnection.createStatement();
+        	ResultSet rs = stmt.executeQuery("SELECT eID, username FROM userEvents WHERE username = '" +
+        	ScreenManager.getCurrentUser().getUsername() + "'");
+            
+            while(rs.next()) {
+            	eventsList.add(rs.getInt(1));
+            }
+            
+    	}  catch (SQLException e) {
+    		System.out.println("Failed to load user events;");
+            e.printStackTrace();
+    	}
+        return eventsList;
+    }
+
+
     /**
      * A method that checks if a user has any outstanding fines.
      * @return If they have outstanding fines.
