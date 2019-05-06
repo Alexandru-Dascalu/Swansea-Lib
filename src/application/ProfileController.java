@@ -31,6 +31,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.effect.Glow;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -238,10 +239,13 @@ public class ProfileController {
 	
 	@FXML
 	private Button staffStatsButton;
+
+	@FXML
+	private ImageView notificationBellView;
 	
 	@FXML
-	private Button notificationsButton;
-
+	private StackPane notificationStack;
+	
 	//may remove fixed size resource images
 	//when dealing with window resizing.
 	private final int RES_IMG_WIDTH = 220;
@@ -1424,5 +1428,36 @@ public class ProfileController {
 			e.printStackTrace();
 		}
 	}
-
+	
+	@FXML
+	private void showNotifications() {
+	    FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/" +
+	        "notificationView.fxml"));
+	    
+        Parent notificationsRoot = null;
+        try {
+            notificationsRoot = (Parent) fxmlLoader.load();
+        } catch (IOException e) {
+            e.printStackTrace();
+            System.exit(-1);
+        }
+        
+        Stage notificationWindow = new Stage();
+        notificationWindow.initModality(Modality.APPLICATION_MODAL);
+        notificationWindow.setTitle("Your Notifications");
+        notificationWindow.setScene(new Scene(notificationsRoot));
+        notificationWindow.show();
+	}
+	
+	@FXML
+	private void setNotificationBellNormal() {
+	    notificationBellView.setEffect(null);
+	}
+	
+	@FXML
+	private void setNotificationBellHover() {
+	    Glow notBellGlow = new Glow();
+	    notBellGlow.setLevel(1);
+        notificationBellView.setEffect(notBellGlow);
+    }
 }

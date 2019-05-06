@@ -15,13 +15,13 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.control.TitledPane?>
 <?import javafx.scene.control.ToolBar?>
-<?import javafx.scene.effect.GaussianBlur?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
@@ -395,11 +395,15 @@
                         <Font size="15.0" />
                      </font>
                   </Label>
-                  <Button fx:id="notificationsButton" alignment="CENTER" contentDisplay="GRAPHIC_ONLY" layoutY="16.0" mnemonicParsing="false" prefHeight="38.0" prefWidth="41.0" AnchorPane.bottomAnchor="16.0" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="16.0">
-                     <effect>
-                        <GaussianBlur />
-                     </effect>
-                  </Button>
+                  <StackPane fx:id="notificationStack" layoutX="14.0" layoutY="3.0" prefHeight="64.0" prefWidth="64.0">
+                     <children>
+                        <ImageView fx:id="notificationBellView" fitHeight="60.0" fitWidth="60.0" onMouseClicked="#showNotifications" onMouseEntered="#setNotificationBellHover" onMouseExited="#setNotificationBellNormal" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../graphics/notification%20bell.png" />
+                           </image>
+                        </ImageView>
+                     </children>
+                  </StackPane>
                </children>
             </AnchorPane>
          </children>
