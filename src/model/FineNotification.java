@@ -37,80 +37,91 @@ public class FineNotification extends Notification {
         SimpleDateFormat dateFormatter = new SimpleDateFormat("dd/MM/yyyy");
         String fineDate = dateFormatter.format(copy.getDueDate());
         
-        try {
-            Connection dbConnection = DBHelper.getConnection();
-            PreparedStatement selectStatement = dbConnection.prepareStatement("" +
-                "SELECT * FROM notification WHERE message = ? AND date = ?");
-            selectStatement.setString(1, fineMessage);
-            selectStatement.setString(2, fineDate);
-            ResultSet existingNotification = selectStatement.executeQuery();
-            
-            if (!existingNotification.next()) {
+        int existingNotificationID = getExistingNotificationID(copy, fineMessage, fineDate);
+        
+        if(existingNotificationID == -1) {
+            try {
+                Connection dbConnection = DBHelper.getConnection();
                 PreparedStatement insertStatement = dbConnection.prepareStatement(
-                    "INSERT INTO notification (message, image, date) VALUES (?, ?, ?)");
+                        "INSERT INTO notification (message, image, date) VALUES (?, ?, ?)");
 
-                insertStatement.setString(1, getFineMsg(copy.getResource(), 
+                insertStatement.setString(1, getFineMsg(copy.getResource(),
                     daysUntilDue));
-                insertStatement.setString(2, copy.getResource().getThumbnail().
-                    impl_getUrl());
-                insertStatement.setString(3, dateFormatter.format(
-                    copy.getDueDate()));
+                //insertStatement.setString(2, copy.getResource().getThumbnail().impl_getUrl());
+                insertStatement.setString(3, dateFormatter.format(copy.getDueDate()));
                 insertStatement.executeUpdate();
 
-                int notificationID = insertStatement.getGeneratedKeys().getInt(1);
+                /*int notificationID = insertStatement.getGeneratedKeys().getInt(1);
                 insertStatement = dbConnection.prepareStatement(
                     "INSERT INTO userNotifications VALUES (?, ?, false)");
 
                 insertStatement.setInt(1, notificationID);
                 insertStatement.setString(2, user.getUsername());
-                insertStatement.executeUpdate();
-            } else {
-                int notificationID = existingNotification.getInt(1);
-                selectStatement = dbConnection.prepareStatement("SELECT * FROM userNotifications WHERE nID = ? AND username = ?");
-                selectStatement.setInt(1, notificationID);
-                selectStatement.setString(2, user.getUsername());
-                
-                existingNotification = selectStatement.executeQuery();
-                
-                if(!existingNotification.next()) {
+                insertStatement.executeUpdate();*/
+            } catch (SQLException e) {
+                e.printStackTrace();
+                System.exit(-1);
+            }
+        } else {
+            if(!existUserNotification(existingNotificationID, user.getUsername())) {
+                try {
+                    Connection dbConnection = DBHelper.getConnection();
                     PreparedStatement insertStatement = dbConnection.prepareStatement(
                             "INSERT INTO userNotifications VALUES (?, ?, false)");
-
-                    existingNotification.close();
-                    selectStatement.close();
                     
-                    while(!existingNotification.isClosed() && !selectStatement.isClosed()) {}
-                    
-                    insertStatement.setInt(1, notificationID);
+                    insertStatement.setInt(1, existingNotificationID);
                     insertStatement.setString(2, user.getUsername());
                     insertStatement.executeUpdate();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                    //System.exit(-1);
                 }
             }
+        }
+    }
+    
+    private static int getExistingNotificationID(Copy copy, String fineMessage, String fineDate) {
+        try {
+            Connection dbConnection = DBHelper.getConnection();
+            PreparedStatement selectStatement = dbConnection.prepareStatement("" +
+                    "SELECT * FROM notification WHERE message = ? AND date = ?");
+            selectStatement.setString(1, fineMessage);
+            selectStatement.setString(2, fineDate);
+            ResultSet existingNotification = selectStatement.executeQuery();
+            
+            int id;
+            if(existingNotification.next()) {
+                 id = existingNotification.getInt(1);
+            } else {
+                id = -1;
+            }
+            
+            existingNotification.close();
+            selectStatement.close();
+            dbConnection.close();
+            return id;
         } catch (SQLException e) {
             e.printStackTrace();
             System.exit(-1);
+            return Integer.MIN_VALUE;
         }
     }
-	
-    public static ArrayList<String> getFineNotificationUsers() {
-        ArrayList<String> notificationUsers = new ArrayList<>();
-        
+    
+    private static boolean existUserNotification(int notificationID, String userName) {
         try {
             Connection dbConnection = DBHelper.getConnection();
-            PreparedStatement insertStatement = dbConnection
-                .prepareStatement("SELECT username FROM users");
-            ResultSet usernames = insertStatement.executeQuery();
-
-            while (usernames.next()) {
-                notificationUsers.add(usernames.getString(1));
-            }
-        }
-        catch (SQLException e) {
+            PreparedStatement selectStatement = dbConnection.prepareStatement(
+                "SELECT * FROM userNotifications WHERE nID = ? AND username = ?");
+            selectStatement.setInt(1, notificationID);
+            selectStatement.setString(2, userName);
+            
+            ResultSet existingNotification = selectStatement.executeQuery();
+            return existingNotification.next();
+        } catch (SQLException e) {
             e.printStackTrace();
             System.exit(-1);
+            return false;
         }
-        
-        return notificationUsers;
     }
     
 	public FineNotification(String message, boolean isRead, String date, String imagePath) {

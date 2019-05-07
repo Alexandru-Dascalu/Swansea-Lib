@@ -252,8 +252,8 @@ CREATE TABLE IF NOT EXISTS `copies` (
 	FOREIGN KEY(`rID`) REFERENCES `resource`(`rID`)
 );
 
-INSERT INTO `copies` VALUES (1,1,'Manny',8,'09/12/2018','17/12/2018',NULL);
-INSERT INTO `copies` VALUES (3,1,'Alexandru',7,'22/04/2019','29/04/2019','06/05/2019');
+INSERT INTO `copies` VALUES (1,1,'Manny',8,'09/12/2018','17/12/2018','08/05/2019');
+INSERT INTO `copies` VALUES (3,1,'Alexandru',7,'22/04/2019','29/04/2019','08/05/2019');
 INSERT INTO `copies` VALUES (4,1,NULL,7,NULL,NULL,NULL);
 INSERT INTO `copies` VALUES (5,1,NULL,7,NULL,NULL,NULL);
 
@@ -445,6 +445,8 @@ CREATE TABLE `notification` (
 	`date`	DATETIME
 );
 
+insert into `notification` values (1, "new resource nigga", "/graphics/Avengers Infinity War.jpg", NULL);
+
 DROP TABLE IF EXISTS `userNotifications`;
 CREATE TABLE `userNotifications` (
 	`nID`	INTEGER ,
@@ -454,5 +456,7 @@ CREATE TABLE `userNotifications` (
 	FOREIGN KEY (nID) REFERENCES `notification` (`id`) ON UPDATE CASCADE ON DELETE CASCADE,
 	FOREIGN KEY (username) REFERENCES `users` (`username`) ON UPDATE CASCADE ON DELETE CASCADE
 );
+
+insert into `userNotifications` values (1,'Alexandru',false);
 
 COMMIT;

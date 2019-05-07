@@ -135,7 +135,7 @@ ArrayList<String> notificationUsers = new ArrayList<>();
 	}
 	
 	public String getStyle() {
-		return "-fx-background-color: gold;";
+		return "-fx-background-color: linear-gradient(#ff7f50, gold);";
 	}
 	
 	public HBox getNotificationBox() {
