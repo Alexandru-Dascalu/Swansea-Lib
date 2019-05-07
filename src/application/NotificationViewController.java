@@ -3,6 +3,8 @@ package application;
 import java.util.List;
 
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import model.Notification;
 import model.User;
@@ -10,10 +12,16 @@ import model.User;
 public class NotificationViewController {
     
     @FXML
+    private BorderPane newNottificationPane;
+    
+    @FXML
     private VBox newNotificationsBox;
     
     @FXML
     private VBox pastNotificationsBox;
+    
+    @FXML
+    private Button markReadBtn;
     
     @FXML
     public void initialize() {
