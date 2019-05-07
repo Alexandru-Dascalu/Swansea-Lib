@@ -134,7 +134,7 @@ public class FineNotification extends Notification {
 	public FineNotification(String message, boolean isRead, String date, String imagePath) {
 		super(message, isRead);
 		this.date = date;
-		image = new Image(imagePath, 30, 50, true, true);
+		image = new Image(imagePath, IMAGE_WIDTH, IMAGE_HEIGHT, true, false);
 	}
 	
 	public String getDate() {
@@ -152,7 +152,8 @@ public class FineNotification extends Notification {
 	public HBox getNotificationBox() {
         HBox notificationBox = super.getNotificationBox();
         notificationBox.getChildren().add(new ImageView(image));
-        notificationBox.getChildren().add(new Text(message));
+        
+        notificationBox.getChildren().add(getMessageTextElement());
         notificationBox.getChildren().add(new Label("Fine date:"));
         notificationBox.getChildren().add(new Text(date));
         return notificationBox;

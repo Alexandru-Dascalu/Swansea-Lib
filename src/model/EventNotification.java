@@ -143,7 +143,7 @@ public class EventNotification extends Notification {
 	public HBox getNotificationBox() {
 	    HBox notificationBox = super.getNotificationBox();
         
-        notificationBox.getChildren().add(new Text(message));
+        notificationBox.getChildren().add(getMessageTextElement());
         notificationBox.getChildren().add(new Label("Event date:"));
         notificationBox.getChildren().add(new Text(date));
         return notificationBox;

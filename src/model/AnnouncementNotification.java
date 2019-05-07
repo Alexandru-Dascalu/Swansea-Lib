@@ -37,7 +37,7 @@ public class AnnouncementNotification extends Notification {
 	public HBox getNotificationBox() {
 	    HBox notificationBox = super.getNotificationBox();
         
-        notificationBox.getChildren().add(new Text(message));
+        notificationBox.getChildren().add(getMessageTextElement());
         notificationBox.getChildren().add(new ImageView(iconImage));
         return notificationBox;
     }

@@ -127,7 +127,7 @@ ArrayList<String> notificationUsers = new ArrayList<>();
 	
 	public ResourceNotification(String message, boolean isRead, String imagePath) {
 		super(message, isRead);
-		this.resourceImage = new Image(imagePath, 30, 50, true, true);
+		this.resourceImage = new Image(imagePath, IMAGE_WIDTH, IMAGE_HEIGHT, true, true);
 	}
 	
 	public Image getImage() {
@@ -141,7 +141,7 @@ ArrayList<String> notificationUsers = new ArrayList<>();
 	public HBox getNotificationBox() {
 	    HBox notificationBox = super.getNotificationBox();
 	    notificationBox.getChildren().add(new ImageView(resourceImage));
-	    notificationBox.getChildren().add(new Text(message));
+	    notificationBox.getChildren().add(getMessageTextElement());
 	    return notificationBox;
 	}
 	

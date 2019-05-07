@@ -1,12 +1,14 @@
 package model;
 
-import javafx.scene.control.Label;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.text.Text;
 
 public abstract class Notification {
 	
+    protected static final int IMAGE_HEIGHT = 150;
+    protected static final int IMAGE_WIDTH = 90;
+    private static final int TEXT_WRAP_WIDTH = 400;
+    
 	protected final String message;
 	private boolean isRead;
 	
@@ -39,5 +41,12 @@ public abstract class Notification {
         notificationBox.setStyle(getStyle());
         
         return notificationBox;
+	}
+	
+	protected Text getMessageTextElement() {
+	    Text messageText = new Text(message);
+	    messageText.setWrappingWidth(TEXT_WRAP_WIDTH);
+	    
+	    return messageText;
 	}
 }
