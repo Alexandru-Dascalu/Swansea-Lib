@@ -142,7 +142,11 @@ public class ResourceNotification extends Notification {
 	}
 	
 	public String getStyle() {
-		return "-fx-background-color: linear-gradient(#ff7f50, gold);";
+		return "-fx-background-color: linear-gradient(gold, #a07000);\r\n" +
+		       "-fx-padding: 8;\r\n" +
+		       "-fx-border-color: #996a00;\r\n" + 
+		       "-fx-border-width: 5;\r\n" +
+		       "-fx-border-style: solid;";
 	}
 	
 	public HBox getNotificationBox() {
