@@ -277,10 +277,10 @@ public class ResourceController {
 	 * @param manu of laptop.
 	 * @param model of laptop.
 	 * @param OS of laptop.
-	 * @param img of laptop.
+	 * @param thumbnailPath of laptop.
 	 */
 	private void updateLaptop(String title,String year,String manu,String model,
-		String OS, String img) {
+		String OS, String thumbnailPath) {
 		//Checks if the year is a number
 		boolean goAhead = true;
 		Image image = null;
@@ -292,8 +292,8 @@ public class ResourceController {
 		}
 		
 		try {
-			if(!img.equals("")) {
-			image = new Image(new File(img).toURI().toString());
+			if(!thumbnailPath.equals("")) {
+			image = new Image(new File(thumbnailPath).toURI().toString());
 			}
 		}catch (Exception e) {
 			goAhead = false;
@@ -302,10 +302,11 @@ public class ResourceController {
 		
 		if(goAhead) {
 			Laptop laptop = (Laptop) ScreenManager.getCurrentResource();
-			if(!img.equals("")) {
+			if(!thumbnailPath.equals("")) {
 				laptop.setThumbnail(image);
-				laptop.setThumbnailDatabase(img);
-				}
+				laptop.setThumbnailDatabase(thumbnailPath);
+				laptop.setThumnailPath(thumbnailPath);
+			}
 			laptop.setTitle(title);
 			laptop.setYear(Integer.parseInt(year));
 			laptop.setManufacturer(manu);
@@ -325,11 +326,11 @@ public class ResourceController {
 	 * @param genre of the game.
 	 * @param rating of the game.
 	 * @param MultiplayerSupport of the game.
-	 * @param img of the game.
+	 * @param thumbnailPath of the game.
 	 */
 	private void updateGame(String title, String year,
 			String publisher, String genre, String rating, String multiplayer, 
-			String img){
+			String thumbnailPath){
 		//Checks if the year is a number
 		boolean goAhead = true;
 		Image image = null;
@@ -341,8 +342,8 @@ public class ResourceController {
 		}
 		
 		try {
-			if(!img.equals("")) {
-				image = new Image(new File(img).toURI().toString());
+			if(!thumbnailPath.equals("")) {
+				image = new Image(new File(thumbnailPath).toURI().toString());
 			}
 		}catch (Exception e) {
 			goAhead = false;
@@ -353,10 +354,11 @@ public class ResourceController {
 		//If the year is a number, update the book attributes
 		if (goAhead) {
 			Game resource = (Game) ScreenManager.getCurrentResource();
-			if(!img.equals("")) {
+			if(!thumbnailPath.equals("")) {
 				resource.setThumbnail(image);
-				resource.setThumbnailDatabase(img);
-				}
+				resource.setThumbnailDatabase(thumbnailPath);
+				resource.setThumnailPath(thumbnailPath);
+			}
 			resource.setTitle(title);
 			resource.setYear(Integer.parseInt(year));
 			resource.setPublisher(publisher);
@@ -378,11 +380,11 @@ public class ResourceController {
 	 * @param genre of the book.
 	 * @param ISBN of the book.
 	 * @param language of the book.
-	 * @param img of the book.
+	 * @param thumnbnailPath of the book.
 	 */
 	private void updateBook(String title, String year, String author,
 			String publish, String genre, String ISBN, String language, 
-			String img){
+			String thumnbnailPath){
 		//Checks if the year is a number
 		boolean goAhead = true;
 		Image image = null;
@@ -394,8 +396,8 @@ public class ResourceController {
 		}
 		
 		try {
-			if(!img.equals("")) {
-				image = new Image(new File(img).toURI().toString());
+			if(!thumnbnailPath.equals("")) {
+				image = new Image(new File(thumnbnailPath).toURI().toString());
 			}
 		}catch (Exception e) {
 			goAhead = false;
@@ -406,10 +408,11 @@ public class ResourceController {
 		//If the year is a number, update the book attributes
 		if (goAhead) {
 			Book resource = (Book) ScreenManager.getCurrentResource();
-			if(!img.equals("")) {
+			if(!thumnbnailPath.equals("")) {
 				resource.setThumbnail(image);
-				resource.setThumbnailDatabase(img);
-				}
+				resource.setThumbnailDatabase(thumnbnailPath);
+			}
+			
 			resource.setTitle(title);
 			resource.setYear(Integer.parseInt(year));
 			resource.setAuthor(author);
@@ -417,6 +420,7 @@ public class ResourceController {
 			resource.setGenre(genre);
 			resource.setISBN(ISBN);
 			resource.setLanguage(language);
+			resource.setThumnailPath(thumnbnailPath);
 
 			AlertBox.showInfoAlert("Updated!");
 		}
@@ -431,10 +435,10 @@ public class ResourceController {
 	 * @param runtime of dvd.
 	 * @param language of dvd.
 	 * @param subtitles of dvd.
-	 * @param img of dvd.
+	 * @param thumbnailPath of dvd.
 	 */
 	private void updateDVD(String title, String year, String director, 
-			String runtime, String language, String subtitles, String img){
+			String runtime, String language, String subtitles, String thumbnailPath){
 		boolean goAhead = true;
 		Image image = null;
 		try {
@@ -446,8 +450,8 @@ public class ResourceController {
 		}
 		
 		try {
-			if(!img.equals("")) {
-				image = new Image(new File(img).toURI().toString());
+			if(!thumbnailPath.equals("")) {
+				image = new Image(new File(thumbnailPath).toURI().toString());
 			}
 		}catch (Exception e) {
 			goAhead = false;
@@ -467,10 +471,11 @@ public class ResourceController {
 				resource.addSubtitle(sub);
 			}
 			
-			if(!img.equals("")) {
+			if(!thumbnailPath.equals("")) {
 				resource.setThumbnail(image);
-				resource.setThumbnailDatabase(img);
-				}
+				resource.setThumbnailDatabase(thumbnailPath);
+				resource.setThumnailPath(thumbnailPath);
+			}
 			resource.setRuntime(Integer.parseInt(runtime));
 			
 			AlertBox.showInfoAlert("Updated!");

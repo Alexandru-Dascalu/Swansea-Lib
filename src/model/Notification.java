@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import application.AlertBox;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.layout.HBox;
@@ -122,7 +123,7 @@ public abstract class Notification {
         notificationBox.setSpacing(20);
         notificationBox.setStyle(getStyle());
         notificationBox.setAlignment(Pos.CENTER_LEFT);
-        
+        notificationBox.setPadding(new Insets(0, 0, 0, 20));
         return notificationBox;
 	}
 	

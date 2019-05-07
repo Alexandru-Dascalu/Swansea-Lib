@@ -372,6 +372,14 @@ public abstract class Resource {
     public String getThumbnailPath() {
         return thumbnailPath;
     }
+    
+    /**
+     * Sets the path to the thumbnail of this resource to a new value.
+     * @param path new path to the thumbnail of the resource.
+     */
+    public void setThumnailPath(String path) {
+        thumbnailPath = path;
+    }
 
     /**
      * Sets the thumbnail to a new image.

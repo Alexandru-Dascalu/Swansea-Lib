@@ -111,7 +111,7 @@ public class ResourceNotification extends Notification {
     }
     
     public static ArrayList<String> getApprovalNotificationUsers() {
-ArrayList<String> notificationUsers = new ArrayList<>();
+        ArrayList<String> notificationUsers = new ArrayList<>();
         
         Connection dbConnection;
         try {
