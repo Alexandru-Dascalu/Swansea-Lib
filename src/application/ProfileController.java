@@ -685,7 +685,7 @@ public class ProfileController {
 
         if(currentPerson instanceof User) {
             User currentUser = (User) currentPerson;
-            //currentUser.checkForNearingEvents();
+            currentUser.checkForNearingEvents();
             currentUser.checkImminentFines();
             currentUser.loadNotifications();
         } else {

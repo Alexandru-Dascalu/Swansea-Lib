@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
+import application.AlertBox;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -30,57 +31,56 @@ public class FineNotification extends Notification {
 	    return className;
 	}
 	
-    public static void makeNotification(Copy copy, User user) {
+    public static int makeNotification(Copy copy, User user) {
         int daysUntilDue = copy.getDaysUntilDue();
-        String fineMessage = getFineMsg(copy.getResource(), daysUntilDue);
-        
         SimpleDateFormat dateFormatter = new SimpleDateFormat("dd/MM/yyyy");
-        String fineDate = dateFormatter.format(copy.getDueDate());
         
-        int existingNotificationID = getExistingNotificationID(copy, fineMessage, fineDate);
-        
-        if(existingNotificationID == -1) {
-            try {
-                Connection dbConnection = DBHelper.getConnection();
-                PreparedStatement insertStatement = dbConnection.prepareStatement(
-                        "INSERT INTO notification (message, image, date) VALUES (?, ?, ?)");
+        try {
+            Connection dbConnection = DBHelper.getConnection();
+            PreparedStatement insertStatement = dbConnection.prepareStatement(
+                "INSERT INTO notification (message, image, date) VALUES (?, ?, ?)");
 
-                insertStatement.setString(1, getFineMsg(copy.getResource(),
-                    daysUntilDue));
-                insertStatement.setString(2, copy.getResource().getThumbnailPath());
-                insertStatement.setString(3, dateFormatter.format(copy.getDueDate()));
-                insertStatement.executeUpdate();
+            insertStatement.setString(1,
+                getFineMsg(copy.getResource(), daysUntilDue));
+            insertStatement.setString(2, copy.getResource().getThumbnailPath());
+            insertStatement.setString(3,
+                dateFormatter.format(copy.getDueDate()));
+            insertStatement.executeUpdate();
 
-                /*int notificationID = insertStatement.getGeneratedKeys().getInt(1);
-                insertStatement = dbConnection.prepareStatement(
-                    "INSERT INTO userNotifications VALUES (?, ?, false)");
-
-                insertStatement.setInt(1, notificationID);
-                insertStatement.setString(2, user.getUsername());
-                insertStatement.executeUpdate();*/
-            } catch (SQLException e) {
-                e.printStackTrace();
-                System.exit(-1);
-            }
-        } else {
-            if(!existUserNotification(existingNotificationID, user.getUsername())) {
-                try {
-                    Connection dbConnection = DBHelper.getConnection();
-                    PreparedStatement insertStatement = dbConnection.prepareStatement(
-                            "INSERT INTO userNotifications VALUES (?, ?, false)");
-                    
-                    insertStatement.setInt(1, existingNotificationID);
-                    insertStatement.setString(2, user.getUsername());
-                    insertStatement.executeUpdate();
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                    //System.exit(-1);
-                }
-            }
+            int notificationID = insertStatement.getGeneratedKeys().getInt(1);
+            insertStatement.close();
+            dbConnection.close();
+            return notificationID;
+        }
+        catch (SQLException e) {
+            e.printStackTrace();
+            System.exit(-1);
+            return -1;
         }
     }
     
-    private static int getExistingNotificationID(Copy copy, String fineMessage, String fineDate) {
+    public static void makeUserNotification(int notificationID, User user) {
+        try {
+            Connection dbConnection = DBHelper.getConnection();
+            PreparedStatement insertStatement = dbConnection.prepareStatement(
+                "INSERT INTO userNotifications VALUES (?, ?, false)");
+            insertStatement.setInt(1, notificationID);
+            insertStatement.setString(2, user.getUsername());
+            
+            insertStatement.executeUpdate();
+            
+            insertStatement.close();
+            dbConnection.close();
+        }
+        catch (SQLException e) {
+            AlertBox.showErrorAlert("Because the SQLite database library we use " +
+                "for this program is a piece of crap, notifications for this user" +
+                " could not be loaded (database locks up for no reason, says it is" +
+                " busy). Close the program and restart it to see your notifications.");
+        }
+    }
+    
+    public static int getExistingNotificationID(Copy copy, String fineMessage, String fineDate) {
         try {
             Connection dbConnection = DBHelper.getConnection();
             PreparedStatement selectStatement = dbConnection.prepareStatement("" +
@@ -107,7 +107,7 @@ public class FineNotification extends Notification {
         }
     }
     
-    private static boolean existUserNotification(int notificationID, String userName) {
+    public static boolean existUserNotification(int notificationID, String userName) {
         try {
             Connection dbConnection = DBHelper.getConnection();
             PreparedStatement selectStatement = dbConnection.prepareStatement(
@@ -116,12 +116,18 @@ public class FineNotification extends Notification {
             selectStatement.setString(2, userName);
             
             ResultSet existingNotification = selectStatement.executeQuery();
-            return existingNotification.next();
+            boolean alreadyExists =  existingNotification.next();
+            
+            existingNotification.close();
+            selectStatement.close();
+            dbConnection.close();
+            
+            return alreadyExists;
         } catch (SQLException e) {
             e.printStackTrace();
             System.exit(-1);
             return false;
-        }
+        } 
     }
     
 	public FineNotification(String message, boolean isRead, String date, String imagePath) {

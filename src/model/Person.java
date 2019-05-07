@@ -254,6 +254,8 @@ public abstract class Person {
                     String balanceResult = rs.getString(8);
                     String stamp = rs.getString(9);
 
+                    rs.close();
+                    sqlStatement.close();
                     dbConnection.close();
                     return new User(usernameResult, firstnameResult, lastnameResult, telephoneResult, addressResult,
                         postcodeResult, pathResult, Double.parseDouble(balanceResult),stamp);
@@ -262,13 +264,9 @@ public abstract class Person {
             else {
                 dbConnection.close();
             }
-
-            // Catch most other errors!
         }
         catch (SQLException e) {
-        	System.out.println("\nCaught SQL Error in Person.java:");
-            System.out.println(e);
-            System.out.println("\n");
+        	e.printStackTrace();
         }
         // By default return null.
         return null;
@@ -289,10 +287,12 @@ public abstract class Person {
            sqlStatement.setString(1,stamp);
            sqlStatement.setString(2, getUsername());
            sqlStatement.executeUpdate();
+           
+           sqlStatement.close();
            connectionToDb.close();
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
+			System.exit(-1);
 		}
     }
     

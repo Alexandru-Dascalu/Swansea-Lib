@@ -5,6 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
@@ -254,7 +255,19 @@ public class User extends Person {
                 int daysUntilDue = copy.getDaysUntilDue();
 
                 if (daysUntilDue < 3 && daysUntilDue > -1) {
-                    FineNotification.makeNotification(copy, this);
+                    String fineMessage = FineNotification.getFineMsg(copy.getResource(), daysUntilDue);
+                    SimpleDateFormat dateFormatter = new SimpleDateFormat("dd/MM/yyyy");
+                    String fineDate = dateFormatter.format(copy.getDueDate());
+                    
+                    int notificationID = FineNotification.getExistingNotificationID(copy, fineMessage, fineDate);
+                    
+                    if(notificationID == -1) {
+                        notificationID = FineNotification.makeNotification(copy, this);
+                    }
+                    
+                    if(!FineNotification.existUserNotification(notificationID, username)) {
+                        FineNotification.makeUserNotification(notificationID, this);
+                    }
                 }
             }
         }
