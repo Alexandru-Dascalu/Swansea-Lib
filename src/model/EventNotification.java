@@ -52,13 +52,16 @@ public class EventNotification extends Notification {
                 insertStatement.setString(2, username);
                 insertStatement.executeUpdate();
             }
+            
+            insertStatement.close();
+            dbConnection.close();
         } catch (SQLException e) {
             e.printStackTrace();
             System.exit(-1);
         }
 	}
 	
-	public static void makeNearingEventNotification(Event event) {
+	public static int makeNearingEventNotification(Event event) {
 	    try {
             Connection dbConnection = DBHelper.getConnection();
             PreparedStatement insertStatement = dbConnection.prepareStatement(
@@ -70,19 +73,87 @@ public class EventNotification extends Notification {
             insertStatement.executeUpdate();
             
             int notificationID = insertStatement.getGeneratedKeys().getInt(1);
-            insertStatement = dbConnection.prepareStatement(
-                "INSERT INTO userNotifications VALUES (?, ?, false)");
-
-            for (String username : getNearingNotificationUsers()) {
-                insertStatement.setInt(1, notificationID);
-                insertStatement.setString(2, username);
-                insertStatement.executeUpdate();
-            }
+            insertStatement.close();
+            dbConnection.close();
+            return notificationID;
         } catch (SQLException e) {
             e.printStackTrace();
             System.exit(-1);
+            return -1;
         }
 	}
+	
+	public static void makeNearingUserNotification(int notificationID, User user) {
+        try {
+            Connection dbConnection = DBHelper.getConnection();
+            PreparedStatement insertStatement = dbConnection.prepareStatement(
+                "INSERT INTO userNotifications VALUES (?, ?, false)");
+            insertStatement.setInt(1, notificationID);
+            insertStatement.setString(2, user.getUsername());
+            
+            insertStatement.executeUpdate();
+            
+            insertStatement.close();
+            dbConnection.close();
+        }
+        catch (SQLException e) {
+            e.printStackTrace();
+            AlertBox.showErrorAlert("Because the SQLite database library we use " +
+                "for this program is a piece of fucking garbage, notifications for this user" +
+                " could not be loaded (database locks up for no reason, says it is" +
+                " busy). Close the program and restart it to see your notifications.");
+        }
+    }
+	
+	public static int getExistingNotificationID(String fineMessage, String fineDate) {
+        try {
+            Connection dbConnection = DBHelper.getConnection();
+            PreparedStatement selectStatement = dbConnection.prepareStatement("" +
+                    "SELECT * FROM notification WHERE message = ? AND date = ?");
+            selectStatement.setString(1, fineMessage);
+            selectStatement.setString(2, fineDate);
+            ResultSet existingNotification = selectStatement.executeQuery();
+            
+            int id;
+            if(existingNotification.next()) {
+                 id = existingNotification.getInt(1);
+            } else {
+                id = -1;
+            }
+            
+            existingNotification.close();
+            selectStatement.close();
+            dbConnection.close();
+            return id;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            System.exit(-1);
+            return Integer.MIN_VALUE;
+        }
+    }
+	
+	public static boolean existUserNotification(int notificationID, String userName) {
+        try {
+            Connection dbConnection = DBHelper.getConnection();
+            PreparedStatement selectStatement = dbConnection.prepareStatement(
+                "SELECT * FROM userNotifications WHERE nID = ? AND username = ?");
+            selectStatement.setInt(1, notificationID);
+            selectStatement.setString(2, userName);
+            
+            ResultSet existingNotification = selectStatement.executeQuery();
+            boolean alreadyExists =  existingNotification.next();
+            
+            existingNotification.close();
+            selectStatement.close();
+            dbConnection.close();
+            
+            return alreadyExists;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            System.exit(-1);
+            return false;
+        } 
+    }
 	
 	public static ArrayList<String> getNewNotificationUsers() {
         ArrayList<String> notificationUsers = new ArrayList<>();

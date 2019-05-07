@@ -82,7 +82,7 @@ public class FineNotification extends Notification {
         }
     }
     
-    public static int getExistingNotificationID(Copy copy, String fineMessage, String fineDate) {
+    public static int getExistingNotificationID(String fineMessage, String fineDate) {
         try {
             Connection dbConnection = DBHelper.getConnection();
             PreparedStatement selectStatement = dbConnection.prepareStatement("" +

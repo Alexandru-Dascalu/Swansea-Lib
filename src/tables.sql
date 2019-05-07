@@ -219,6 +219,7 @@ create table if not exists `userEvents` (
 	foreign key (username) references `users`(`username`) ON UPDATE CASCADE ON DELETE CASCADE
 );
 
+insert into `userEvents` values (2,'Alexandru');
 
 INSERT INTO `subtitles` VALUES (4,'romanian');
 INSERT INTO `subtitles` VALUES (4,'greek');

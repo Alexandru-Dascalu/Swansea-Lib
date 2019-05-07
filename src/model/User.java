@@ -239,8 +239,18 @@ public class User extends Person {
             AlertBox.showErrorAlert(e.getMessage());
         }
         
-        for(Event e: nearEvents) {
-            EventNotification.makeNearingEventNotification(e);
+        for(Event event: nearEvents) {
+            String eventMessage = EventNotification.getNearingEventMsg(event);
+            String eventDate = event.getDateTime();
+            
+            int notificationID = EventNotification.getExistingNotificationID(eventMessage, eventDate);
+            if(notificationID == -1) {
+                notificationID = EventNotification.makeNearingEventNotification(event);
+            }
+            
+            if(!EventNotification.existUserNotification(notificationID, username)) {
+                EventNotification.makeNearingUserNotification(notificationID, this);
+            }
         }
     }
     
@@ -259,7 +269,7 @@ public class User extends Person {
                     SimpleDateFormat dateFormatter = new SimpleDateFormat("dd/MM/yyyy");
                     String fineDate = dateFormatter.format(copy.getDueDate());
                     
-                    int notificationID = FineNotification.getExistingNotificationID(copy, fineMessage, fineDate);
+                    int notificationID = FineNotification.getExistingNotificationID(fineMessage, fineDate);
                     
                     if(notificationID == -1) {
                         notificationID = FineNotification.makeNotification(copy, this);
