@@ -219,8 +219,6 @@ create table if not exists `userEvents` (
 	foreign key (username) references `users`(`username`) ON UPDATE CASCADE ON DELETE CASCADE
 );
 
-insert into `userEvents` values (2,'Alexandru');
-
 INSERT INTO `subtitles` VALUES (4,'romanian');
 INSERT INTO `subtitles` VALUES (4,'greek');
 INSERT INTO `subtitles` VALUES (2,'welsh');
@@ -446,8 +444,6 @@ CREATE TABLE `notification` (
 	`date`	DATETIME
 );
 
-insert into `notification` values (1, "new resource", "/graphics/Avengers Infinity War.jpg", NULL);
-
 DROP TABLE IF EXISTS `userNotifications`;
 CREATE TABLE `userNotifications` (
 	`nID`	INTEGER ,
@@ -457,7 +453,5 @@ CREATE TABLE `userNotifications` (
 	FOREIGN KEY (nID) REFERENCES `notification` (`id`) ON UPDATE CASCADE ON DELETE CASCADE,
 	FOREIGN KEY (username) REFERENCES `users` (`username`) ON UPDATE CASCADE ON DELETE CASCADE
 );
-
-insert into `userNotifications` values (1,'Alexandru',false);
 
 COMMIT;

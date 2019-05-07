@@ -197,9 +197,9 @@ public abstract class Person {
      * @return either a librarian or a user from the database.
      */
     public static Person loadPerson(String userName) {
-        try {
+        try (Connection dbConnection = DBHelper.getConnection()){
             // Declaring necessary variables
-            Connection dbConnection = DBHelper.getConnection();
+            
 
             PreparedStatement sqlStatement = dbConnection
                 .prepareStatement("SELECT COUNT(*) FROM users WHERE users.username = ?");
@@ -231,8 +231,9 @@ public abstract class Person {
                     int staffIDResult = rs.getInt(11);
                     String employmentDateResult = rs.getString(12);
                     String stamp = rs.getString(9);
-
-                    dbConnection.close();
+                    
+                    rs.close();
+                    sqlStatement.close();
                     return new Librarian(usernameResult, firstnameResult, lastnameResult, telephoneResult,
                         addressResult, postcodeResult, pathResult, stamp, employmentDateResult,
                        staffIDResult);
@@ -256,13 +257,12 @@ public abstract class Person {
 
                     rs.close();
                     sqlStatement.close();
-                    dbConnection.close();
                     return new User(usernameResult, firstnameResult, lastnameResult, telephoneResult, addressResult,
                         postcodeResult, pathResult, Double.parseDouble(balanceResult),stamp);
                 }
-            }
-            else {
-                dbConnection.close();
+            } else {
+                rs.close();
+                sqlStatement.close();
             }
         }
         catch (SQLException e) {

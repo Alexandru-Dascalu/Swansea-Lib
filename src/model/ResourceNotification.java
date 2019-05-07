@@ -36,7 +36,7 @@ public class ResourceNotification extends Notification {
             insertStatement.setString(1,
                 ResourceNotification.getNewAdditionMsg(resource));
 
-            insertStatement.setString(2, resource.getThumbnail().impl_getUrl());
+            insertStatement.setString(2, resource.getThumbnailPath());
             insertStatement.executeUpdate();
             
             int notificationID = insertStatement.getGeneratedKeys().getInt(1);

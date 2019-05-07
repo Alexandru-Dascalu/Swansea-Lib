@@ -243,13 +243,13 @@ public class User extends Person {
             String eventMessage = EventNotification.getNearingEventMsg(event);
             String eventDate = event.getDateTime();
             
-            int notificationID = EventNotification.getExistingNotificationID(eventMessage, eventDate);
+            int notificationID = Notification.getExistingNotificationID(eventMessage, eventDate);
             if(notificationID == -1) {
                 notificationID = EventNotification.makeNearingEventNotification(event);
             }
             
-            if(!EventNotification.existUserNotification(notificationID, username)) {
-                EventNotification.makeNearingUserNotification(notificationID, this);
+            if(!Notification.existUserNotification(notificationID, username)) {
+                Notification.makeUserNotification(notificationID, username);
             }
         }
     }
@@ -269,14 +269,14 @@ public class User extends Person {
                     SimpleDateFormat dateFormatter = new SimpleDateFormat("dd/MM/yyyy");
                     String fineDate = dateFormatter.format(copy.getDueDate());
                     
-                    int notificationID = FineNotification.getExistingNotificationID(fineMessage, fineDate);
+                    int notificationID = Notification.getExistingNotificationID(fineMessage, fineDate);
                     
                     if(notificationID == -1) {
                         notificationID = FineNotification.makeNotification(copy, this);
                     }
                     
-                    if(!FineNotification.existUserNotification(notificationID, username)) {
-                        FineNotification.makeUserNotification(notificationID, this);
+                    if(!Notification.existUserNotification(notificationID, username)) {
+                        Notification.makeUserNotification(notificationID, username);
                     }
                 }
             }
