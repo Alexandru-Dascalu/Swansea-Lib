@@ -75,7 +75,7 @@ public class FineNotification extends Notification {
         catch (SQLException e) {
             e.printStackTrace();
             AlertBox.showErrorAlert("Because the SQLite database library we use " +
-                "for this program is a piece of crap, notifications for this user" +
+                "for this program is a piece of fucking garbage, notifications for this user" +
                 " could not be loaded (database locks up for no reason, says it is" +
                 " busy). Close the program and restart it to see your notifications.");
         }
