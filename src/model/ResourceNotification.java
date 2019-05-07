@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import application.AlertBox;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
@@ -50,7 +51,10 @@ public class ResourceNotification extends Notification {
             }
         } catch (SQLException e) {
             e.printStackTrace();
-            System.exit(-1);
+            AlertBox.showErrorAlert("Because the SQLite database library we use " +
+                    " for this program, notifications for this user" +
+                    " could not be loaded (database locks up for no reason, says it is" +
+                    " busy). Close the program and restart it to see your notifications.");
         }
 	}
 	
@@ -77,7 +81,10 @@ public class ResourceNotification extends Notification {
         }
         catch (SQLException e) {
             e.printStackTrace();
-            System.exit(-1);
+            AlertBox.showErrorAlert("Because the SQLite database library we use " +
+                    " for this program, notifications for this user" +
+                    " could not be loaded (database locks up for no reason, says it is" +
+                    " busy). Close the program and restart it to see your notifications.");
         }
 	}
     

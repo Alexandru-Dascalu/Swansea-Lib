@@ -350,13 +350,11 @@ public class User extends Person {
     public void loadNotifications() {
         notifications.clear();
 
-        try {
-            Connection dbConnection = DBHelper.getConnection();
-            PreparedStatement selectStatement = dbConnection.prepareStatement(
+        try (Connection dbConnection = DBHelper.getConnection();
+                PreparedStatement selectStatement = dbConnection.prepareStatement(
                 "SELECT message, image, date, seen FROM notification, " +
-                "userNotifications WHERE nID = id AND username = ?");
-            selectStatement.setString(1, username);
-            ResultSet notificationData = selectStatement.executeQuery();
+                 "userNotifications WHERE nID = id AND username = " + username);
+                ResultSet notificationData = selectStatement.executeQuery()){
 
             while (notificationData.next()) {
                 String message = notificationData.getString(1);
@@ -377,13 +375,11 @@ public class User extends Person {
                     throw new IllegalStateException();
                 }
             }
-            
-            notificationData.close();
-            selectStatement.close();
-            dbConnection.close();
         } catch (SQLException e) {
-            System.out.println(
-                "Failed to load notifications for user " + username + ".");
+            AlertBox.showErrorAlert("Because the SQLite database library we use " +
+                    " for this program, notifications for this user" +
+                    " could not be loaded (database locks up for no reason, says it is" +
+                    " busy). Close the program and restart it to see your notifications.");
             e.printStackTrace();
         }
     }
