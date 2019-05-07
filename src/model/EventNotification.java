@@ -59,6 +59,8 @@ public class EventNotification extends Notification {
 	}
 	
 	public static int makeNearingEventNotification(Event event) {
+	    int notificationID;
+	    
 	    try (Connection dbConnection = DBHelper.getConnection();
 	            PreparedStatement insertStatement = dbConnection.prepareStatement(
 	            "INSERT INTO notification (message, date) VALUES (?, ?)")){
@@ -67,8 +69,8 @@ public class EventNotification extends Notification {
             insertStatement.setString(2, event.getDateTime());
             insertStatement.executeUpdate();
             
-            int notificationID = insertStatement.getGeneratedKeys().getInt(1);
-            return notificationID;
+            notificationID = insertStatement.getGeneratedKeys().getInt(1);
+           
         } catch (SQLException e) {
             e.printStackTrace();
             AlertBox.showErrorAlert("Because the SQLite database library we use " +
@@ -77,6 +79,8 @@ public class EventNotification extends Notification {
                     " busy). Close the program and restart it to see your notifications.");
             return -1;
         }
+	    
+	    return notificationID;
 	}
 	
 	public static ArrayList<String> getNewNotificationUsers() {

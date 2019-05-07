@@ -42,6 +42,8 @@ public abstract class Notification {
     }
     
     public static int getExistingNotificationID(String message, String date) {
+        int id;
+        
         try (Connection dbConnection = DBHelper.getConnection();
                 PreparedStatement selectStatement = dbConnection.prepareStatement("" +
                 "SELECT * FROM notification WHERE message = ? AND date = ?")) {
@@ -49,7 +51,6 @@ public abstract class Notification {
             selectStatement.setString(2, date);
             ResultSet existingNotification = selectStatement.executeQuery();
             
-            int id;
             if(existingNotification.next()) {
                  id = existingNotification.getInt(1);
             } else {
@@ -57,7 +58,6 @@ public abstract class Notification {
             }
             
             existingNotification.close();
-            return id;
         } catch (SQLException e) {
             e.printStackTrace();
             AlertBox.showErrorAlert("Because the SQLite database library we use " +
@@ -66,9 +66,12 @@ public abstract class Notification {
                     " busy). Close the program and restart it to see your notifications.");
             return Integer.MIN_VALUE;
         }
+        
+        return id;
     }
     
     public static boolean existUserNotification(int notificationID, String userName) {
+        boolean alreadyExists;
         try (Connection dbConnection = DBHelper.getConnection();
                 PreparedStatement selectStatement = dbConnection.prepareStatement(
                 "SELECT * FROM userNotifications WHERE nID = ? AND username = ?")){
@@ -76,10 +79,9 @@ public abstract class Notification {
             selectStatement.setString(2, userName);
             
             ResultSet existingNotification = selectStatement.executeQuery();
-            boolean alreadyExists =  existingNotification.next();
+            alreadyExists =  existingNotification.next();
             
             existingNotification.close();
-            return alreadyExists;
         } catch (SQLException e) {
             e.printStackTrace();
             AlertBox.showErrorAlert("Because the SQLite database library we use " +
@@ -88,6 +90,8 @@ public abstract class Notification {
                     " busy). Close the program and restart it to see your notifications.");
             return false;
         } 
+        
+        return alreadyExists;
     }
     
 	public Notification(String message, boolean isRead) {

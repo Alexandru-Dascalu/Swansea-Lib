@@ -36,6 +36,7 @@ public class FineNotification extends Notification {
         int daysUntilDue = copy.getDaysUntilDue();
         SimpleDateFormat dateFormatter = new SimpleDateFormat("dd/MM/yyyy");
         
+        int notificationID;
         try (Connection dbConnection = DBHelper.getConnection(); 
                 PreparedStatement insertStatement = dbConnection.prepareStatement(
                 "INSERT INTO notification (message, image, date) VALUES (?, ?, ?)")) {
@@ -47,8 +48,7 @@ public class FineNotification extends Notification {
                 dateFormatter.format(copy.getDueDate()));
             insertStatement.executeUpdate();
 
-            int notificationID = insertStatement.getGeneratedKeys().getInt(1);
-            return notificationID;
+            notificationID = insertStatement.getGeneratedKeys().getInt(1);
         }
         catch (SQLException e) {
             e.printStackTrace();
@@ -58,6 +58,8 @@ public class FineNotification extends Notification {
                     " busy). Close the program and restart it to see your notifications.");
             return -1;
         }
+        
+        return notificationID;
     }
     
 	public FineNotification(String message, boolean isRead, String date, String imagePath) {

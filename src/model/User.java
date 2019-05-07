@@ -353,7 +353,7 @@ public class User extends Person {
         try (Connection dbConnection = DBHelper.getConnection();
                 PreparedStatement selectStatement = dbConnection.prepareStatement(
                 "SELECT message, image, date, seen FROM notification, " +
-                 "userNotifications WHERE nID = id AND username = " + username);
+                 "userNotifications WHERE nID = id AND username = '" + username + "'");
                 ResultSet notificationData = selectStatement.executeQuery()){
 
             while (notificationData.next()) {
