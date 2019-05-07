@@ -1,6 +1,9 @@
 package model;
 
+import javafx.scene.control.Label;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
+import javafx.scene.text.Text;
 
 public abstract class Notification {
 	
@@ -30,5 +33,11 @@ public abstract class Notification {
 	
 	public abstract String getStyle();
 	
-	public abstract HBox getNotificationBox();
+	public HBox getNotificationBox() {
+	    HBox notificationBox = new HBox();
+        notificationBox.setSpacing(30);
+        notificationBox.setStyle(getStyle());
+        
+        return notificationBox;
+	}
 }

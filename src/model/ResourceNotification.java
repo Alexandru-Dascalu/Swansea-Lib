@@ -139,11 +139,9 @@ ArrayList<String> notificationUsers = new ArrayList<>();
 	}
 	
 	public HBox getNotificationBox() {
-	    HBox notificationBox = new HBox();
-	    notificationBox.setSpacing(30);
+	    HBox notificationBox = super.getNotificationBox();
 	    notificationBox.getChildren().add(new ImageView(resourceImage));
 	    notificationBox.getChildren().add(new Text(message));
-	    notificationBox.setStyle(getStyle());
 	    return notificationBox;
 	}
 	

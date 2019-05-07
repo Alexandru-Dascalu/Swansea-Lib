@@ -4,15 +4,15 @@
 <?import javafx.scene.control.TabPane?>
 <?import javafx.scene.layout.VBox?>
 
-<TabPane fx:id="notificationsPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" tabClosingPolicy="UNAVAILABLE" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/11.0.1" fx:controller="application.NotificationViewController">
+<TabPane fx:id="notificationsPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.NotificationViewController">
   <tabs>
     <Tab fx:id="newNotificationsTab" closable="false" text="New Notifications">
          <content>
-            <VBox fx:id="newNotificationsBox" prefHeight="200.0" prefWidth="100.0" />
+            <VBox fx:id="newNotificationsBox" prefHeight="200.0" prefWidth="100.0" spacing="10.0" />
          </content></Tab>
     <Tab fx:id="pastNotificationsTab" text="Past Notifications">
          <content>
-            <VBox fx:id="pastNotificationsBox" prefHeight="200.0" prefWidth="100.0" />
+            <VBox fx:id="pastNotificationsBox" prefHeight="200.0" prefWidth="100.0" spacing="10.0" />
          </content></Tab>
   </tabs>
 </TabPane>

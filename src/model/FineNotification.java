@@ -150,13 +150,11 @@ public class FineNotification extends Notification {
 	}
 	
 	public HBox getNotificationBox() {
-        HBox notificationBox = new HBox();
-        notificationBox.setSpacing(30);
+        HBox notificationBox = super.getNotificationBox();
         notificationBox.getChildren().add(new ImageView(image));
         notificationBox.getChildren().add(new Text(message));
         notificationBox.getChildren().add(new Label("Fine date:"));
         notificationBox.getChildren().add(new Text(date));
-        notificationBox.setStyle(getStyle());
         return notificationBox;
     }
 }

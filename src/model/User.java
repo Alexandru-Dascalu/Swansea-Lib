@@ -265,9 +265,9 @@ public class User extends Person {
                         notificationID = FineNotification.makeNotification(copy, this);
                     }
                     
-                    //if(!FineNotification.existUserNotification(notificationID, username)) {
+                    if(!FineNotification.existUserNotification(notificationID, username)) {
                         FineNotification.makeUserNotification(notificationID, this);
-                    //}
+                    }
                 }
             }
         }
