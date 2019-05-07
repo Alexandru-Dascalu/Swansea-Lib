@@ -10,6 +10,7 @@ import application.AlertBox;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
+import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 
 public class EventNotification extends Notification {
@@ -142,9 +143,14 @@ public class EventNotification extends Notification {
 	
 	public HBox getNotificationBox() {
 	    HBox notificationBox = super.getNotificationBox();
+	    notificationBox.getChildren().add(createSpacer());
+	    notificationBox.getChildren().add(getMessageTextElement());
         
-        notificationBox.getChildren().add(getMessageTextElement());
-        notificationBox.getChildren().add(new Label("Event date:"));
+        Label dateLabel = new Label("Event date:");
+        dateLabel.setTextFill(Color.BLACK);
+        dateLabel.setStyle("-fx-font-weight: bold;");
+        notificationBox.getChildren().add(dateLabel);
+        
         notificationBox.getChildren().add(new Text(date));
         return notificationBox;
     }

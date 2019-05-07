@@ -174,7 +174,7 @@ INSERT INTO `events` VALUES (1,'Zilele ASMI','Jocuri sociale si training ASMI','
 INSERT INTO `events` VALUES (2,'Cardiff Varsity Cup Theft','We are going to sneak into Cardiff University 
 and steal the Varsity Cup and Shield and escape to 
 bring it back to Swansea. We just need 20 good men.
-#FuckCardiff #UppaSwans','2019-05-06 11:00', 20);
+#FuckCardiff #UppaSwans','2019-05-08 11:00', 20);
 INSERT INTO `events` VALUES (3,'Examen auto','Iau carnetul in sfarsit.','2019-04-25 11:00', 2);
 
 DROP TABLE IF EXISTS `dvd`;
@@ -445,7 +445,7 @@ CREATE TABLE `notification` (
 	`date`	DATETIME
 );
 
-insert into `notification` values (1, "new resource nigga", "/graphics/Avengers Infinity War.jpg", NULL);
+insert into `notification` values (1, "new resource", "/graphics/Avengers Infinity War.jpg", NULL);
 
 DROP TABLE IF EXISTS `userNotifications`;
 CREATE TABLE `userNotifications` (

@@ -1,6 +1,10 @@
 package model;
 
+import javafx.geometry.Pos;
+import javafx.scene.Node;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Priority;
+import javafx.scene.layout.Region;
 import javafx.scene.text.Text;
 
 public abstract class Notification {
@@ -37,8 +41,9 @@ public abstract class Notification {
 	
 	public HBox getNotificationBox() {
 	    HBox notificationBox = new HBox();
-        notificationBox.setSpacing(30);
+        notificationBox.setSpacing(20);
         notificationBox.setStyle(getStyle());
+        notificationBox.setAlignment(Pos.CENTER_LEFT);
         
         return notificationBox;
 	}
@@ -49,4 +54,13 @@ public abstract class Notification {
 	    
 	    return messageText;
 	}
+	
+	protected Node createSpacer() 
+    {
+        final Region spacer =  new Region();
+        spacer.setPrefHeight(IMAGE_HEIGHT);
+        spacer.setPrefWidth(IMAGE_WIDTH);
+        HBox.setHgrow(spacer, Priority.NEVER);
+        return spacer;
+    }
 }

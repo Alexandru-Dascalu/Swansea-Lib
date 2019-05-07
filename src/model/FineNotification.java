@@ -12,6 +12,7 @@ import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
+import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 
 public class FineNotification extends Notification {
@@ -152,10 +153,16 @@ public class FineNotification extends Notification {
 	public HBox getNotificationBox() {
         HBox notificationBox = super.getNotificationBox();
         notificationBox.getChildren().add(new ImageView(image));
-        
         notificationBox.getChildren().add(getMessageTextElement());
-        notificationBox.getChildren().add(new Label("Fine date:"));
+        
+        Label dateLabel = new Label("Imminent fine date:");
+        dateLabel.setTextFill(Color.BLACK);
+        dateLabel.setStyle("-fx-font-weight: bold;");
+        
+        notificationBox.getChildren().add(dateLabel);
         notificationBox.getChildren().add(new Text(date));
+        
+        System.out.println(notificationBox.getPrefWidth());
         return notificationBox;
     }
 }
