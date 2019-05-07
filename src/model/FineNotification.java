@@ -77,8 +77,12 @@ public class FineNotification extends Notification {
 	}
 	
 	public String getStyle() {
-		return "-fx-background-color: firebrick;";
-	}
+        return "-fx-background-color: linear-gradient(firebrick, #d81111);\r\n" +
+               "-fx-padding: 8;\r\n" +
+               "-fx-border-color: #6d0000;\r\n" + 
+               "-fx-border-width: 5;\r\n" +
+               "-fx-border-style: solid;";
+    }
 	
 	public HBox getNotificationBox() {
         HBox notificationBox = super.getNotificationBox();

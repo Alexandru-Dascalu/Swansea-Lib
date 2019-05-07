@@ -140,8 +140,12 @@ public class EventNotification extends Notification {
 	}
 	
 	public String getStyle() {
-		return "-fx-background-color: deepskyblue;";
-	}
+        return "-fx-background-color: linear-gradient(#1184aa, deepskyblue);\r\n" +
+               "-fx-padding: 8;\r\n" +
+               "-fx-border-color: #054256;\r\n" + 
+               "-fx-border-width: 5;\r\n" +
+               "-fx-border-style: solid;";
+    }
 	
 	public HBox getNotificationBox() {
 	    HBox notificationBox = super.getNotificationBox();
