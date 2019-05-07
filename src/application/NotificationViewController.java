@@ -26,5 +26,7 @@ public class NotificationViewController {
                 newNotificationsBox.getChildren().add(notification.getNotificationBox());
             }
         }
+        
+        System.out.println("vbox "+newNotificationsBox.getPrefWidth());
     }
 }
