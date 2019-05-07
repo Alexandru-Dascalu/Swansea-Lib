@@ -265,9 +265,9 @@ public class User extends Person {
                         notificationID = FineNotification.makeNotification(copy, this);
                     }
                     
-                    if(!FineNotification.existUserNotification(notificationID, username)) {
+                    //if(!FineNotification.existUserNotification(notificationID, username)) {
                         FineNotification.makeUserNotification(notificationID, this);
-                    }
+                    //}
                 }
             }
         }
@@ -367,6 +367,10 @@ public class User extends Person {
                     throw new IllegalStateException();
                 }
             }
+            
+            notificationData.close();
+            selectStatement.close();
+            dbConnection.close();
         } catch (SQLException e) {
             System.out.println(
                 "Failed to load notifications for user " + username + ".");
