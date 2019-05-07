@@ -45,6 +45,7 @@ public class Book extends Resource {
      * @param title The title of this resource.
      * @param year The year this resource appeared.
      * @param thumbnail A small image of this resource.
+     * @param thumbnailPath The path to the thumbnail of the image.
      * @param author The author of the book.
      * @param publisher The publisher of the book.
      * @param genre The genre of the book.
@@ -52,10 +53,10 @@ public class Book extends Resource {
      * @param language The language of the book.
      * @param timestamp The time when this resource was added.
      */
-    public Book(int uniqueID, String title, int year, Image thumbnail,
-    		String timestamp,String author, String publisher, String genre,
-            String isbn, String language) {
-        super(uniqueID, title, year, thumbnail, timestamp);
+    public Book(int uniqueID, String title, int year, Image thumbnail, 
+            String thumbnailPath, String timestamp,String author, String publisher,
+            String genre, String isbn, String language) {
+        super(uniqueID, title, year, thumbnail, thumbnailPath, timestamp);
         this.author = author;
         this.publisher = publisher;
         this.genre = genre;
@@ -69,13 +70,15 @@ public class Book extends Resource {
      * @param title The title of this resource.
      * @param year The year this resource appeared.
      * @param thumbnail A small image of this resource.
-    * @param author The author of the book.
+     * @param thumbnailPath The path to the thumbnail of the image.
+     * @param author The author of the book.
      * @param publisher The publisher of the book.
      * @param timestamp The time when this resource was added.
      */
     public Book(int uniqueID, String title, int year, Image thumbnail, 
-    		String timestamp, String author, String publisher) {
-        super(uniqueID, title, year, thumbnail, timestamp);
+    		String thumbnailPath, String timestamp, String author, 
+    		String publisher) {
+        super(uniqueID, title, year, thumbnail, thumbnailPath, timestamp);
         this.author = author;
         this.publisher = publisher;
     }
@@ -96,10 +99,11 @@ public class Book extends Resource {
                     + "= resource.rID"); 
 
             while (rs.next()) {
-                Image resourceImage = new Image(rs.getString("thumbnail"), true);
+                String thumbnailPath = rs.getString("thumbnail");
+                Image resourceImage = new Image(thumbnailPath, true);
                 
                 resources.add(new Book(rs.getInt("rID"), rs.getString("title"), 
-                		rs.getInt("year"), resourceImage, rs.getString("timestamp"),
+                		rs.getInt("year"), resourceImage, thumbnailPath, rs.getString("timestamp"),
                     rs.getString("author"), rs.getString("publisher"), 
                     rs.getString("genre"), rs.getString("ISBN"),
                     rs.getString("language")));

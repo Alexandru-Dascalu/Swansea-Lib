@@ -54,6 +54,9 @@ public abstract class Resource {
     /** The thumbnail Image of this resource. */
     protected Image thumbnail;
 
+    /**The file path to the thumbnail of this image.*/
+    protected String thumbnailPath;
+    
     /**
      * A time stamp for resource, so that each time a user logs in the user can view any
      * new additions.
@@ -84,13 +87,15 @@ public abstract class Resource {
      * @param title The title of this resource.
      * @param year The year this resource appeared.
      * @param thumbnail A small image of this resource.
+     * @param thumbnailPath The path to the thumbnail of the image.
      * @param timestamp The time when this resource was added.
      */
-    public Resource(int uniqueID, String title, int year, Image thumbnail, String timestamp) {
+    public Resource(int uniqueID, String title, int year, Image thumbnail, String thumbnailPath, String timestamp) {
         this.uniqueID = uniqueID;
         this.title = title;
         this.year = year;
         this.thumbnail = thumbnail;
+        this.thumbnailPath = thumbnailPath;
         this.timestamp = timestamp;
 
         /*
@@ -358,6 +363,14 @@ public abstract class Resource {
      */
     public Image getThumbnail() {
         return thumbnail;
+    }
+
+    /**
+     * Gets the path of the thumbnail of this resource, as it is in the database
+     * @return the path to the thumbnail of this resource.
+     */
+    public String getThumbnailPath() {
+        return thumbnailPath;
     }
 
     /**

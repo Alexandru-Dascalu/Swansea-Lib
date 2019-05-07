@@ -38,11 +38,12 @@ public class Laptop extends Resource {
                 + "resource.rID = laptop.rID");
 
             while (rs.next()) {
-            	Image resourceImage = new Image(rs.getString("thumbnail"), true);
+                String thumbnailPath = rs.getString("thumbnail");
+            	Image resourceImage = new Image(thumbnailPath, true);
                 resources.add(new Laptop(rs.getInt("rID"), rs.getString("title"),
-                		rs.getInt("year"), resourceImage, rs.getString("timestamp"),
-                		rs.getString("manufacturer"), rs.getString("model"),
-                		rs.getString("os")));
+                		rs.getInt("year"), resourceImage, thumbnailPath, 
+                		rs.getString("timestamp"), rs.getString("manufacturer"), 
+                		rs.getString("model"), rs.getString("os")));
             }
         }
         catch (SQLException e) {
@@ -57,14 +58,16 @@ public class Laptop extends Resource {
      * @param title The title of this resource.
      * @param year The year this resource appeared.
      * @param thumbnail A small image of this resource.
+     * @param thumbnailPath The path to the thumbnail of the image.
      * @param timestamp The time when this resource was added.
      * @param manufacturer The manufacturer of the laptop.
      * @param model The model of the laptop.
      * @param operatingSystem The operating system of the laptop.
      */
     public Laptop(int uniqueID, String title, int year, Image thumbnail, 
-    		String timestamp, String manufacturer, String model, String operatingSystem) {
-        super(uniqueID, title, year, thumbnail, timestamp);
+            String thumbnailPath, String timestamp, String manufacturer,
+            String model, String operatingSystem) {
+        super(uniqueID, title, year, thumbnail, thumbnailPath, timestamp);
         this.manufacturer = manufacturer;
         this.model = model;
         this.operatingSystem = operatingSystem;

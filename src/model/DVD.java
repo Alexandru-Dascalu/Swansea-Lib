@@ -33,6 +33,7 @@ public class DVD extends Resource {
      * @param title The title of this resource.
      * @param year The year this resource appeared.
      * @param thumbnail A small image of this resource.
+     * @param thumbnailPath The path to the thumbnail of the image.
      * @param timestamp The time when this resource was added.
      * @param director The director of the movie.
      * @param runtime The run time of the movie.
@@ -40,9 +41,9 @@ public class DVD extends Resource {
      * @param subtitleList The list of all subtitle languages.
      */
     public DVD(int uniqueID, String title, int year, Image thumbnail, 
-    		String timestamp, String director, int runtime, String language,
-            ArrayList<String> subtitleList) {
-        super(uniqueID, title, year, thumbnail, timestamp);
+    		String thumbnailPath, String timestamp, String director, int runtime,
+    		String language, ArrayList<String> subtitleList) {
+        super(uniqueID, title, year, thumbnail, thumbnailPath, timestamp);
         this.director = director;
         this.runTime = runtime;
         this.language = language;
@@ -62,12 +63,13 @@ public class DVD extends Resource {
      * @param title The title of this resource.
      * @param year The year this resource appeared.
      * @param thumbnail A small image of this resource.
+     * @param thumbnailPath The path to the thumbnail of the image.
      * @param director The director of the movie.
      * @param runtime The run time of the movie.
      */
     public DVD(int uniqueID, String title, int year, Image thumbnail,
-    		String timestamp, String director, int runtime) {
-        super(uniqueID, title, year, thumbnail, timestamp);
+    		String thumbnailPath, String timestamp, String director, int runtime) {
+        super(uniqueID, title, year, thumbnail, thumbnailPath, timestamp);
         this.director = director;
         this.runTime = runtime;
 
@@ -87,10 +89,11 @@ public class DVD extends Resource {
                 "director, runTime, language, timestamp FROM dvd, resource WHERE dvd.rID = resource.rID");
 
             while (rs.next()) {
-                Image resourceImage = new Image(rs.getString("thumbnail"), true);
+                String thumbnailPath = rs.getString("thumbnail");
+                Image resourceImage = new Image(thumbnailPath, true);
                 
                 resources.add(new DVD(rs.getInt("rID"), rs.getString("title"), 
-                		rs.getInt("year"), resourceImage,
+                    rs.getInt("year"), resourceImage, thumbnailPath,
                     rs.getString("timestamp"), rs.getString("director"), rs.getInt("runTime"),
                     rs.getString("language"), null));
 

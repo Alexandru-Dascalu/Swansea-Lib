@@ -41,6 +41,7 @@ public class Game extends Resource {
      * @param title The title of this resource.
      * @param year The year this resource appeared.
      * @param thumbnail A small image of this resource.
+     * @param thumbnailPath The path to the thumbnail of the image.
      * @param publisher The publisher of the game.
      * @param genre The genre of the game.
      * @param rating The rating of the game.
@@ -48,9 +49,9 @@ public class Game extends Resource {
      * @param timestamp The timestamp of when it was created.
      */
     public Game(int uniqueID, String title, int year, Image thumbnail,
-    		String timestamp, String publisher, String genre,
+    		String thumbnailPath, String timestamp, String publisher, String genre,
             String rating, String multiplayerSupport) {
-        super(uniqueID, title, year, thumbnail, timestamp);
+        super(uniqueID, title, year, thumbnail, thumbnailPath, timestamp);
         this.publisher = publisher;
         this.genre = genre;
         this.rating = rating;
@@ -74,12 +75,14 @@ public class Game extends Resource {
                 + "= resource.rID"); 
 
             while (rs.next()) {
-                Image resourceImage = new Image(rs.getString("thumbnail"), true);
+                String thumbnailPath = rs.getString("thumbnail");
+                Image resourceImage = new Image(thumbnailPath, true);
                 
                 resources.add(new Game(	rs.getInt("rID"), 
                 					   	rs.getString("title"), 
                 					   	rs.getInt("year"), 
                 					   	resourceImage,
+                					   	thumbnailPath,
                 					   	rs.getString("timestamp"),
 					                    rs.getString("publisher"), 
 					                    rs.getString("genre"), 
