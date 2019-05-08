@@ -17,8 +17,8 @@ import javafx.scene.text.Text;
 
 public abstract class Notification {
 	
-    protected static final int IMAGE_HEIGHT = 150;
-    protected static final int IMAGE_WIDTH = 90;
+    protected static final int IMAGE_HEIGHT = 200;
+    protected static final int IMAGE_WIDTH = 120;
     private static final int TEXT_WRAP_WIDTH = 400;
     
 	protected final String message;

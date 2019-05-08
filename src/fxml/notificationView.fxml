@@ -8,15 +8,15 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.VBox?>
 
-<TabPane fx:id="notificationsPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="900.0" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.NotificationViewController">
+<TabPane fx:id="notificationsPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="900.0" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.NotificationViewController">
   <tabs>
     <Tab fx:id="newNotificationsTab" closable="false" text="New Notifications">
          <content>
             <BorderPane fx:id="newNottificationPane" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308">
                <center>
-                  <ScrollPane hbarPolicy="NEVER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="800.0" prefWidth="900.0" vbarPolicy="ALWAYS">
+                  <ScrollPane fitToWidth="true" hbarPolicy="NEVER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="800.0" prefWidth="900.0" vbarPolicy="ALWAYS">
                      <content>
-                        <VBox fx:id="newNotificationsBox" alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefWidth="900.0" spacing="1.0" />
+                        <VBox fx:id="newNotificationsBox" alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefWidth="900.0" spacing="3.0" />
                      </content>
                   </ScrollPane>
                </center>
@@ -30,7 +30,11 @@
          </content></Tab>
     <Tab fx:id="pastNotificationsTab" text="Past Notifications">
          <content>
-            <VBox fx:id="pastNotificationsBox" prefHeight="200.0" prefWidth="900.0" spacing="1.0" />
+            <ScrollPane fitToWidth="true" hbarPolicy="NEVER" prefHeight="800.0" prefWidth="900.0" vbarPolicy="ALWAYS">
+               <content>
+                  <VBox fx:id="pastNotificationsBox" prefWidth="900.0" spacing="3.0" />
+               </content>
+            </ScrollPane>
          </content></Tab>
   </tabs>
 </TabPane>
