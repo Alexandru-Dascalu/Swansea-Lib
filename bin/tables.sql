@@ -44,7 +44,7 @@ CREATE TABLE IF NOT EXISTS `userSettings` (
 	`newEventSetting` BOOLEAN DEFAULT TRUE,
 	`nearingEventSetting` BOOLEAN DEFAULT TRUE,
 	PRIMARY KEY (`userName`),
-	FOREIGN KEY(`username`) REFERENCES `users`(`username`)
+	FOREIGN KEY(`userName`) REFERENCES `users`(`username`)
 );
 
 INSERT INTO `userSettings` VALUES ('Alexandru',true,true,false,true);

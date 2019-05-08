@@ -155,7 +155,8 @@ public class Event {
 	 * @param title Title of event
 	 * @param details Details of event
 	 * @param date date and time of event
-	 * @param maxAllowed total number of people who can attend the event
+	 * @param maxAllowed total number of people who can attend the event.
+	 * @return An instance of the new event that was added.
 	 */
 	public static Event addEvent(String title, String details, String date, int maxAllowed) {
 		Event newEvent = new Event(title, details, date, maxAllowed);

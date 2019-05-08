@@ -94,6 +94,7 @@ public class EventCreationController {
             
             //execute SQL insert and close connection.
             sqlStatement.execute();
+            sqlStatement.close();
             connectionToDB.close();
             
             //increment total event number.

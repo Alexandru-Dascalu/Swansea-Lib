@@ -5,10 +5,10 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
 
 import application.AlertBox;
 import javafx.scene.control.Label;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
@@ -53,7 +53,8 @@ public class EventNotification extends Notification {
             return;
         }
 	    
-	    for (String username : getNewNotificationUsers()) {
+	    List<String> notificationUsers = getNewEventNotificationUsers();
+	    for (String username : notificationUsers) {
             Notification.makeUserNotification(notificationID, username);
         }
 	}
@@ -83,13 +84,12 @@ public class EventNotification extends Notification {
 	    return notificationID;
 	}
 	
-	public static ArrayList<String> getNewNotificationUsers() {
+	public static ArrayList<String> getNewEventNotificationUsers() {
         ArrayList<String> notificationUsers = new ArrayList<>();
-        
         
         try (Connection dbConnection = DBHelper.getConnection();
                 PreparedStatement insertStatement = dbConnection.prepareStatement(
-                "SELECT username FROM users");
+                "SELECT userName FROM userSettings WHERE newEventSetting = true");
                 ResultSet usernames = insertStatement.executeQuery()){
             
             while(usernames.next()) {
@@ -102,6 +102,7 @@ public class EventNotification extends Notification {
                     " for this program, notifications for this user" +
                     " could not be loaded (database locks up for no reason, says it is" +
                     " busy). Close the program and restart it to see your notifications.");
+            return null;
         }
      
         return notificationUsers;
