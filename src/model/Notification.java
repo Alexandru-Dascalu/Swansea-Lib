@@ -139,8 +139,6 @@ public abstract class Notification {
 	protected Node createSpacer() 
     {
         final Region spacer =  new Region();
-        //spacer.setPrefHeight(IMAGE_HEIGHT);
-        //spacer.setPrefWidth(IMAGE_WIDTH);
         
         spacer.setMinHeight(IMAGE_HEIGHT/2);
         spacer.setMinWidth(IMAGE_WIDTH);

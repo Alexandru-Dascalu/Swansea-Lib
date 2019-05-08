@@ -17,7 +17,14 @@ import java.util.List;
 import java.util.PriorityQueue;
 
 import application.AlertBox;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
+import javafx.scene.control.CheckBox;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.Priority;
+import javafx.scene.layout.VBox;
 
 /**
  * This class represents a resource that the library has to offer. A resource is
@@ -777,6 +784,34 @@ public abstract class Resource {
         } else {
             return false;
         }
+    }
+    
+    public HBox getRelatedResourceHBox() {
+        HBox resourceBox = new HBox();
+        resourceBox.setSpacing(20);
+        resourceBox.setAlignment(Pos.CENTER_LEFT);
+        resourceBox.setPadding(new Insets(10, 10, 10, 20));
+        
+        ImageView resourceImageView = new ImageView(thumbnail);
+        resourceImageView.setFitHeight(200);
+        resourceImageView.setFitWidth(120);
+        resourceBox.getChildren().add(resourceImageView);
+        
+        VBox labelBox = new VBox();
+        labelBox.setSpacing(5);
+        labelBox.setAlignment(Pos.CENTER);
+        resourceBox.getChildren().add(labelBox);
+        
+        VBox infoBox = new VBox();
+        infoBox.setSpacing(5);
+        infoBox.setAlignment(Pos.CENTER);
+        resourceBox.getChildren().add(infoBox);
+        
+        CheckBox checkBox = new CheckBox();
+        checkBox.setSelected(false);
+        
+        resourceBox.getChildren().add(checkBox);
+        return resourceBox;
     }
     
     /**
