@@ -17,6 +17,7 @@ import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Pos;
 import javafx.scene.CacheHint;
 import javafx.scene.Node;
 import javafx.scene.Parent;
@@ -39,6 +40,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
@@ -688,6 +690,12 @@ public class ProfileController {
             currentUser.checkForNearingEvents();
             currentUser.checkImminentFines();
             currentUser.loadNotifications();
+            
+            if(currentUser.hasUnreadNotifications()) {
+                Circle circle = new Circle (7, Color.RED);
+                notificationStack.getChildren().add(circle);
+                notificationStack.setAlignment(circle, Pos.TOP_RIGHT);
+            }
         } else {
             notificationStack.setVisible(false);
         }

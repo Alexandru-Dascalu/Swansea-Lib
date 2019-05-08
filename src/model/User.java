@@ -319,8 +319,21 @@ public class User extends Person {
         }
         return borrowHistory;
     }
-
     
+    /**
+     * Says if this user has any unread notifications.
+     * @return True if the user has any unread notifications, false if not.
+     */
+    public boolean hasUnreadNotifications() {
+        for(Notification n: notifications) {
+            if(!n.isRead()) {
+                return true;
+            }
+        }
+        
+        return false;
+    }
+
     /**
      * Loads the copies the user is currently is borrowing and adds them to
      * this object's copy list.
