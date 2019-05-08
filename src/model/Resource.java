@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.PriorityQueue;
 
 import application.AlertBox;
@@ -735,7 +736,51 @@ public abstract class Resource {
     }
     
     /**
-     * limit Amount used to restrict number of items a user can borrow
+     * Computes a list of other resources that could possibly be part of the 
+     * same series, based on the implementation of the 
+     * isPossiblySameSeries(Resource) method.
+     * @return a list of other resources that could possibly be part of the 
+     * same series.
+     */
+    public List<Resource> getSameSeriesSuggestions() {
+        List<Resource> possiblySameSeries = new LinkedList<>();
+        
+        for(Resource resource: resources) {
+            if(isPossiblySameSeries(resource) && (this != resource)) {
+                possiblySameSeries.add(resource);
+            }
+        }
+        
+        return possiblySameSeries;
+    }
+    
+    /**
+     * Says if this resource is possibly in the same series as another resource. 
+     * It calculates it by just seeing if it is of the same type and if the first 
+     * word of both titles is the same. Should be overridden to provide a better 
+     * implementation for different resource types.
+     * @param otherResource Another resource we want to see if it can be of the 
+     * same series.
+     * @return True if it is possibly of the same series, false if not.
+     */
+    protected boolean isPossiblySameSeries(Resource otherResource) {
+        if(getClass() != otherResource.getClass()) {
+            return false;
+        }
+        
+        String thisFirstWord = title.split(" ")[0];
+        String otherFirstWord = otherResource.getTitle().split(" ")[0];
+        
+        if(thisFirstWord.equals(otherFirstWord) && !thisFirstWord.equalsIgnoreCase("a")
+                && !thisFirstWord.equalsIgnoreCase("the")) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+    
+    /**
+     * Gets the limit amount used to restrict number of items a user can borrow.
      * @return the default amount of the resource.
      */
     public int getLimitAmount() {

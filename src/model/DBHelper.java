@@ -89,8 +89,6 @@ public class DBHelper {
                     }
                     catch (SQLException e) { // Error on the SQL table.
                         System.out.println(line);
-
-                        // The tables.sql is incorrect
                         e.printStackTrace();
                     }
                 }
