@@ -96,6 +96,7 @@
                                     <Button fx:id="statsButton" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onMouseClicked="#openStatistics" text="Statistics" />
                                  </children>
                               </HBox>
+                              <Button fx:id="notificationSettingBtn" mnemonicParsing="false" onMouseClicked="#showNotificationSettings" text="Notification Settings" />
                               <Separator prefWidth="200.0">
                                  <VBox.margin>
                                     <Insets bottom="10.0" top="15.0" />

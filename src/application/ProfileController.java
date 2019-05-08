@@ -248,6 +248,9 @@ public class ProfileController {
 	@FXML
 	private StackPane notificationStack;
 	
+	@FXML 
+	private Button notificationSettingBtn;
+	
 	//may remove fixed size resource images
 	//when dealing with window resizing.
 	private final int RES_IMG_WIDTH = 220;
@@ -1467,6 +1470,26 @@ public class ProfileController {
         notificationWindow.setTitle("Your Notifications");
         notificationWindow.setScene(new Scene(notificationsRoot));
         notificationWindow.show();
+	}
+	
+	@FXML
+	private void showNotificationSettings() {
+	    FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/" +
+	            "notificationSettings.fxml"));
+	    
+	    Parent notificationsRoot = null;
+        try {
+            notificationsRoot = (Parent) fxmlLoader.load();
+        } catch (IOException e) {
+            e.printStackTrace();
+            System.exit(-1);
+        }
+        
+        Stage settingsWindow = new Stage();
+        settingsWindow.initModality(Modality.APPLICATION_MODAL);
+        settingsWindow.setTitle("Notification Settings");
+        settingsWindow.setScene(new Scene(notificationsRoot));
+        settingsWindow.show();
 	}
 	
 	@FXML
