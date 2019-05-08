@@ -21,7 +21,7 @@
                   </ScrollPane>
                </center>
                <bottom>
-                  <Button fx:id="markReadBtn" mnemonicParsing="false" text="Mark all as read" BorderPane.alignment="CENTER" />
+                  <Button fx:id="markReadBtn" mnemonicParsing="false" onMouseClicked="#markAllAsRead" text="Mark all as read" BorderPane.alignment="CENTER" />
                </bottom>
                <padding>
                   <Insets bottom="5.0" top="5.0" />
