@@ -178,6 +178,18 @@ public class Laptop extends Resource {
     }
     
     /**
+     * Says if this laptop is possibly in the same series as another laptop.
+     * Since I consider that laptops can not be part of series the way books,
+     * dvds or games can be, this method always returns false.
+     * @param otherResource Another resource we want to see if it can be of the 
+     * same series.
+     * @return false.
+     */
+    protected boolean isPossiblySameSeries(Resource otherResource) {
+        return false;
+    }
+    
+    /**
      * override the limit amount from resource super class and set laptop limit
      * to 3 instead of default 1 to restrict user from over requesting.
      */

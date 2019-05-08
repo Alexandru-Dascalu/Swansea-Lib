@@ -757,7 +757,7 @@ public abstract class Resource {
     /**
      * Says if this resource is possibly in the same series as another resource. 
      * It calculates it by just seeing if it is of the same type and if the first 
-     * word of both titles is the same. Should be overridden to provide a better 
+     * word of both titles is the same. Should be overloaded to provide a better 
      * implementation for different resource types.
      * @param otherResource Another resource we want to see if it can be of the 
      * same series.

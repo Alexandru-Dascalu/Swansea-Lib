@@ -283,6 +283,26 @@ public class DVD extends Resource {
     }
     
     /**
+     * Says if this dvd is possibly in the same series as another dvd. 
+     * It calculates it by seeing if they have the same director, as 
+     * well the result of the Resource method of the same name.
+     * @param otherDVD Another dvd we want to see if it can be of the 
+     * same series.
+     * @return True if it is possibly of the same series, false if not.
+     */
+    protected boolean isPossiblySameSeries(DVD otherDVD) {
+        if(!super.isPossiblySameSeries(otherDVD)) {
+            return false;
+        }
+        
+        if(director.equals(otherDVD.getDirector())) {
+                return true;
+        }
+        
+        return false;
+    }
+    
+    /**
      * Return the default limit number from resource to restrict user over requesting
      */
     public int getLimitAmount() {

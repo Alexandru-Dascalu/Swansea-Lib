@@ -224,4 +224,26 @@ public class Game extends Resource {
         score += super.getLikenessScore(otherResource);
         return score;
     }
+    
+    /**
+     * Says if this game is possibly in the same series as another game. 
+     * It calculates it by seeing if they have the same publisher and genre, as 
+     * well the result of the Resource method of the same name.
+     * @param otherGame Another game we want to see if it can be of the 
+     * same series.
+     * @return True if it is possibly of the same series, false if not.
+     */
+    protected boolean isPossiblySameSeries(Game otherGame) {
+        if(!super.isPossiblySameSeries(otherGame)) {
+            return false;
+        }
+        
+        if(publisher.equals(otherGame.getPublisher())) {
+            if(genre != null && genre.equalsIgnoreCase(otherGame.getGenre())) {
+                return true;
+            }
+        }
+        
+        return false;
+    }
 }
