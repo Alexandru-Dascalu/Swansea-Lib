@@ -117,6 +117,22 @@ INSERT INTO `resource`(rID,title,year,thumbnail) VALUES (34,'Acer Aspire VX 15',
 INSERT INTO `resource`(rID,title,year,thumbnail) VALUES (35,'Acer Swift 1',2016,'/graphics/acer swift 1.png');
 INSERT INTO `resource`(rID,title,year,thumbnail) VALUES (36,'Lenovo IdeaPad 530S',2018,'/graphics/lenovo ideapad.jpg');
 
+DROP TABLE IF EXISTS `resourceSeries`;
+CREATE TABLE IF NOT EXISTS `resourceSeries` (
+	`rID` INTEGER,
+	`seriesResource` INTEGER,
+	PRIMARY KEY (`rID`),
+	FOREIGN KEY (`rID`,`seriesResource`) REFERENCES `resource` (`rID`,`rID`) ON UPDATE CASCADE ON DELETE CASCADE
+);
+
+DROP TABLE IF EXISTS `relatedResources`;
+CREATE TABLE IF NOT EXISTS `relatedResources` (
+	`rID` INTEGER,
+	`relatedRsrc` INTEGER,
+	PRIMARY KEY (`rID`),
+	FOREIGN KEY(`rID`,`relatedRsrc`) REFERENCES `resource` (`rID`,`rID`) ON UPDATE CASCADE ON DELETE CASCADE
+);
+
 DROP TABLE IF EXISTS `fines`;
 CREATE TABLE IF NOT EXISTS `fines` (
 	`fineID`	INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT UNIQUE,
