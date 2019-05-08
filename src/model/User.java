@@ -151,32 +151,6 @@ public class User extends Person {
     public boolean[] getNotificationSettings() {
         return notificationSettings;
     }
-
-    /**
-     * Loads the notification settings of this user from the database.
-     */
-    public void loadNotificationSettings() {
-        try (Connection dbConnection = DBHelper.getConnection();
-                PreparedStatement selectStatement = dbConnection.prepareStatement(
-                "SELECT * FROM userSettings WHERE userName = ?")) {
-            
-            selectStatement.setString(1, username);
-            ResultSet settings = selectStatement.executeQuery();
-            
-            notificationSettings[0] = settings.getBoolean(2);
-            notificationSettings[1] = settings.getBoolean(3);
-            notificationSettings[2] = settings.getBoolean(4);
-            notificationSettings[3] = settings.getBoolean(5);
-            
-            settings.close();
-        } catch (SQLException e) {
-            e.printStackTrace();
-            AlertBox.showErrorAlert("Because of the SQLite database library we use " +
-                    " for this program, notification settings for this user" +
-                    " could not be loaded. Close the program and restart it " +
-                    "to see your notifications.");
-        }
-     }
     
     /**
      * Reduces the users balance.
@@ -195,8 +169,7 @@ public class User extends Person {
 
         statement.executeUpdate();
     }
-
-    
+ 
     /**
      * Checks the users balance.
      * 
@@ -436,12 +409,78 @@ public class User extends Person {
         }
     }
     
+   /**
+    * Loads the notification settings of this user from the database.
+    */
+   public void loadNotificationSettings() {
+       try (Connection dbConnection = DBHelper.getConnection();
+               PreparedStatement selectStatement = dbConnection.prepareStatement(
+               "SELECT * FROM userSettings WHERE userName = ?")) {
+           
+           selectStatement.setString(1, username);
+           ResultSet settings = selectStatement.executeQuery();
+           
+           notificationSettings[0] = settings.getBoolean(2);
+           notificationSettings[1] = settings.getBoolean(3);
+           notificationSettings[2] = settings.getBoolean(4);
+           notificationSettings[3] = settings.getBoolean(5);
+           
+           settings.close();
+       } catch (SQLException e) {
+           e.printStackTrace();
+           AlertBox.showErrorAlert("Because of the SQLite database library we use " +
+                   " for this program, notification settings for this user" +
+                   " could not be loaded. Close the program and restart it " +
+                   "to see your notifications.");
+       }
+    }
+   
+   /**
+    * Updates the user notification setting in the database, for the given notification type.
+    * @param notificationColumn The notification type whose setting is changed.
+    * @param newValue the new value of the setting.
+    * @throws IllegalArgumentException when the name of the column notification is not valid.
+    */
+   public void updateNotificationSetting(String notificationColumn, boolean newValue) {
+       try (Connection dbConnection = DBHelper.getConnection();
+               PreparedStatement updateStatement = dbConnection.prepareStatement(
+               "UPDATE userSettings SET " + notificationColumn + " = ? WHERE " +
+               "userName = ?")) {
+           
+           updateStatement.setBoolean(1, newValue);
+           updateStatement.setString(2, username);
+           updateStatement.executeUpdate();
+       } catch (SQLException e) {
+           e.printStackTrace();
+           AlertBox.showErrorAlert("Because of the SQLite database library we use " +
+                   " for this program, notification settings for this user" +
+                   " could not be loaded. Close the program and restart it " +
+                   "to see your notifications.");
+       }
+       
+       switch (notificationColumn) {
+           case "newResourcesSetting":
+               notificationSettings[0] = newValue;
+               break;
+           case "requestApprvlSetting":
+               notificationSettings[1] = newValue;
+               break;
+           case "newEventSetting":
+               notificationSettings[2] = newValue;
+               break;
+           case "nearingEventSetting":
+               notificationSettings[3] = newValue;
+               break;
+           default :
+               throw new IllegalArgumentException();
+       }
+   }
+    
     
     public ArrayList<Integer> loadUserEvents() throws SQLException {
     	
-    	try {
-    		Connection dbConnection = DBHelper.getConnection();
-        	Statement stmt = dbConnection.createStatement();
+    	try (Connection dbConnection = DBHelper.getConnection();
+                Statement stmt = dbConnection.createStatement()) {
         	ResultSet rs = stmt.executeQuery("SELECT eID, username FROM userEvents WHERE username = '" +
         	ScreenManager.getCurrentUser().getUsername() + "'");
             
@@ -449,6 +488,7 @@ public class User extends Person {
             	eventsList.add(rs.getInt(1));
             }
             
+            rs.close();
     	}  catch (SQLException e) {
     		System.out.println("Failed to load user events;");
             e.printStackTrace();
@@ -462,18 +502,19 @@ public class User extends Person {
      * @return If they have outstanding fines.
      */
     public boolean hasOutstandingFines() {
-        try {
-            Connection dbConnection = DBHelper.getConnection();
-            PreparedStatement sqlStatement = dbConnection.prepareStatement(
-                "SELECT COUNT(*) FROM fines WHERE username = ? AND paid = 0;");
+        try (Connection dbConnection = DBHelper.getConnection();
+                PreparedStatement sqlStatement = dbConnection.prepareStatement(
+                "SELECT COUNT(*) FROM fines WHERE username = ? AND paid = 0;")){
+            
             sqlStatement.setString(1, this.getUsername());
             ResultSet rs = sqlStatement.executeQuery();
-            dbConnection.close();
-
+            
             if (rs.getInt(1) == 0) {
+                rs.close();
                 return false;
             }
             else {
+                rs.close();
                 return true;
             }
         }
