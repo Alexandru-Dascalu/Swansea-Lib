@@ -162,20 +162,15 @@ public class RecommendedController {
 		Person person = ScreenManager.getCurrentUser();
 		if (person instanceof User) {
 			User user = ((User) ScreenManager.getCurrentUser());
-						
-			try {
-				ArrayList<Resource> recommendations = user.getRecommendations();
-				for(Resource recommendedR : recommendations) {
-					StackPane imagePane = createImage(
-							recommendedR, RES_IMG_WIDTH, RES_IMG_HEIGHT);
-						
-					recommended.getChildren().add(imagePane);
-					
-				}
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+			
+            ArrayList<Resource> recommendations = user.getRecommendations();
+            for (Resource recommendedR : recommendations) {
+                StackPane imagePane = createImage(recommendedR, RES_IMG_WIDTH,
+                    RES_IMG_HEIGHT);
+
+                recommended.getChildren().add(imagePane);
+
+            }
 		}	
 	}	
 }
