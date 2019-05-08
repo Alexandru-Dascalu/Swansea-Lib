@@ -12,6 +12,7 @@ import javafx.scene.Node;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.Region;
+import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 
 public abstract class Notification {
@@ -124,6 +125,7 @@ public abstract class Notification {
         notificationBox.setStyle(getStyle());
         notificationBox.setAlignment(Pos.CENTER_LEFT);
         notificationBox.setPadding(new Insets(0, 0, 0, 20));
+        VBox.setVgrow(notificationBox, Priority.ALWAYS);
         return notificationBox;
 	}
 	

@@ -12,11 +12,11 @@
   <tabs>
     <Tab fx:id="newNotificationsTab" closable="false" text="New Notifications">
          <content>
-            <BorderPane fx:id="newNottificationPane">
+            <BorderPane fx:id="newNottificationPane" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308">
                <center>
-                  <ScrollPane hbarPolicy="NEVER" prefHeight="800.0" prefWidth="900.0" vbarPolicy="ALWAYS">
+                  <ScrollPane hbarPolicy="NEVER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="800.0" prefWidth="900.0" vbarPolicy="ALWAYS">
                      <content>
-                        <VBox fx:id="newNotificationsBox" alignment="CENTER" spacing="1.0" />
+                        <VBox fx:id="newNotificationsBox" alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefWidth="900.0" spacing="1.0" />
                      </content>
                   </ScrollPane>
                </center>
@@ -30,7 +30,7 @@
          </content></Tab>
     <Tab fx:id="pastNotificationsTab" text="Past Notifications">
          <content>
-            <VBox fx:id="pastNotificationsBox" prefHeight="200.0" prefWidth="100.0" spacing="1.0" />
+            <VBox fx:id="pastNotificationsBox" prefHeight="200.0" prefWidth="900.0" spacing="1.0" />
          </content></Tab>
   </tabs>
 </TabPane>
