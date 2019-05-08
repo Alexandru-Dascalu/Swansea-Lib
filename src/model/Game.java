@@ -205,7 +205,7 @@ public class Game extends Resource {
             
             if (genre != null) {
                 if (genre.equals(otherGame.getGenre())) {
-                    score++;
+                    score += 3;
                 }
             }
 
@@ -217,7 +217,7 @@ public class Game extends Resource {
 
             if (multiplayerSupport != null) {
                 if (multiplayerSupport.equals(otherGame.getMultiplayerSupport())) {
-                    score++;
+                    score += 2;
                 }
             }
         }

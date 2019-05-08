@@ -262,15 +262,17 @@ public class DVD extends Resource {
             DVD otherDVD = (DVD) otherResource;
 
             if (director.equals(otherDVD.getDirector())) {
-                score++;
-            }
-
-            if (runTime == otherDVD.getRuntime()) {
-                score++;
+                score += 4;
             }
 
             if (language != null) {
-                if (language.equals(otherDVD.getLanguage())) {
+                /*Language only contributes if it is not english since most of 
+                 * the dvds are in english anyway. If it is in another language
+                 * then maybe the user wants to see movies in that language. 
+                 * This change is a suggestion from one of the participants 
+                 * in my study.*/
+                if (!language.equalsIgnoreCase("egnlish") && 
+                        language.equals(otherDVD.getLanguage())) {
                     score++;
                 }
             }

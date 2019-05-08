@@ -235,7 +235,7 @@ public class Book extends Resource {
             Book otherBook = (Book) otherResource;
 
             if (author.equals(otherBook.getAuthor())) {
-                score++;
+                score += 4;
             }
 
             if (publisher.equals(otherBook.getPublisher())) {
@@ -244,7 +244,7 @@ public class Book extends Resource {
 
             if (genre != null) {
                 if (genre.equals(otherBook.getGenre())) {
-                    score++;
+                    score += 3;
                 }
             }
 
@@ -255,8 +255,14 @@ public class Book extends Resource {
             }
 
             if (language != null) {
-                if (language.equals(otherBook.getLanguage())) {
-                    score++;
+                /*Language only contributes if it is not english since most of 
+                 * the books are in english anyway. If it is in another language
+                 * then maybe the user wants to read books in that language. 
+                 * This change is a suggestion from one of the participants 
+                 * in my study.*/
+                if (!language.equalsIgnoreCase("english") && 
+                        language.equals(otherBook.getLanguage())) {
+                    score += 2;
                 }
             }
         }

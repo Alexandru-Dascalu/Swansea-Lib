@@ -161,11 +161,11 @@ public class Laptop extends Resource {
             Laptop otherLaptop = (Laptop) otherResource;
 
             if (manufacturer.equals(otherLaptop.getManufacturer())) {
-                score++;
+                score += 2;
             }
 
             if (model.equals(otherLaptop.getModel())) {
-                score++;
+                score += 3;
             }
 
             if (operatingSystem.equals(otherLaptop.getOS())) {

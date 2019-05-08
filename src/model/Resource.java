@@ -708,7 +708,7 @@ public abstract class Resource {
         int score = 0;
 
         if (title.equals(otherResource.getTitle())) {
-            score++;
+            score += 4;
         }
 
         if (year == otherResource.getYear()) {
