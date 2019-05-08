@@ -251,6 +251,7 @@ public class User extends Person {
             catch (SQLException e) {
                 e.printStackTrace();
                 AlertBox.showErrorAlert(e.getMessage());
+                return;
             }
             
             for(Event event: nearEvents) {
@@ -548,38 +549,48 @@ public class User extends Person {
      * A method that gets a list of resources recommended for the user based on what they 
      * have previously borrowed.
      * @return the recommended resource based on the user
-     * @throws SQLException If the connection to the data base fails.
      */
-    public ArrayList<Resource> getRecommendations() throws SQLException {
-        Connection connectionToDB = DBHelper.getConnection();
-        PreparedStatement sqlStatement = connectionToDB.prepareStatement(
-            "select copyID from borrowRecords where username=?");
-        sqlStatement.setString(1, username);
-        ResultSet borrowedCopiesID = sqlStatement.executeQuery();
+    public ArrayList<Resource> getRecommendations() {
+        
+        ArrayList<Resource> borrowedResources;
+        try (Connection connectionToDB = DBHelper.getConnection();
+                PreparedStatement sqlStatement = connectionToDB.prepareStatement(
+                "select copyID from borrowRecords where username= \"" +
+                username + "\"");
+                ResultSet borrowedCopiesID = sqlStatement.executeQuery()) {
+            
+            PreparedStatement selectRID = connectionToDB.prepareStatement("select rID from copies where copyID=?");
+            borrowedResources = new ArrayList<>();
+            
+            while (borrowedCopiesID.next()) {
+                int copyID = borrowedCopiesID.getInt("copyID");
 
-        sqlStatement = connectionToDB
-            .prepareStatement("select rID from copies where copyID=?");
-        ArrayList<Resource> borrowedResources = new ArrayList<>();
+                selectRID.setInt(1, copyID);
+                ResultSet resourceIDResult = selectRID.executeQuery();
 
-        while (borrowedCopiesID.next()) {
-            int copyID = borrowedCopiesID.getInt("copyID");
+                /*
+                 * Since copyID is the primary key of copies, the result to
+                 * selecting rID will always have only one row.
+                 */
+                int resourceID = resourceIDResult.getInt("rID");
+                System.out.println("rID: " + resourceID);
+                Resource borrowedResource = Resource.getResource(resourceID);
 
-            sqlStatement.setInt(1, copyID);
-            ResultSet resourceIDResult = sqlStatement.executeQuery();
+                if (!borrowedResources.contains(borrowedResource)) {
+                    borrowedResources.add(borrowedResource);
+                }
 
-            /*
-             * Since copyID is the primary key of copies, the result to
-             * selecting rID will always have only one row.
-             */
-            int resourceID = resourceIDResult.getInt("rID");
-            System.out.println("rID: " + resourceID);
-            Resource borrowedResource = Resource.getResource(resourceID);
-
-            if (!borrowedResources.contains(borrowedResource)) {
-                borrowedResources.add(borrowedResource);
+                resourceIDResult.close();
             }
+            
+            selectRID.close();
+                
+        } catch (SQLException e) {
+            e.printStackTrace();
+            AlertBox.showErrorAlert(e.getMessage());
+            return null;
         }
-
+        
         //The arraylist that stores the recommendation scores
         ArrayList<ResourceRecommendScore> resourceScores = new ArrayList<>();
         ArrayList<Resource> resources = Resource.getResources();

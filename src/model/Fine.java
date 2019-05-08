@@ -85,11 +85,11 @@ public class Fine {
      */
     public static ArrayList<Fine> getFines() {
         ArrayList<Fine> fines = new ArrayList<Fine>();
-        try {
-            Connection connection = DBHelper.getConnection();
-            PreparedStatement statement = connection.prepareStatement("SELECT "
-            		+ "* " + "FROM fines");
-            ResultSet results = statement.executeQuery();
+        try (Connection connection = DBHelper.getConnection();
+                PreparedStatement statement = connection.prepareStatement(
+                    "SELECT * FROM fines");
+                ResultSet results = statement.executeQuery()) {
+            
             while (results.next()) {
                 boolean finePaid;
                 if (results.getInt("paid") == 1) {

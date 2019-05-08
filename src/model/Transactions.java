@@ -37,12 +37,12 @@ public class Transactions {
      */
     public static Transactions getTransactions(String username) {
         ArrayList<Payment> payments = new ArrayList<Payment>();
-        try {
-            Connection connection = DBHelper.getConnection();
-            PreparedStatement statement = connection.prepareStatement(
-                "SELECT * " + "FROM transactions WHERE username=?");
-            statement.setString(1, username);
-            ResultSet results = statement.executeQuery();
+        try  (Connection connection = DBHelper.getConnection();
+                PreparedStatement statement = connection.prepareStatement(
+                    "SELECT * FROM transactions WHERE username = \"" +
+                    username +"\"");
+                ResultSet results = statement.executeQuery()) {
+            
             while (results.next()) {
                 payments.add(new Payment(results.getInt("transactionId"),
                     results.getString("username"), results.getFloat("paid"),
