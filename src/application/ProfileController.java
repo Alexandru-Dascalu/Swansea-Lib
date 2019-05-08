@@ -701,6 +701,7 @@ public class ProfileController {
             }
         } else {
             notificationStack.setVisible(false);
+            notificationSettingBtn.setVisible(false);
         }
         
         loadUserTableColumns();
