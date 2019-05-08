@@ -21,6 +21,7 @@ import model.Laptop;
 import model.Notification;
 import model.Resource;
 import model.ResourceNotification;
+import model.User;
 
 /**
 * Resource Controller is a class that setups up the resources and updates them.

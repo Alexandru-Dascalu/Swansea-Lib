@@ -57,7 +57,7 @@ public class User extends Person {
         super(username, firstName, lastName, phoneNumber, address, postcode,
             avatarPath,stamp);
         this.accountBalance = accountBalance;
-        notificationSettings = new boolean[4];
+        notificationSettings = null;
     }
 
     
@@ -223,45 +223,48 @@ public class User extends Person {
     
     /**Checks if any events that this user will be attending are within 3 days 
      * from the current date, and if so makes a new notification for this in 
-     * the database.*/
+     * the database, but only if the user notification setting allows so. 
+     * Otherwise, it does nothing.*/
     public void checkForNearingEvents() {
-        LinkedList<Event> nearEvents = new LinkedList<>();
-        try (Connection connectionToDB = DBHelper.getConnection();
-                PreparedStatement selectionStmt = connectionToDB.prepareStatement(
-                "SELECT title, details, date, maxAllowed FROM userEvents, events" +
-                " WHERE events.eID = userEvents.eID AND username=?")) {
-            
-            selectionStmt.setString(1, getUsername());
-            ResultSet userEvents = selectionStmt.executeQuery();
-            
-            while(userEvents.next()) {
-                Event userEvent = new Event(userEvents.getString(1), userEvents.getString(2), 
-                    userEvents.getString(3), userEvents.getInt(4));
+        if(notificationSettings[3]) {
+            LinkedList<Event> nearEvents = new LinkedList<>();
+            try (Connection connectionToDB = DBHelper.getConnection();
+                    PreparedStatement selectionStmt = connectionToDB.prepareStatement(
+                    "SELECT title, details, date, maxAllowed FROM userEvents, events" +
+                    " WHERE events.eID = userEvents.eID AND username=?")) {
                 
-                int daysUntil = userEvent.getDaysUntilEvent();
-                if(daysUntil < 4 && daysUntil > -1) {
-                    nearEvents.add(userEvent);
+                selectionStmt.setString(1, getUsername());
+                ResultSet userEvents = selectionStmt.executeQuery();
+                
+                while(userEvents.next()) {
+                    Event userEvent = new Event(userEvents.getString(1), userEvents.getString(2), 
+                        userEvents.getString(3), userEvents.getInt(4));
+                    
+                    int daysUntil = userEvent.getDaysUntilEvent();
+                    if(daysUntil < 4 && daysUntil > -1) {
+                        nearEvents.add(userEvent);
+                    }
                 }
+                
+                userEvents.close();
+            }
+            catch (SQLException e) {
+                e.printStackTrace();
+                AlertBox.showErrorAlert(e.getMessage());
             }
             
-            userEvents.close();
-        }
-        catch (SQLException e) {
-            e.printStackTrace();
-            AlertBox.showErrorAlert(e.getMessage());
-        }
-        
-        for(Event event: nearEvents) {
-            String eventMessage = EventNotification.getNearingEventMsg(event);
-            String eventDate = event.getDateTime();
-            
-            int notificationID = Notification.getExistingNotificationID(eventMessage, eventDate);
-            if(notificationID == -1) {
-                notificationID = EventNotification.makeNearingEventNotification(event);
-            }
-            
-            if(!Notification.existUserNotification(notificationID, username)) {
-                Notification.makeUserNotification(notificationID, username);
+            for(Event event: nearEvents) {
+                String eventMessage = EventNotification.getNearingEventMsg(event);
+                String eventDate = event.getDateTime();
+                
+                int notificationID = Notification.getExistingNotificationID(eventMessage, eventDate);
+                if(notificationID == -1) {
+                    notificationID = EventNotification.makeNearingEventNotification(event);
+                }
+                
+                if(!Notification.existUserNotification(notificationID, username)) {
+                    Notification.makeUserNotification(notificationID, username);
+                }
             }
         }
     }
@@ -420,6 +423,7 @@ public class User extends Person {
            selectStatement.setString(1, username);
            ResultSet settings = selectStatement.executeQuery();
            
+           notificationSettings = new boolean[4];
            notificationSettings[0] = settings.getBoolean(2);
            notificationSettings[1] = settings.getBoolean(3);
            notificationSettings[2] = settings.getBoolean(4);
