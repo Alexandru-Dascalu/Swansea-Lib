@@ -901,31 +901,32 @@ public class ProfileController {
 		Resource resourceToLoan = Resource.getResource(resourceID);
 		
 		User user = (User)Person.loadPerson(username);
+		
+		if (user.getBorrowLoad() + resourceToLoan.getLimitAmount() > 5) {
+		    throw new IllegalStateException("approveCopy should not have "
+                    + "been called if user is over request limit.");
+		}
+		
         if (!resourceToLoan.loanToUser(user)) {
             AlertBox.showInfoAlert("Waiting for free copy");
         } else {
-            if (user.getBorrowLoad() + resourceToLoan.getLimitAmount() > 5) {
-                throw new IllegalStateException("approveCopy should not have "
-                		+ "been called if user is over request limit.");
-            } else {
-                try {
-                    Connection conn = DBHelper.getConnection();
+            
+            try (Connection dbConnection = DBHelper.getConnection();
+                    PreparedStatement sqlStatement = dbConnection.prepareStatement(
+                    "DELETE FROM requestsToApprove WHERE rID = ? AND userName = ?")) {
 
-                    PreparedStatement sqlStatement = conn.prepareStatement("DELETE" +
-                            " FROM requestsToApprove WHERE rID = ? AND userName = ?");
-                    sqlStatement.setInt(1, resourceID);
-                    sqlStatement.setString(2, username);
-                    sqlStatement.executeUpdate();
-                }
-                catch (SQLException e) {
-                    e.printStackTrace();
-                }
+                sqlStatement.setInt(1, resourceID);
+                sqlStatement.setString(2, username);
+                sqlStatement.executeUpdate();
             }
-        }
+            catch (SQLException e) {
+                e.printStackTrace();
+            }
 
-		System.out.println("Approved copy!");
+            ResourceNotification.makeApprovalNotification(resourceToLoan, user);
+        }
+        System.out.println("Approved copy!");
 		displayRequested();
-		ResourceNotification.makeApprovalNotification(resourceToLoan);;
 	}
 
 	/**

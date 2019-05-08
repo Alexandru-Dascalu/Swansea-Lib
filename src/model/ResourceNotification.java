@@ -62,41 +62,41 @@ public class ResourceNotification extends Notification {
         }
 	}
 	
-	public static void makeApprovalNotification(Resource resource) {
-	    int notificationID;
-	    try (Connection dbConnection = DBHelper.getConnection();
-	            PreparedStatement insertStatement = dbConnection.prepareStatement(
-	            "INSERT INTO notification (message, image) VALUES (?, ?)")) {
-            
-            insertStatement.setString(1,
-                ResourceNotification.getRequestApprvlMsg(resource));
+	public static void makeApprovalNotification(Resource resource, User borrower) {
+	    borrower.loadNotificationSettings();
+	    if(borrower.getNotificationSettings()[1]) {
+	        int notificationID;
+	        try (Connection dbConnection = DBHelper.getConnection();
+	                PreparedStatement insertStatement = dbConnection.prepareStatement(
+	                "INSERT INTO notification (message, image) VALUES (?, ?)")) {
+	            
+	            insertStatement.setString(1,
+	                ResourceNotification.getRequestApprvlMsg(resource));
 
-            insertStatement.setString(2, resource.getThumbnailPath());
-            insertStatement.executeUpdate();
-            
-            notificationID = insertStatement.getGeneratedKeys().getInt(1);
-            
-        }
-        catch (SQLException e) {
-            e.printStackTrace();
-            AlertBox.showErrorAlert(e.getMessage());
-            return;
-        }
-	    
-	    List<String> notificationUsers = getApprovalNotificationUsers();
-	    try (Connection dbConnection = DBHelper.getConnection();
-	            PreparedStatement insertStatement = dbConnection.prepareStatement(
-	            "INSERT INTO userNotifications VALUES (?, ?, false)")) {
-	        
-	        for (String username : notificationUsers) {
-	                insertStatement.setInt(1, notificationID);
-	                insertStatement.setString(2, username);
-	                insertStatement.executeUpdate();
+	            insertStatement.setString(2, resource.getThumbnailPath());
+	            insertStatement.executeUpdate();
+	            
+	            notificationID = insertStatement.getGeneratedKeys().getInt(1);
+	            
 	        }
-	    } catch (SQLException e) {
-            e.printStackTrace();
-            AlertBox.showErrorAlert(e.getMessage());
-        }
+	        catch (SQLException e) {
+	            e.printStackTrace();
+	            AlertBox.showErrorAlert(e.getMessage());
+	            return;
+	        }
+	        
+	        try (Connection dbConnection = DBHelper.getConnection();
+	                PreparedStatement insertStatement = dbConnection.prepareStatement(
+	                "INSERT INTO userNotifications VALUES (?, ?, false)")) {
+	            
+                insertStatement.setInt(1, notificationID);
+                insertStatement.setString(2, borrower.getUsername());
+                insertStatement.executeUpdate();
+	        } catch (SQLException e) {
+	            e.printStackTrace();
+	            AlertBox.showErrorAlert(e.getMessage());
+	        }
+	    }
 	}
     
     public static ArrayList<String> getNewNotificationUsers() {
