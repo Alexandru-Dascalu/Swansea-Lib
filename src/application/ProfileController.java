@@ -713,6 +713,13 @@ public class ProfileController {
 
         scrollPane.setHvalue(0.5);
     }
+    
+    private void removeNotificationDot() {
+        int nrOfChildren = notificationStack.getChildren().size();
+        if(nrOfChildren > 1) {
+            notificationStack.getChildren().remove(nrOfChildren - 1);
+        }
+    }
 
 	//
 	//Staff Profile -----------------------------------------------------------
@@ -1434,13 +1441,16 @@ public class ProfileController {
             stage.setScene(new Scene(root1));
             stage.show();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
 	
 	@FXML
 	private void showNotifications() {
+	    
+	    if(!((User)ScreenManager.getCurrentUser()).hasUnreadNotifications()) {
+	        removeNotificationDot();
+	    }
 	    FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/" +
 	        "notificationView.fxml"));
 	    
