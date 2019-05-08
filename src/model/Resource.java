@@ -827,36 +827,17 @@ public abstract class Resource {
      */
     protected static void updateDBvalue(String tableName, int resourceID,
             String field, int data) {
-        Connection connectionToDB = null;
-        PreparedStatement sqlStatement = null;
-        try {
-            connectionToDB = DBHelper.getConnection();
-            sqlStatement = connectionToDB.prepareStatement(
-                "update " + tableName + " set " + field + "=? where rID=?");
+        
+        try (Connection connectionToDB = DBHelper.getConnection();
+                PreparedStatement sqlStatement = connectionToDB.prepareStatement(
+                "update " + tableName + " set " + field + "=? where rID=?")) {
+            
             sqlStatement.setInt(1, data);
             sqlStatement.setInt(2, resourceID);
             sqlStatement.executeUpdate();
         }
         catch (SQLException e) {
             e.printStackTrace();
-        } finally {
-            if (sqlStatement != null) {
-                try {
-                    sqlStatement.close();
-                }
-                catch (SQLException e) {
-                    e.printStackTrace();
-                }
-            }
-
-            if (connectionToDB != null) {
-                try {
-                    connectionToDB.close();
-                }
-                catch (SQLException e) {
-                    e.printStackTrace();
-                }
-            }
         }
     }
     

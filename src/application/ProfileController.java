@@ -697,7 +697,7 @@ public class ProfileController {
             if(currentUser.hasUnreadNotifications()) {
                 Circle circle = new Circle (7, Color.RED);
                 notificationStack.getChildren().add(circle);
-                notificationStack.setAlignment(circle, Pos.TOP_RIGHT);
+                StackPane.setAlignment(circle, Pos.TOP_RIGHT);
             }
         } else {
             notificationStack.setVisible(false);
@@ -718,6 +718,7 @@ public class ProfileController {
         scrollPane.setHvalue(0.5);
     }
     
+    /**Removes the red notification dot from the notification bell stack pane.*/
     private void removeNotificationDot() {
         int nrOfChildren = notificationStack.getChildren().size();
         if(nrOfChildren > 1) {

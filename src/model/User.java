@@ -33,6 +33,11 @@ public class User extends Person {
     private ArrayList<Integer> eventsList = new ArrayList<Integer>();
     
     private LinkedList<Notification> notifications = new LinkedList<>();
+    
+    /**A series of values representing the notification preferences of this user.
+     * They are in the array in this order: new resource , request approval, 
+     * new events, nearing events.*/
+    private boolean[] notificationSettings;
 
     /**
      * Creates a new User object from the given arguments.
@@ -52,6 +57,8 @@ public class User extends Person {
         super(username, firstName, lastName, phoneNumber, address, postcode,
             avatarPath,stamp);
         this.accountBalance = accountBalance;
+        notificationSettings = new boolean[4];
+        loadNotificationSettings();
     }
 
     
@@ -137,7 +144,40 @@ public class User extends Person {
     public double getAccountBalance() {
         return accountBalance;
     }
+    
+    /**
+     * Gets the array of settings for receiving notifications for this user.
+     * @return the notification settings of this user.
+     */
+    public boolean[] getNotificationSettings() {
+        return notificationSettings;
+    }
 
+    /**
+     * Loads the notification settings of this user from the database.
+     */
+    public void loadNotificationSettings() {
+        try (Connection dbConnection = DBHelper.getConnection();
+                PreparedStatement selectStatement = dbConnection.prepareStatement(
+                "SELECT * FROM userSettings WHERE userName = ?")) {
+            
+            selectStatement.setString(1, username);
+            ResultSet settings = selectStatement.executeQuery();
+            
+            notificationSettings[0] = settings.getBoolean(2);
+            notificationSettings[1] = settings.getBoolean(3);
+            notificationSettings[2] = settings.getBoolean(4);
+            notificationSettings[3] = settings.getBoolean(5);
+            
+            settings.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            AlertBox.showErrorAlert("Because of the SQLite database library we use " +
+                    " for this program, notification settings for this user" +
+                    " could not be loaded. Close the program and restart it " +
+                    "to see your notifications.");
+        }
+     }
     
     /**
      * Reduces the users balance.
@@ -214,11 +254,11 @@ public class User extends Person {
      * the database.*/
     public void checkForNearingEvents() {
         LinkedList<Event> nearEvents = new LinkedList<>();
-        try {
-            Connection connectionToDB = DBHelper.getConnection();
-            PreparedStatement selectionStmt = connectionToDB.prepareStatement(
+        try (Connection connectionToDB = DBHelper.getConnection();
+                PreparedStatement selectionStmt = connectionToDB.prepareStatement(
                 "SELECT title, details, date, maxAllowed FROM userEvents, events" +
-                " WHERE events.eID = userEvents.eID AND username=?");
+                " WHERE events.eID = userEvents.eID AND username=?")) {
+            
             selectionStmt.setString(1, getUsername());
             ResultSet userEvents = selectionStmt.executeQuery();
             
@@ -232,7 +272,7 @@ public class User extends Person {
                 }
             }
             
-            connectionToDB.close();
+            userEvents.close();
         }
         catch (SQLException e) {
             e.printStackTrace();

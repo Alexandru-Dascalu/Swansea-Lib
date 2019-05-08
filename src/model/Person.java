@@ -198,41 +198,39 @@ public abstract class Person {
      */
     public static Person loadPerson(String userName) {
         try (Connection dbConnection = DBHelper.getConnection()){
-            // Declaring necessary variables
             
-
             PreparedStatement sqlStatement = dbConnection
                 .prepareStatement("SELECT COUNT(*) FROM users WHERE users.username = ?");
             sqlStatement.setString(1, userName);
-            ResultSet rs = sqlStatement.executeQuery();
+            ResultSet persons = sqlStatement.executeQuery();
 
             //Selects the amount of people who are staff
-            if (rs.getInt(1) == 1) {
+            if (persons.getInt(1) == 1) {
                 sqlStatement = dbConnection.prepareStatement("SELECT COUNT "
                 		+ "(*) FROM staff WHERE username = ?");
                 sqlStatement.setString(1, userName);
-                rs = sqlStatement.executeQuery();
+                persons = sqlStatement.executeQuery();
 
                 //Loads up all staff users
-                if (rs.getInt(1) == 1) {
+                if (persons.getInt(1) == 1) {
                     sqlStatement = dbConnection.prepareStatement(
                         "SELECT * FROM users, staff WHERE users.username = "
                         + "staff.username and users.username = ?");
                     sqlStatement.setString(1, userName);
-                    rs = sqlStatement.executeQuery();
+                    persons = sqlStatement.executeQuery();
 
-                    String usernameResult = rs.getString(1);
-                    String firstnameResult = rs.getString(2);
-                    String lastnameResult = rs.getString(3);
-                    String telephoneResult = rs.getString(4);
-                    String addressResult = rs.getString(5);
-                    String postcodeResult = rs.getString(6);
-                    String pathResult = rs.getString(7);
-                    int staffIDResult = rs.getInt(11);
-                    String employmentDateResult = rs.getString(12);
-                    String stamp = rs.getString(9);
+                    String usernameResult = persons.getString(1);
+                    String firstnameResult = persons.getString(2);
+                    String lastnameResult = persons.getString(3);
+                    String telephoneResult = persons.getString(4);
+                    String addressResult = persons.getString(5);
+                    String postcodeResult = persons.getString(6);
+                    String pathResult = persons.getString(7);
+                    int staffIDResult = persons.getInt(11);
+                    String employmentDateResult = persons.getString(12);
+                    String stamp = persons.getString(9);
                     
-                    rs.close();
+                    persons.close();
                     sqlStatement.close();
                     return new Librarian(usernameResult, firstnameResult, lastnameResult, telephoneResult,
                         addressResult, postcodeResult, pathResult, stamp, employmentDateResult,
@@ -243,25 +241,25 @@ public abstract class Person {
                     sqlStatement = dbConnection.prepareStatement("SELECT * "
                     		+ "FROM users WHERE username = ?");
                     sqlStatement.setString(1, userName);
-                    rs = sqlStatement.executeQuery();
+                    persons = sqlStatement.executeQuery();
 
-                    String usernameResult = rs.getString(1);
-                    String firstnameResult = rs.getString(2);
-                    String lastnameResult = rs.getString(3);
-                    String telephoneResult = rs.getString(4);
-                    String addressResult = rs.getString(5);
-                    String postcodeResult = rs.getString(6);
-                    String pathResult = rs.getString(7);
-                    String balanceResult = rs.getString(8);
-                    String stamp = rs.getString(9);
+                    String usernameResult = persons.getString(1);
+                    String firstnameResult = persons.getString(2);
+                    String lastnameResult = persons.getString(3);
+                    String telephoneResult = persons.getString(4);
+                    String addressResult = persons.getString(5);
+                    String postcodeResult = persons.getString(6);
+                    String pathResult = persons.getString(7);
+                    String balanceResult = persons.getString(8);
+                    String stamp = persons.getString(9);
 
-                    rs.close();
+                    persons.close();
                     sqlStatement.close();
                     return new User(usernameResult, firstnameResult, lastnameResult, telephoneResult, addressResult,
                         postcodeResult, pathResult, Double.parseDouble(balanceResult),stamp);
                 }
             } else {
-                rs.close();
+                persons.close();
                 sqlStatement.close();
             }
         }

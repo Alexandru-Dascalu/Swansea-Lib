@@ -10,6 +10,10 @@ CREATE TABLE IF NOT EXISTS `users` (
 	`avatarPath`	TEXT,
 	`accountBalance`	TEXT,
 	`lastLogin`	TEXT,
+	`newResourcesSetting` BOOLEAN DEFAULT TRUE,
+	`requestApprvlSetting` BOOLEAN DEFAULT TRUE,
+	`newEventSetting` BOOLEAN DEFAULT TRUE,
+	`nearingEventSetting` BOOLEAN DEFAULT TRUE,
 	PRIMARY KEY(`username`)
 );
 INSERT INTO `users`('username','firstname','lastname','telephone','address','postcode','avatarPath','accountBalance') VALUES ('Alexandru','Alex','Dascalu','079999999','3 Maple Street','SA2 8PP','/SavedAvatars/Avatar1.png','0');
@@ -31,6 +35,23 @@ CREATE TABLE IF NOT EXISTS `staff` (
 
 INSERT INTO `staff` VALUES ('Helper1','1','03/11/2018');
 INSERT INTO `staff` VALUES ('Manager1','2','21/02/2016');
+
+DROP TABLE IF EXISTS `userSettings`;
+CREATE TABLE IF NOT EXISTS `userSettings` (
+	`userName`	TEXT,
+	`newResourcesSetting` BOOLEAN DEFAULT TRUE,
+	`requestApprvlSetting` BOOLEAN DEFAULT TRUE,
+	`newEventSetting` BOOLEAN DEFAULT TRUE,
+	`nearingEventSetting` BOOLEAN DEFAULT TRUE,
+	PRIMARY KEY (`userName`),
+	FOREIGN KEY(`username`) REFERENCES `users`(`username`)
+);
+
+INSERT INTO `userSettings` VALUES ('Alexandru');
+INSERT INTO `userSettings` VALUES ('Queeny');
+INSERT INTO `userSettings` VALUES ('Jackie');
+INSERT INTO `userSettings` VALUES ('Manny');
+INSERT INTO `userSettings` VALUES ('Steveo');
 
 DROP TABLE IF EXISTS `transactions`;
 CREATE TABLE IF NOT EXISTS `transactions` (
