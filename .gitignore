@@ -21,6 +21,7 @@
 
 .project
 .settings/
+bin/*
 .classpath
 *.db
 
