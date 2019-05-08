@@ -10,8 +10,8 @@ import java.util.ArrayList;
  * @author Alexandru Dascalu
  *
  */
-public class ResourceRecommendScore
-        implements Comparable<ResourceRecommendScore> {
+public class ResourceRecommender
+        implements Comparable<ResourceRecommender> {
 
     private Resource resource;
 
@@ -21,7 +21,7 @@ public class ResourceRecommendScore
      * Makes a new ResourceRecommendScore object. It just initialises the 
      * resource as null and the list of resources as an empty list.
      */
-    public ResourceRecommendScore() {
+    public ResourceRecommender() {
         resource = null;
         borrowedResources = new ArrayList<Resource>();
     }
@@ -85,7 +85,7 @@ public class ResourceRecommendScore
      * @return -1 if the other object has a lower score, 1 of the other object 
      * has a higher score, 0 if their scores are the same.
      */
-    public int compareTo(ResourceRecommendScore other) {
+    public int compareTo(ResourceRecommender other) {
         int likenessDifference = calculateLikeness() -
             other.calculateLikeness();
         if (likenessDifference > 0) {

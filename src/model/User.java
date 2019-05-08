@@ -592,11 +592,11 @@ public class User extends Person {
         }
         
         //The arraylist that stores the recommendation scores
-        ArrayList<ResourceRecommendScore> resourceScores = new ArrayList<>();
+        ArrayList<ResourceRecommender> resourceScores = new ArrayList<>();
         ArrayList<Resource> resources = Resource.getResources();
         for (Resource resource : resources) {
             if (!borrowedResources.contains(resource)) {
-                ResourceRecommendScore resourceScore = new ResourceRecommendScore();
+                ResourceRecommender resourceScore = new ResourceRecommender();
                 resourceScore.setResource(resource);
                 resourceScore.setBorrowedResources(borrowedResources);
                 resourceScores.add(resourceScore);
@@ -607,7 +607,7 @@ public class User extends Person {
 
         //Arraylist that stores the recommended resource
         ArrayList<Resource> recommendedResource = new ArrayList<>();
-        for (ResourceRecommendScore resourceScore : resourceScores) {
+        for (ResourceRecommender resourceScore : resourceScores) {
             if (resourceScore.calculateLikeness() > 0) {
                 recommendedResource.add(resourceScore.getResource());
             }
