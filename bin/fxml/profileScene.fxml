@@ -71,7 +71,7 @@
                <content>
                   <BorderPane prefHeight="200.0" prefWidth="200.0">
                      <left>
-                        <VBox alignment="TOP_CENTER" minHeight="0.0" minWidth="0.0" style="-fx-background-color: #545454;" BorderPane.alignment="CENTER">
+                        <VBox alignment="TOP_CENTER" minHeight="0.0" minWidth="0.0" spacing="10.0" style="-fx-background-color: #545454;" BorderPane.alignment="CENTER">
                            <children>
                               <Label id="usernameText" fx:id="userLabel" text="Username" textFill="WHITE">
                                  <font>
