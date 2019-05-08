@@ -744,13 +744,12 @@ public class ProfileController {
 		loadExplorerTableColumns("all");
 		ObservableList<ExplorerRow> copiesList = FXCollections.observableArrayList();
 
-		try {
-			Connection conn = DBHelper.getConnection();
-			Statement stmt = conn.createStatement();
-			ResultSet rs = stmt.executeQuery("SELECT * FROM copies,"
-					+ " resource WHERE copies.rID = resource.rID");
-
-			while(rs.next()) {
+		try (Connection conn = DBHelper.getConnection();
+	            Statement stmt = conn.createStatement();
+	            ResultSet rs = stmt.executeQuery("SELECT * FROM copies,"
+	                    + " resource WHERE copies.rID = resource.rID")) {
+		    
+		    while(rs.next()) {
 				copiesList.add(new ExplorerRow(
 						rs.getString(9),
 						rs.getString(3),
@@ -783,15 +782,14 @@ public class ProfileController {
 		loadExplorerTableColumns("overdue");
 		ObservableList<ExplorerRow> copiesList = FXCollections.observableArrayList();
 
-		try {
-			Connection conn = DBHelper.getConnection();
-			Statement stmt = conn.createStatement();
-			ResultSet rs = stmt.executeQuery("SELECT * FROM fines, "
-					+ "resource, copies WHERE fines.rID = resource.rID AND "
-					+ "copies.rID = resource.rID AND copies.keeper = "
-					+ "fines.username");
-
-			while(rs.next()) {
+		try (Connection conn = DBHelper.getConnection();
+	            Statement stmt = conn.createStatement();
+	            ResultSet rs = stmt.executeQuery("SELECT * FROM fines, "
+	                    + "resource, copies WHERE fines.rID = resource.rID AND "
+	                    + "copies.rID = resource.rID AND copies.keeper = "
+	                    + "fines.username")) {
+			
+		    while(rs.next()) {
 				copiesList.add(new ExplorerRow(
 						rs.getString(9),
 						rs.getString(2),
@@ -822,14 +820,13 @@ public class ProfileController {
 		loadExplorerTableColumns("requested");
 		ObservableList<ExplorerRow> copiesList = FXCollections.observableArrayList();
 
-		try {
-			Connection conn = DBHelper.getConnection();
-			Statement stmt = conn.createStatement();
+		try (Connection conn = DBHelper.getConnection();
+	            Statement stmt = conn.createStatement();
+		        ResultSet rs = stmt.executeQuery("SELECT * FROM requestsToApprove")) {
+			
 			/*ResultSet rs = stmt.executeQuery("SELECT * FROM requestsToApprove, "
 					+ "users where requestsToApprove.userName = users.username");*/
 
-			ResultSet rs = stmt.executeQuery("SELECT * FROM requestsToApprove");
-			
 			while(rs.next()) {
 				copiesList.add(new ExplorerRow(
 						rs.getString(2),
