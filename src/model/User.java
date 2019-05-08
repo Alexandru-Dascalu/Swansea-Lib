@@ -58,7 +58,6 @@ public class User extends Person {
             avatarPath,stamp);
         this.accountBalance = accountBalance;
         notificationSettings = new boolean[4];
-        loadNotificationSettings();
     }
 
     

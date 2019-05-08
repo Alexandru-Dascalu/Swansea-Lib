@@ -47,11 +47,11 @@ CREATE TABLE IF NOT EXISTS `userSettings` (
 	FOREIGN KEY(`username`) REFERENCES `users`(`username`)
 );
 
-INSERT INTO `userSettings` VALUES ('Alexandru');
-INSERT INTO `userSettings` VALUES ('Queeny');
-INSERT INTO `userSettings` VALUES ('Jackie');
-INSERT INTO `userSettings` VALUES ('Manny');
-INSERT INTO `userSettings` VALUES ('Steveo');
+INSERT INTO `userSettings` VALUES ('Alexandru',true,true,false,true);
+INSERT INTO `userSettings` ('userName') VALUES ('Queeny');
+INSERT INTO `userSettings` ('userName') VALUES ('Jackie');
+INSERT INTO `userSettings` ('userName') VALUES ('Manny');
+INSERT INTO `userSettings` ('userName') VALUES ('Steveo');
 
 DROP TABLE IF EXISTS `transactions`;
 CREATE TABLE IF NOT EXISTS `transactions` (

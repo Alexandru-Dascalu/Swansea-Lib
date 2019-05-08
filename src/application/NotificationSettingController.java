@@ -24,8 +24,11 @@ public class NotificationSettingController {
     
     @FXML
     public void initialize() {
-        User currentUser = (User) ScreenManager.getCurrentUser();
+        boolean[] userSettings = ((User) ScreenManager.getCurrentUser()).getNotificationSettings();
         
-        
+        newResourcesBox.setSelected(userSettings[0]);
+        requestApprovalBox.setSelected(userSettings[1]);
+        newEventBox.setSelected(userSettings[2]);
+        nearingEventBox.setSelected(userSettings[3]);
     }
 }

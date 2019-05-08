@@ -692,6 +692,7 @@ public class ProfileController {
             User currentUser = (User) currentPerson;
             currentUser.checkForNearingEvents();
             currentUser.checkImminentFines();
+            currentUser.loadNotificationSettings();
             currentUser.loadNotifications();
             
             if(currentUser.hasUnreadNotifications()) {
