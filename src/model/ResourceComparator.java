@@ -11,7 +11,7 @@ public class ResourceComparator implements Comparator<Resource> {
     }
     
     public int compare(Resource r1, Resource r2) {
-        return (r1.getLikenessScore(resourceToCompareAgainst) - 
-                r2.getLikenessScore(resourceToCompareAgainst));
+        return (r2.getLikenessScore(resourceToCompareAgainst) - 
+                r1.getLikenessScore(resourceToCompareAgainst));
     }
 }

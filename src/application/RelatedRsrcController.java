@@ -106,7 +106,7 @@ public class RelatedRsrcController {
     public void loadResourceHboxes(String selectionMode, Resource originalResource) {
         this.originalResource = originalResource;
         this.selectionMode = selectionMode;
-        List<Resource> displayedResources = resourcesToDisplay();
+        List<Resource> displayedResources = getResourcesToDisplay();
         
         for(Resource resource: displayedResources) {
             HBox h = getRelatedResourceHBox(resource, clickHandler);
@@ -162,7 +162,7 @@ public class RelatedRsrcController {
         AlertBox.showInfoAlert("Related resources have been saved successfully!");
     }
     
-    private List<Resource> resourcesToDisplay() {
+    private List<Resource> getResourcesToDisplay() {
         List<Resource> displayedResources;
         
         switch (selectionMode) {
@@ -175,10 +175,12 @@ public class RelatedRsrcController {
                     originalResource);
                 displayedResources.sort(comparator);
 
-                for (Resource resource : displayedResources) {
+                for (int i = 0; i < displayedResources.size(); i++) {
+                    Resource resource = displayedResources.get(i);
                     if (resource == ScreenManager.currentResource ||
                         originalResource.isPossiblySameSeries(resource)) {
-                        displayedResources.remove(resource);
+                        displayedResources.remove(i);
+                        i--;
                     }
                 }
                 break;
