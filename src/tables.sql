@@ -173,7 +173,7 @@ INSERT INTO `book` VALUES ('Andy Weir','Harvill Secker','Fiction','978-191-070-1
 INSERT INTO `book` VALUES ('Yuval Noah Harari','Harvill Secker','Non-Fiction','978-191-070-187-5','English',8);
 INSERT INTO `book` VALUES ('Unknown Author','Harvill Secker','Fiction','978-191-070-187-6','English',9);
 INSERT INTO `book` VALUES ('Neil Gaimen','Harvill Secker','Fiction','978-191-070-187-7','English',10);
-INSERT INTO `book` VALUES ('George R. R. Martin','Bantam Spectra','Fantasy','9780007456376','English',29);
+INSERT INTO `book` VALUES ('George R. R. Martin','Bantam Spectra','Epic Fantasy','9780007456376','English',29);
 INSERT INTO `book` VALUES ('George R. R. Martin','Bantam Spectra','Epic Fantasy','9780007456376','English',30);
 INSERT INTO `book` VALUES ('Jules Verne','Pierre-Jules Hetzel','Adventure novel','978-0812972122','English',31);
 INSERT INTO `book` VALUES ('Liviu Rebreanu','Viata Romaneasca','Realist novel','978-973-1898-21-6','Romanian',32);
