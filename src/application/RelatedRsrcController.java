@@ -15,7 +15,6 @@ import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.stage.Modality;
@@ -33,6 +32,8 @@ public class RelatedRsrcController {
     private VBox resourcesVBox;
     
     private Resource originalResource;
+    
+    private String selectionMode;
     
     private final EventHandler<MouseEvent> clickHandler;
             
@@ -99,7 +100,8 @@ public class RelatedRsrcController {
     
     public void loadResourceHboxes(String selectionMode, Resource originalResource) {
         this.originalResource = originalResource;
-        List<Resource> displayedResources = resourcesToDisplay(selectionMode);
+        this.selectionMode = selectionMode;
+        List<Resource> displayedResources = resourcesToDisplay();
         
         for(Resource resource: displayedResources) {
             HBox h = getRelatedResourceHBox(resource, clickHandler);
@@ -111,7 +113,7 @@ public class RelatedRsrcController {
         ScreenManager.setCurrentResource(originalResource);
     }
     
-    private List<Resource> resourcesToDisplay(String selectionMode) {
+    private List<Resource> resourcesToDisplay() {
         List<Resource> displayedResources;
         
         switch (selectionMode) {
