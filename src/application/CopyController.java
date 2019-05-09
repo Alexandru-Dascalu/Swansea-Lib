@@ -112,8 +112,15 @@ public class CopyController {
     @FXML
     private HBox otherBox;
     
+    /**Mouse Click Handler for clicking related resources images and displaying
+     * their detailed info.*/
     private final EventHandler<MouseEvent> clickHandler;
     
+    /**
+     * Makes a new copy controller and makes a new click handler meant for an 
+     * ImageView to display the detailed resource view of the resource whose 
+     * image is in the ImageView.
+     */
     public CopyController() {
         clickHandler = event -> {
             for(Resource resource : ScreenManager.getResources()) {
@@ -468,7 +475,9 @@ public class CopyController {
     }
 
     /**
-     * Initialize the window.
+     * Initializes the window. Loads the resource images, information, hides 
+     * view trailer button if needed and loads the images of resources related
+     * to this one.
      */
     @FXML
     public void initialize() {

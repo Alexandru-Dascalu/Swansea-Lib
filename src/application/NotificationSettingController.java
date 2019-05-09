@@ -7,6 +7,12 @@ import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 import model.User;
 
+/**
+ * A controller for the window that shows the user their notification 
+ * settings. This controller allows the user to change their notification
+ * settings.
+ * @author Alexandru Dascalu
+ */
 public class NotificationSettingController {
     
     @FXML
@@ -27,8 +33,11 @@ public class NotificationSettingController {
     @FXML
     private Button saveSettingsBtn;
     
+    /**The current user of the application, whose details are being viewed.*/
     private User currentUser;
     
+    /**Initializes the stage of this controller. It loads the user's settings 
+     * into the GUI.*/
     @FXML
     public void initialize() {
         currentUser = (User) ScreenManager.getCurrentUser();
@@ -40,6 +49,9 @@ public class NotificationSettingController {
         nearingEventBox.setSelected(userSettings[3]);
     }
     
+    /**Saves the current check box selection of settings into the database and 
+     * closes this window. Also displays an information box telling the user about
+     * the successful save.*/
     @FXML
     private void saveSettings() {
         currentUser.updateNotificationSetting("newResourcesSetting", newResourcesBox.isSelected());
