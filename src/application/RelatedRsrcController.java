@@ -36,6 +36,12 @@ import model.ResourceComparator;
  */
 public class RelatedRsrcController {
 
+    /**
+     * The wrap width of the text showing the message of the resource title in the
+     * GUI. Its value is {@value}.
+     */
+    private static final int TEXT_WRAP_WIDTH = 250;
+    
     /**A button that for saving the selection of resources as related resources.*/
     @FXML
     private Button saveBtn;
@@ -109,21 +115,26 @@ public class RelatedRsrcController {
         resourceImageView.setOnMouseClicked(clickHandler);
         resourceBox.getChildren().add(resourceImageView);
 
-        VBox labelBox = new VBox();
-        labelBox.setSpacing(5);
-        labelBox.setAlignment(Pos.CENTER);
-        resourceBox.getChildren().add(labelBox);
-
-        labelBox.getChildren().add(new Label("Title:"));
-        labelBox.getChildren().add(new Label("Year:"));
-
-        VBox infoBox = new VBox();
-        infoBox.setSpacing(5);
-        infoBox.setAlignment(Pos.CENTER);
-        resourceBox.getChildren().add(infoBox);
-
-        infoBox.getChildren().add(new Text(resource.getTitle()));
-        infoBox.getChildren().add(new Text("" + resource.getYear()));
+        VBox resourceInfoBox = new VBox();
+        resourceInfoBox.setSpacing(5);
+        resourceInfoBox.setAlignment(Pos.CENTER);
+        
+        HBox titleBox = new HBox();
+        titleBox.setSpacing(5);
+        titleBox.setAlignment(Pos.CENTER);
+        titleBox.getChildren().add(new Label("Title:"));
+        Text titleText = new Text(resource.getTitle());
+        titleText.setWrappingWidth(TEXT_WRAP_WIDTH);
+        titleBox.getChildren().add(titleText);
+        resourceInfoBox.getChildren().add(titleBox);
+        
+        HBox yearBox = new HBox();
+        yearBox.setSpacing(5);
+        yearBox.setAlignment(Pos.CENTER);
+        yearBox.getChildren().add(new Label("Year:"));
+        yearBox.getChildren().add(new Text("" + resource.getYear()));
+        resourceInfoBox.getChildren().add(yearBox);
+        resourceBox.getChildren().add(resourceInfoBox);
 
         CheckBox checkBox = new CheckBox();
         checkBox.setSelected(false);
