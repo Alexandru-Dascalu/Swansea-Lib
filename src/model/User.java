@@ -30,8 +30,10 @@ public class User extends Person {
     /** All of the copies the user has taken out. */
     private ArrayList<Copy> copiesList = new ArrayList<Copy>();
     
+    /**The list of events this user will be attending.*/
     private ArrayList<Integer> eventsList = new ArrayList<Integer>();
     
+    /**A list of all notifications this user has ever had.*/
     private LinkedList<Notification> notifications = new LinkedList<>();
     
     /**A series of values representing the notification preferences of this user.
@@ -41,7 +43,6 @@ public class User extends Person {
 
     /**
      * Creates a new User object from the given arguments.
-     * 
      * @param username user's username
      * @param firstName user's firstname
      * @param lastName user's lastname
@@ -50,17 +51,17 @@ public class User extends Person {
      * @param postcode user's postcode
      * @param avatarPath user's avatar
      * @param accountBalance users account balance
+     * @param lastLogin The last time this user logged in.
      */
     public User(String username, String firstName, String lastName,
         String phoneNumber, String address, String postcode, String avatarPath,
-        double accountBalance,String stamp) {
+        double accountBalance, String lastLogin) {
         super(username, firstName, lastName, phoneNumber, address, postcode,
-            avatarPath,stamp);
+            avatarPath, lastLogin);
         this.accountBalance = accountBalance;
         notificationSettings = null;
     }
 
-    
     /**
      * Adds a copy of a resource that the user has withdrawn.
      * 
@@ -71,7 +72,6 @@ public class User extends Person {
         //Updater not needed as copy already updates the database.
     }
 
-    
     /**
      * Returns all copies that the user has currently withdrawn.
      * 
@@ -81,7 +81,6 @@ public class User extends Person {
         return copiesList;
     }
 
-    
     /**
      * Method that gets the list of all requested resources.
      * @return the list of all requested resources 
@@ -299,6 +298,10 @@ public class User extends Person {
         }
     }
     
+    /**
+     * Gets the list of all events this user wants to attend.
+     * @return a list of all events this user will go to.
+     */
     public ArrayList<Integer> getUserEvents(){
     	return this.eventsList;
     }
@@ -376,6 +379,8 @@ public class User extends Person {
         }
     }
     
+    /**Loads the notifications of this user from the database and adds it to 
+     * the list of user notifications.*/
     public void loadNotifications() {
         notifications.clear();
 
@@ -405,10 +410,7 @@ public class User extends Person {
                 }
             }
         } catch (SQLException e) {
-            AlertBox.showErrorAlert("Because the SQLite database library we use " +
-                    " for this program, notifications for this user" +
-                    " could not be loaded (database locks up for no reason, says it is" +
-                    " busy). Close the program and restart it to see your notifications.");
+            AlertBox.showErrorAlert(e.getMessage());
             e.printStackTrace();
         }
     }
@@ -433,71 +435,72 @@ public class User extends Person {
            settings.close();
        } catch (SQLException e) {
            e.printStackTrace();
-           AlertBox.showErrorAlert("Because of the SQLite database library we use " +
-                   " for this program, notification settings for this user" +
-                   " could not be loaded. Close the program and restart it " +
-                   "to see your notifications.");
+           AlertBox.showErrorAlert(e.getMessage());
        }
     }
    
-   /**
-    * Updates the user notification setting in the database, for the given notification type.
-    * @param notificationColumn The notification type whose setting is changed.
-    * @param newValue the new value of the setting.
-    * @throws IllegalArgumentException when the name of the column notification is not valid.
-    */
-   public void updateNotificationSetting(String notificationColumn, boolean newValue) {
-       try (Connection dbConnection = DBHelper.getConnection();
-               PreparedStatement updateStatement = dbConnection.prepareStatement(
-               "UPDATE userSettings SET " + notificationColumn + " = ? WHERE " +
-               "userName = ?")) {
-           
-           updateStatement.setBoolean(1, newValue);
-           updateStatement.setString(2, username);
-           updateStatement.executeUpdate();
-       } catch (SQLException e) {
-           e.printStackTrace();
-           AlertBox.showErrorAlert("Because of the SQLite database library we use " +
-                   " for this program, notification settings for this user" +
-                   " could not be loaded. Close the program and restart it " +
-                   "to see your notifications.");
-       }
-       
-       switch (notificationColumn) {
-           case "newResourcesSetting":
-               notificationSettings[0] = newValue;
-               break;
-           case "requestApprvlSetting":
-               notificationSettings[1] = newValue;
-               break;
-           case "newEventSetting":
-               notificationSettings[2] = newValue;
-               break;
-           case "nearingEventSetting":
-               notificationSettings[3] = newValue;
-               break;
-           default :
-               throw new IllegalArgumentException();
-       }
-   }
-    
-    
-    public ArrayList<Integer> loadUserEvents() throws SQLException {
-    	
-    	try (Connection dbConnection = DBHelper.getConnection();
-                Statement stmt = dbConnection.createStatement()) {
-        	ResultSet rs = stmt.executeQuery("SELECT eID, username FROM userEvents WHERE username = '" +
-        	ScreenManager.getCurrentUser().getUsername() + "'");
-            
-            while(rs.next()) {
-            	eventsList.add(rs.getInt(1));
-            }
-            
-            rs.close();
-    	}  catch (SQLException e) {
-    		System.out.println("Failed to load user events;");
+    /**
+     * Updates the user notification setting in the database, for the given
+     * notification type.
+     * 
+     * @param notificationColumn The notification type whose setting is changed.
+     * @param newValue the new value of the setting.
+     * @throws IllegalArgumentException when the name of the column notification is
+     *         not valid.
+     */
+    public void updateNotificationSetting(String notificationColumn, boolean newValue) {
+        try (Connection dbConnection = DBHelper.getConnection();
+                PreparedStatement updateStatement = dbConnection
+                    .prepareStatement("UPDATE userSettings SET " + notificationColumn +
+                        " = ? WHERE " + "userName = ?")) {
+
+            updateStatement.setBoolean(1, newValue);
+            updateStatement.setString(2, username);
+            updateStatement.executeUpdate();
+        }
+        catch (SQLException e) {
             e.printStackTrace();
-    	}
+            AlertBox.showErrorAlert(e.getMessage());
+        }
+
+        switch (notificationColumn) {
+            case "newResourcesSetting":
+                notificationSettings[0] = newValue;
+                break;
+            case "requestApprvlSetting":
+                notificationSettings[1] = newValue;
+                break;
+            case "newEventSetting":
+                notificationSettings[2] = newValue;
+                break;
+            case "nearingEventSetting":
+                notificationSettings[3] = newValue;
+                break;
+            default:
+                throw new IllegalArgumentException();
+        }
+    }
+
+    /**Loads the events this user will attend from the database and returns them.
+     * @return a list of events this user will attend.*/
+    public ArrayList<Integer> loadUserEvents() {
+
+        try (Connection dbConnection = DBHelper.getConnection();
+                Statement selectStatement = dbConnection.createStatement()) {
+            ResultSet userEvents = selectStatement.executeQuery("SELECT eID," +
+                " username FROM userEvents WHERE username = '" + 
+                ScreenManager.getCurrentUser().getUsername() + "'");
+
+            while (userEvents.next()) {
+                eventsList.add(userEvents.getInt(1));
+            }
+
+            userEvents.close();
+        }
+        catch (SQLException e) {
+            System.out.println("Failed to load user events;");
+            e.printStackTrace();
+        }
         return eventsList;
     }
 
@@ -509,7 +512,7 @@ public class User extends Person {
     public boolean hasOutstandingFines() {
         try (Connection dbConnection = DBHelper.getConnection();
                 PreparedStatement sqlStatement = dbConnection.prepareStatement(
-                "SELECT COUNT(*) FROM fines WHERE username = ? AND paid = 0;")){
+                "SELECT COUNT(*) FROM fines WHERE username = ? AND paid = 0;")) {
             
             sqlStatement.setString(1, this.getUsername());
             ResultSet rs = sqlStatement.executeQuery();
@@ -529,7 +532,6 @@ public class User extends Person {
         return false;
     }
 
-    
     /**
      * Boolean method that checks if the resource is being borrowed.
      * @param resource that is being borrowed
@@ -544,7 +546,6 @@ public class User extends Person {
         return false;
     }
 
-    
     /**
      * A method that gets a list of resources recommended for the user based on what they 
      * have previously borrowed.
@@ -630,12 +631,18 @@ public class User extends Person {
 		return requestLimit;
 	}
 	
+	/**
+	 * Gets the list of all notifications of this user.
+	 * @return a list of all notifications of this user.
+	 */
 	public List<Notification> getNotifications() {
 	    return notifications;
 	}
 	
     /**
-	 * Check of the user have over requested an item
+	 * Check of the user have over requested an item.
+	 * @param resource The resource, that if allowed to be requested, would 
+	 * make the borrow load of the user go over the limit.
 	 * @return true if the user have over requested, false otherwise
 	 */
 	public boolean exceedLimit(Resource resource) {
