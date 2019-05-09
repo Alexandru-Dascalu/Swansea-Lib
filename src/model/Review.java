@@ -66,7 +66,7 @@ public class Review {
     }
 
     /**
-    * Method that checks if the resource has been reviewed
+    * Method that checks if the resource has been reviewed.
     * @param username username of the user
     * @param rId resource ID
     * @return true or false. depending if a resource has been reviewed

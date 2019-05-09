@@ -411,7 +411,7 @@ public abstract class Resource {
     }
     
     /**
-     * Sets the database value
+     * Sets the database value.
      * @param thumbnail New location.
      */
     public void setThumbnailDatabase(String thumbnail) {
@@ -838,7 +838,7 @@ public abstract class Resource {
      * Method to check if user last login compared to resource added timestamp
      * @param person current user
      * @return true if user last login was before resource added time, false otherwise.
-     * @throws ParseException
+     * @throws ParseException if the last log in date is not stored in a correct format.
      */
     public boolean compareTimeDifference(Person person) throws ParseException {
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
@@ -1181,6 +1181,11 @@ public abstract class Resource {
         }
     }
 
+    /**
+     * Loads from the database the list of unique ids of resources in the same
+     *  series as this one and the list of unique ids of other related 
+     *  resources.
+     */
     private void loadRelatedResources() {
         try (Connection dbConnection = DBHelper.getConnection();
                 PreparedStatement selectStatement = dbConnection.prepareStatement(
