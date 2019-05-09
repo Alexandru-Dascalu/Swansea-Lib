@@ -185,7 +185,7 @@ public class Laptop extends Resource {
      * same series.
      * @return false.
      */
-    protected boolean isPossiblySameSeries(Resource otherResource) {
+    public boolean isPossiblySameSeries(Resource otherResource) {
         return false;
     }
     

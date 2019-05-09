@@ -281,7 +281,7 @@ public class Book extends Resource {
      * same series.
      * @return True if it is possibly of the same series, false if not.
      */
-    protected boolean isPossiblySameSeries(Book otherBook) {
+    public boolean isPossiblySameSeries(Book otherBook) {
         if(!super.isPossiblySameSeries(otherBook)) {
             return false;
         }

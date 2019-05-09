@@ -772,7 +772,7 @@ public abstract class Resource {
      * same series.
      * @return True if it is possibly of the same series, false if not.
      */
-    protected boolean isPossiblySameSeries(Resource otherResource) {
+    public boolean isPossiblySameSeries(Resource otherResource) {
         if(getClass() != otherResource.getClass()) {
             return false;
         }
@@ -786,40 +786,6 @@ public abstract class Resource {
         } else {
             return false;
         }
-    }
-    
-    public HBox getRelatedResourceHBox() {
-        HBox resourceBox = new HBox();
-        resourceBox.setSpacing(20);
-        resourceBox.setAlignment(Pos.CENTER_LEFT);
-        resourceBox.setPadding(new Insets(10, 10, 10, 20));
-        
-        ImageView resourceImageView = new ImageView(thumbnail);
-        resourceImageView.setFitHeight(200);
-        resourceImageView.setFitWidth(120);
-        resourceBox.getChildren().add(resourceImageView);
-        
-        VBox labelBox = new VBox();
-        labelBox.setSpacing(5);
-        labelBox.setAlignment(Pos.CENTER);
-        resourceBox.getChildren().add(labelBox);
-        
-        labelBox.getChildren().add(new Label("Title:"));
-        labelBox.getChildren().add(new Label("Year:"));
-        
-        VBox infoBox = new VBox();
-        infoBox.setSpacing(5);
-        infoBox.setAlignment(Pos.CENTER);
-        resourceBox.getChildren().add(infoBox);
-        
-        infoBox.getChildren().add(new Text(title));
-        infoBox.getChildren().add(new Text("" + year));
-        
-        CheckBox checkBox = new CheckBox();
-        checkBox.setSelected(false);
-        
-        resourceBox.getChildren().add(checkBox);
-        return resourceBox;
     }
     
     /**

@@ -290,7 +290,7 @@ public class DVD extends Resource {
      * same series.
      * @return True if it is possibly of the same series, false if not.
      */
-    protected boolean isPossiblySameSeries(DVD otherDVD) {
+    public boolean isPossiblySameSeries(DVD otherDVD) {
         if(!super.isPossiblySameSeries(otherDVD)) {
             return false;
         }

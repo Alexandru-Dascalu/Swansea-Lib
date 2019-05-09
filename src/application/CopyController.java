@@ -308,32 +308,6 @@ public class CopyController {
     @FXML
     public void showTrailerWindow(ActionEvent actionEvent) {
         Resource currentResource = ScreenManager.currentResource;
-
-        try {
-            Connection dbConnection = DBHelper.getConnection();
-            PreparedStatement insertStatement = dbConnection.prepareStatement(
-                "SELECT * FROM notification");
-            ResultSet rs = insertStatement.executeQuery();
-            System.out.println("test");
-            while(rs.next()) {
-                System.out.println(rs.getInt(1));
-                System.out.println(rs.getString(2));
-                System.out.println(rs.getString(3));
-                System.out.println(rs.getString(4));
-            }
-            
-            insertStatement = dbConnection.prepareStatement("SELECT * FROM userNotifications");
-            rs = insertStatement.executeQuery();
-            
-            while(rs.next()) {
-                System.out.println(rs.getString(2));
-                System.out.println(rs.getInt(1));
-                System.out.println(rs.getBoolean(3));
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-            System.exit(-1);
-        }
         
         if (currentResource.getClass() == DVD.class) {
             DVD currentMovie = (DVD) currentResource;

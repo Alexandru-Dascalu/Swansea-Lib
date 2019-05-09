@@ -233,7 +233,7 @@ public class Game extends Resource {
      * same series.
      * @return True if it is possibly of the same series, false if not.
      */
-    protected boolean isPossiblySameSeries(Game otherGame) {
+    public boolean isPossiblySameSeries(Game otherGame) {
         if(!super.isPossiblySameSeries(otherGame)) {
             return false;
         }
