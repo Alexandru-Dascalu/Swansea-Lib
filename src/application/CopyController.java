@@ -39,9 +39,10 @@ import model.Review;
 import model.User;
 
 /**
- * The gui that appears when a resource is clicked, shows the information 
- * about a resource and allows the user to request a copy if there is a free 
- * copy available.
+ * The gui that appears when a resource is clicked, shows the information about
+ * a resource and allows the user to request a copy if there is a free copy
+ * available.
+ * 
  * @author Joe Wright
  * @author Oliver Harris
  */
@@ -49,16 +50,16 @@ public class CopyController {
 
     private static final int RES_IMG_WIDTH = 200;
     private static final int RES_IMG_HEIGHT = 200;
-    
+
     private static final double ROUND = 100.0;
     private static final double REVIEW_SPACING = 8;
-    
- // star, name,what,when
+
+    // star, name,what,when
     private static final int STAR_INDEX = 0;
     private static final int NAME_INDEX = 1;
     private static final int REVIEW_INDEX = 2;
     private static final int WHEN_INDEX = 3;
-    
+
     @FXML
     private BorderPane borderpane1;// borderpane
 
@@ -108,43 +109,46 @@ public class CopyController {
 
     @FXML
     private HBox seriesBox;
-    
+
     @FXML
     private HBox otherBox;
-    
-    /**Mouse Click Handler for clicking related resources images and displaying
-     * their detailed info.*/
-    private final EventHandler<MouseEvent> clickHandler;
-    
+
     /**
-     * Makes a new copy controller and makes a new click handler meant for an 
-     * ImageView to display the detailed resource view of the resource whose 
+     * Mouse Click Handler for clicking related resources images and displaying
+     * their detailed info.
+     */
+    private final EventHandler<MouseEvent> clickHandler;
+
+    /**
+     * Makes a new copy controller and makes a new click handler meant for an
+     * ImageView to display the detailed resource view of the resource whose
      * image is in the ImageView.
      */
     public CopyController() {
         clickHandler = event -> {
-            for(Resource resource : ScreenManager.getResources()) {
-                if(resource.getUniqueID() ==
-                        Integer.parseInt(((ImageView) event.getSource()).getId())) {
+            for (Resource resource : ScreenManager.getResources()) {
+                if (resource.getUniqueID() == Integer
+                    .parseInt(((ImageView) event.getSource()).getId())) {
                     ScreenManager.setCurrentResource(resource);
                 }
             }
 
             try {
-                FXMLLoader fxmlLoader =
-                        new FXMLLoader(getClass().getResource("/fxml/copyScene.fxml"));
+                FXMLLoader fxmlLoader = new FXMLLoader(
+                    getClass().getResource("/fxml/copyScene.fxml"));
                 Parent root1 = (Parent) fxmlLoader.load();
                 Stage stage = new Stage();
                 stage.initModality(Modality.APPLICATION_MODAL);
                 stage.setTitle("Resource Information");
                 stage.setScene(new Scene(root1));
                 stage.show();
-            } catch (IOException e) {
+            }
+            catch (IOException e) {
                 e.printStackTrace();
             }
         };
     }
-    
+
     /**
      * Sets new scene on stage within program using fxml file provided.
      *
@@ -202,7 +206,7 @@ public class CopyController {
                 if (ScreenManager.getCurrentUser() instanceof model.Librarian) {
 
                     Button removeReview = new Button("Remove");
-                    removeReview.setOnAction((event) -> {
+                    removeReview.setOnAction(event -> {
                         Review.removeReview(Integer.valueOf(review[4]));
                         seeReviews.getChildren().clear();
 
@@ -332,8 +336,8 @@ public class CopyController {
      */
     @FXML
     public void requestCopy(MouseEvent event) {
-        ScreenManager.currentResource
-            .addPendingRequest((User) ScreenManager.getCurrentUser());
+        ScreenManager.currentResource.addPendingRequest((User)
+            ScreenManager.getCurrentUser());
         AlertBox.showInfoAlert("Requested!");
         // ScreenManager.currentResource.loanToUser((User)ScreenMana
         // ger.getCurrentUser());
@@ -349,15 +353,15 @@ public class CopyController {
     @FXML
     public void showTrailerWindow(ActionEvent actionEvent) {
         Resource currentResource = ScreenManager.currentResource;
-        
-        for(Integer i: currentResource.getSameSeriesResources()) {
+
+        for (Integer i : currentResource.getSameSeriesResources()) {
             System.out.println(i.toString());
         }
         System.out.println();
-        for(Integer i: currentResource.getOtherRelatedResources()) {
+        for (Integer i : currentResource.getOtherRelatedResources()) {
             System.out.println(i.toString());
         }
-        
+
         if (currentResource.getClass() == DVD.class) {
             DVD currentMovie = (DVD) currentResource;
 
@@ -371,8 +375,7 @@ public class CopyController {
                     trailerView.getPrefViewHeight());
 
                 Stage trailerWindow = new Stage();
-                trailerWindow
-                    .setTitle(trailerView.getTrailerDescription().getName());
+                trailerWindow.setTitle(trailerView.getTrailerDescription().getName());
 
                 trailerWindow.setOnHidden(e -> {
                     trailerView.stop();
@@ -475,7 +478,7 @@ public class CopyController {
     }
 
     /**
-     * Initializes the window. Loads the resource images, information, hides 
+     * Initializes the window. Loads the resource images, information, hides
      * view trailer button if needed and loads the images of resources related
      * to this one.
      */
@@ -498,28 +501,32 @@ public class CopyController {
             viewTrailerButton.setDisable(true);
             viewTrailerButton.setVisible(false);
         }
-        
-        for(Integer id: ScreenManager.getCurrentResource().getSameSeriesResources()) {
+
+        for (Integer id : ScreenManager.getCurrentResource()
+            .getSameSeriesResources()) {
             Resource sameSeriesResource = Resource.getResource(id);
-            
-            ImageView resourceImageView = new ImageView(sameSeriesResource.getThumbnail());
+
+            ImageView resourceImageView = new ImageView(
+                sameSeriesResource.getThumbnail());
             resourceImageView.setFitHeight(200);
             resourceImageView.setFitWidth(120);
             resourceImageView.setId(id + "");
             resourceImageView.setOnMouseClicked(clickHandler);
-            
+
             seriesBox.getChildren().add(resourceImageView);
         }
-        
-        for(Integer id: ScreenManager.getCurrentResource().getOtherRelatedResources()) {
+
+        for (Integer id : ScreenManager.getCurrentResource()
+            .getOtherRelatedResources()) {
             Resource otherRelatedResource = Resource.getResource(id);
-            
-            ImageView resourceImageView = new ImageView(otherRelatedResource.getThumbnail());
+
+            ImageView resourceImageView = new ImageView(
+                otherRelatedResource.getThumbnail());
             resourceImageView.setFitHeight(200);
             resourceImageView.setFitWidth(120);
             resourceImageView.setId(id + "");
             resourceImageView.setOnMouseClicked(clickHandler);
-            
+
             otherBox.getChildren().add(resourceImageView);
         }
     }

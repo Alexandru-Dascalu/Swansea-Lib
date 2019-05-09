@@ -31,20 +31,19 @@ import model.ResourceNotification;
 import model.User;
 
 /**
-* Resource Controller is a class that setups up the resources and updates them.
-* @author Oliver Harris
-* 
-* With Game Resource added by Charles Day on 16/03/19
-*/
+ * Resource Controller is a class that setups up the resources and updates them.
+ * 
+ * @author Oliver Harris With Game Resource added by Charles Day on 16/03/19
+ */
 public class ResourceController {
 
     @FXML
     private VBox resourceBlock;
 
     /**
-     * Sets up the book resource screen. Shows suggestions for the librarian to set 
-     * related resources, but only if the resource has just been made and 
-     * is not just edited.
+     * Sets up the book resource screen. Shows suggestions for the librarian to set
+     * related resources, but only if the resource has just been made and is not
+     * just edited.
      */
     private void setupBook() {
         // creates instance of a book
@@ -96,43 +95,36 @@ public class ResourceController {
         Button button = new Button("Save");
         button.setOnAction(e -> {
             boolean isNewAddition = book.getTitle() == null;
-            updateBook(titleField.getText(), yearField.getText(),
-                authorField.getText(), publishField.getText(),
-                genreField.getText(), iField.getText(), languageField.getText(),
-                imgField.getText());
+            updateBook(titleField.getText(), yearField.getText(), authorField.getText(),
+                publishField.getText(), genreField.getText(), iField.getText(),
+                languageField.getText(), imgField.getText());
 
             if (isNewAddition) {
                 ResourceNotification.makeNewRsrcNotification(book);
 
                 try {
-                    FXMLLoader loader = new FXMLLoader(getClass().getResource(
-                        "/fxml/relatedResourceEditor.fxml"));
+                    FXMLLoader loader = new FXMLLoader(
+                        getClass().getResource("/fxml/relatedResourceEditor.fxml"));
                     Parent otherReleatedRoot = loader.load();
                     RelatedRsrcController controller = loader.getController();
                     controller.loadResourceHboxes("other related", book);
 
                     Stage otherResourcesSTage = new Stage();
-                    otherResourcesSTage.setTitle("Other resources that might " +
-                        "be related");
+                    otherResourcesSTage.setTitle("Other resources that might " + "be related");
                     otherResourcesSTage.setScene(new Scene(otherReleatedRoot));
-                    otherResourcesSTage.setOnHidden(event -> 
-                        controller.onStageClosed());
+                    otherResourcesSTage.setOnHidden(event -> controller.onStageClosed());
                     otherResourcesSTage.show();
 
-                    loader = new FXMLLoader(getClass().getResource("/fxml/r" +
-                        "elatedResourceEditor.fxml"));
+                    loader = new FXMLLoader(
+                        getClass().getResource("/fxml/r" + "elatedResourceEditor.fxml"));
                     Parent sameSeriesRoot = loader.load();
-                    RelatedRsrcController sameSeriesController = loader
-                        .getController();
-                    sameSeriesController.loadResourceHboxes("same series",
-                        book);
+                    RelatedRsrcController sameSeriesController = loader.getController();
+                    sameSeriesController.loadResourceHboxes("same series", book);
 
                     Stage sameSeriesStage = new Stage();
-                    sameSeriesStage.setTitle(
-                        "Resources that might be part of the same series");
+                    sameSeriesStage.setTitle("Resources that might be part of the same series");
                     sameSeriesStage.setScene(new Scene(sameSeriesRoot));
-                    sameSeriesStage.setOnHidden(
-                        event -> sameSeriesController.onStageClosed());
+                    sameSeriesStage.setOnHidden(event -> sameSeriesController.onStageClosed());
                     sameSeriesStage.show();
 
                 }
@@ -141,14 +133,14 @@ public class ResourceController {
                 }
             }
         });
-        resourceBlock.getChildren().addAll(titleBox, yearBox, authorBox,
-            publishBox, genreBox, iBox, languageBox, imgBox, button);
+        resourceBlock.getChildren().addAll(titleBox, yearBox, authorBox, publishBox, genreBox, iBox,
+            languageBox, imgBox, button);
     }
 
     /**
-     * Sets up the game resource screen. Shows suggestions for the librarian to set 
-     * related resources, but only if the resource has just been made and 
-     * is not just edited.
+     * Sets up the game resource screen. Shows suggestions for the librarian to set
+     * related resources, but only if the resource has just been made and is not
+     * just edited.
      */
     private void setupGame() {
         // creates instance of a game
@@ -195,43 +187,38 @@ public class ResourceController {
         Button button = new Button("Save");
         button.setOnAction(e -> {
             boolean isNewAddition = game.getTitle() == null;
-            updateGame(titleField.getText(), yearField.getText(),
-                publishField.getText(), genreField.getText(),
-                ratingField.getText(), multiField.getText(),
+            updateGame(titleField.getText(), yearField.getText(), publishField.getText(),
+                genreField.getText(), ratingField.getText(), multiField.getText(),
                 imgField.getText());
 
             if (isNewAddition) {
                 ResourceNotification.makeNewRsrcNotification(game);
 
                 try {
-                    FXMLLoader loader = new FXMLLoader(getClass()
-                        .getResource("/fxml/relatedResourceEditor.fxml"));
+                    FXMLLoader loader = new FXMLLoader(
+                        getClass().getResource("/fxml/relatedResourceEditor.fxml"));
                     Parent otherReleatedRoot = loader.load();
                     RelatedRsrcController controller = loader.getController();
                     controller.loadResourceHboxes("other related", game);
 
                     Stage otherResourcesSTage = new Stage();
-                    otherResourcesSTage
-                        .setTitle("Other resources that might be related");
+                    otherResourcesSTage.setTitle("Other resources that might be related");
                     otherResourcesSTage.setScene(new Scene(otherReleatedRoot));
-                    otherResourcesSTage
-                        .setOnHidden(event -> controller.onStageClosed());
+                    otherResourcesSTage.setOnHidden(event -> controller.onStageClosed());
                     otherResourcesSTage.show();
 
-                    loader = new FXMLLoader(getClass()
-                        .getResource("/fxml/relatedResourceEditor.fxml"));
+                    loader = new FXMLLoader(
+                        getClass().getResource("/fxml/relatedResourceEditor.fxml"));
                     Parent sameSeriesRoot = loader.load();
-                    RelatedRsrcController sameSeriesController = loader
-                        .getController();
-                    sameSeriesController.loadResourceHboxes("same series",
-                        game);
+                    RelatedRsrcController sameSeriesController = loader.getController();
+                    sameSeriesController.loadResourceHboxes("same series", game);
 
                     Stage sameSeriesStage = new Stage();
-                    sameSeriesStage.setTitle(
-                        "Resources that might be part of the same series");
+                    sameSeriesStage.setTitle("Resources that might be part of " +
+                        "the same series");
                     sameSeriesStage.setScene(new Scene(sameSeriesRoot));
-                    sameSeriesStage.setOnHidden(
-                        event -> sameSeriesController.onStageClosed());
+                    sameSeriesStage.setOnHidden(event -> 
+                        sameSeriesController.onStageClosed());
                     sameSeriesStage.show();
                 }
                 catch (IOException e2) {
@@ -239,14 +226,14 @@ public class ResourceController {
                 }
             }
         });
-        resourceBlock.getChildren().addAll(titleBox, yearBox, publishBox,
-            genreBox, ratingBox, multiBox, imgBox, button);
+        resourceBlock.getChildren().addAll(titleBox, yearBox, publishBox, genreBox, ratingBox,
+            multiBox, imgBox, button);
     }
 
     /**
-     * Setups the DVD resource. Shows suggestions for the librarian to set 
-     * related resources, but only if the resource has just been made and 
-     * is not just edited.
+     * Setups the DVD resource. Shows suggestions for the librarian to set related
+     * resources, but only if the resource has just been made and is not just
+     * edited.
      */
     private void setupDVD() {
         DVD dvd = (DVD) ScreenManager.getCurrentResource();
@@ -271,8 +258,7 @@ public class ResourceController {
 
         HBox runtimeBox = new HBox();
         Text runtimeText = new Text("Runtime");
-        TextField runtimeField = new TextField(
-            String.valueOf(dvd.getRuntime()));
+        TextField runtimeField = new TextField(String.valueOf(dvd.getRuntime()));
         runtimeBox.getChildren().addAll(runtimeText, runtimeField);
 
         HBox langBox = new HBox();
@@ -302,42 +288,36 @@ public class ResourceController {
         Button button = new Button("Save");
         button.setOnAction(e -> {
             boolean isNewAddition = (dvd.getTitle() == null);
-            updateDVD(titleField.getText(), yearField.getText(),
-                directorField.getText(), runtimeField.getText(),
-                langField.getText(), subtitlesField.getText(),
+            updateDVD(titleField.getText(), yearField.getText(), directorField.getText(),
+                runtimeField.getText(), langField.getText(), subtitlesField.getText(),
                 imgField.getText());
 
             if (isNewAddition) {
                 ResourceNotification.makeNewRsrcNotification(dvd);
 
                 try {
-                    FXMLLoader loader = new FXMLLoader(getClass()
-                        .getResource("/fxml/relatedResourceEditor.fxml"));
+                    FXMLLoader loader = new FXMLLoader(
+                        getClass().getResource("/fxml/relatedResourceEditor.fxml"));
                     Parent otherReleatedRoot = loader.load();
                     RelatedRsrcController controller = loader.getController();
                     controller.loadResourceHboxes("other related", dvd);
 
                     Stage otherResourcesSTage = new Stage();
-                    otherResourcesSTage
-                        .setTitle("Other resources that might be related");
+                    otherResourcesSTage.setTitle("Other resources that might be related");
                     otherResourcesSTage.setScene(new Scene(otherReleatedRoot));
-                    otherResourcesSTage
-                        .setOnHidden(event -> controller.onStageClosed());
+                    otherResourcesSTage.setOnHidden(event -> controller.onStageClosed());
                     otherResourcesSTage.show();
 
-                    loader = new FXMLLoader(getClass()
-                        .getResource("/fxml/relatedResourceEditor.fxml"));
+                    loader = new FXMLLoader(
+                        getClass().getResource("/fxml/relatedResourceEditor.fxml"));
                     Parent sameSeriesRoot = loader.load();
-                    RelatedRsrcController sameSeriesController = loader
-                        .getController();
+                    RelatedRsrcController sameSeriesController = loader.getController();
                     sameSeriesController.loadResourceHboxes("same series", dvd);
 
                     Stage sameSeriesStage = new Stage();
-                    sameSeriesStage.setTitle(
-                        "Resources that might be part of the same series");
+                    sameSeriesStage.setTitle("Resources that might be part of the same series");
                     sameSeriesStage.setScene(new Scene(sameSeriesRoot));
-                    sameSeriesStage.setOnHidden(
-                        event -> sameSeriesController.onStageClosed());
+                    sameSeriesStage.setOnHidden(event -> sameSeriesController.onStageClosed());
                     sameSeriesStage.show();
                 }
                 catch (IOException e2) {
@@ -345,14 +325,14 @@ public class ResourceController {
                 }
             }
         });
-        resourceBlock.getChildren().addAll(titleBox, yearBox, directorBox,
-            runtimeBox, langBox, subtitlesBox, imgBox, button);
+        resourceBlock.getChildren().addAll(titleBox, yearBox, directorBox, runtimeBox, langBox,
+            subtitlesBox, imgBox, button);
     }
 
     /**
-     * Setups the Laptop resource. Shows suggestions for the librarian to set 
-     * related resources, but only if the resource has just been made and 
-     * is not just edited.
+     * Setups the Laptop resource. Shows suggestions for the librarian to set
+     * related resources, but only if the resource has just been made and is not
+     * just edited.
      */
     private void setupLaptop() {
         Laptop laptop = (Laptop) ScreenManager.getCurrentResource();
@@ -393,16 +373,15 @@ public class ResourceController {
         Button button = new Button("Save");
         button.setOnAction(e -> {
             boolean isNewAddition = (laptop.getTitle() == null);
-            updateLaptop(titleField.getText(), yearField.getText(),
-                manuField.getText(), modelField.getText(), OSField.getText(),
-                imgField.getText());
+            updateLaptop(titleField.getText(), yearField.getText(), manuField.getText(),
+                modelField.getText(), OSField.getText(), imgField.getText());
 
             if (isNewAddition) {
                 ResourceNotification.makeNewRsrcNotification(laptop);
             }
         });
-        resourceBlock.getChildren().addAll(titleBox, yearBox, manuBox, modelBox,
-            OSBox, imgBox, button);
+        resourceBlock.getChildren().addAll(titleBox, yearBox, manuBox, modelBox, OSBox, imgBox,
+            button);
     }
 
     /**
@@ -415,8 +394,8 @@ public class ResourceController {
      * @param OS of laptop.
      * @param thumbnailPath of laptop.
      */
-    private void updateLaptop(String title, String year, String manu,
-            String model, String OS, String thumbnailPath) {
+    private void updateLaptop(String title, String year, String manu, String model, String OS,
+            String thumbnailPath) {
         // Checks if the year is a number
         boolean goAhead = true;
         Image image = null;
@@ -465,9 +444,8 @@ public class ResourceController {
      * @param multiplayer The multiplayer support of the game.
      * @param thumbnailPath of the game.
      */
-    private void updateGame(String title, String year, String publisher,
-            String genre, String rating, String multiplayer,
-            String thumbnailPath) {
+    private void updateGame(String title, String year, String publisher, String genre,
+            String rating, String multiplayer, String thumbnailPath) {
         // Checks if the year is a number
         boolean goAhead = true;
         Image image = null;
@@ -521,9 +499,8 @@ public class ResourceController {
      * @param language of the book.
      * @param thumnbnailPath of the book.
      */
-    private void updateBook(String title, String year, String author,
-            String publish, String genre, String ISBN, String language,
-            String thumnbnailPath) {
+    private void updateBook(String title, String year, String author, String publish, String genre,
+            String ISBN, String language, String thumnbnailPath) {
         // Checks if the year is a number
         boolean goAhead = true;
         Image image = null;
@@ -578,9 +555,8 @@ public class ResourceController {
      * @param subtitles of dvd.
      * @param thumbnailPath of dvd.
      */
-    private void updateDVD(String title, String year, String director,
-            String runtime, String language, String subtitles,
-            String thumbnailPath) {
+    private void updateDVD(String title, String year, String director, String runtime,
+            String language, String subtitles, String thumbnailPath) {
         boolean goAhead = true;
         Image image = null;
         try {

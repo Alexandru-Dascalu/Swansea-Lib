@@ -28,143 +28,190 @@ import model.DBHelper;
 import model.Resource;
 import model.ResourceComparator;
 
+/**
+ * A controller for a window showing up after making a new resource letting the 
+ * librarian select resources that are related to the newly added resources.
+ * @author Alexandru Dascalu
+ */
 public class RelatedRsrcController {
 
     @FXML
     private Button saveBtn;
-    
+
     @FXML
     private VBox resourcesVBox;
-    
+
+    /**The original resource, for which the librarian can associate with resources that are related.*/
     private Resource originalResource;
-    
+
+    /**A string representing what resources to display to the librarian to see.
+     * He can select from resources that the program thinks can from the same 
+     * series, or from other resources that might be related.*/
     private String selectionMode;
-    
+
+    /**An event handler for mouse clicks to display the detailed information
+     * view of a resource whose image was clicked on in the window of this controller.*/
     private final EventHandler<MouseEvent> clickHandler;
-            
-    private static HBox getRelatedResourceHBox(Resource resource, 
-            EventHandler<MouseEvent> clickHandler) {
-        HBox resourceBox = new HBox();
-        resourceBox.setSpacing(20);
-        resourceBox.setAlignment(Pos.CENTER);
-        resourceBox.setPadding(new Insets(10, 10, 10, 20));
-        
-        ImageView resourceImageView = new ImageView(resource.getThumbnail());
-        resourceImageView.setFitHeight(200);
-        resourceImageView.setFitWidth(120);
-        resourceImageView.setId(resource.getUniqueID() + "");
-        resourceImageView.setOnMouseClicked(clickHandler);
-        resourceBox.getChildren().add(resourceImageView);
-        
-        VBox labelBox = new VBox();
-        labelBox.setSpacing(5);
-        labelBox.setAlignment(Pos.CENTER);
-        resourceBox.getChildren().add(labelBox);
-        
-        labelBox.getChildren().add(new Label("Title:"));
-        labelBox.getChildren().add(new Label("Year:"));
-        
-        VBox infoBox = new VBox();
-        infoBox.setSpacing(5);
-        infoBox.setAlignment(Pos.CENTER);
-        resourceBox.getChildren().add(infoBox);
-        
-        infoBox.getChildren().add(new Text(resource.getTitle()));
-        infoBox.getChildren().add(new Text("" + resource.getYear()));
-        
-        CheckBox checkBox = new CheckBox();
-        checkBox.setSelected(false);
-        
-        resourceBox.getChildren().add(checkBox);
-        return resourceBox;
-    }
-    
+
+    /**
+     * Makes a new related resources controller and makes a new click handler
+     * meant for an ImageView to display the detailed resource view of the
+     * resource whose image is in the ImageView.
+     */
     public RelatedRsrcController() {
         clickHandler = event -> {
-            for(Resource resource : ScreenManager.getResources()) {
-                if(resource.getUniqueID() ==
-                        Integer.parseInt(((ImageView) event.getSource()).getId())) {
+            for (Resource resource : ScreenManager.getResources()) {
+                if (resource.getUniqueID() == Integer.parseInt(((ImageView)
+                        event.getSource()).getId())) {
                     ScreenManager.setCurrentResource(resource);
                 }
             }
 
             try {
-                FXMLLoader fxmlLoader =
-                        new FXMLLoader(getClass().getResource("/fxml/copyScene.fxml"));
+                FXMLLoader fxmlLoader = new FXMLLoader(
+                    getClass().getResource("/fxml/copyScene.fxml"));
                 Parent root1 = (Parent) fxmlLoader.load();
                 Stage stage = new Stage();
                 stage.initModality(Modality.APPLICATION_MODAL);
                 stage.setTitle("Resource Information");
                 stage.setScene(new Scene(root1));
                 stage.show();
-            } catch (IOException e) {
+            }
+            catch (IOException e) {
                 e.printStackTrace();
             }
         };
     }
     
-    public void loadResourceHboxes(String selectionMode, Resource originalResource) {
+    /**Builds an HBox representing details of a resource, complete with an 
+     * image view of its thumbnail that you can click on, and a checkbox that 
+     * will be used to save the given resource as related to the original 
+     * resource.
+     * @param resource The reosurce for which this box is made.
+     * @param clickHandler The click handler used for the image view of the
+     * image of the given resource.
+     * @return An HBox used for selecting related resources.*/
+    private static HBox getRelatedResourceHBox(Resource resource,
+            EventHandler<MouseEvent> clickHandler) {
+        HBox resourceBox = new HBox();
+        resourceBox.setSpacing(20);
+        resourceBox.setAlignment(Pos.CENTER);
+        resourceBox.setPadding(new Insets(10, 10, 10, 20));
+
+        ImageView resourceImageView = new ImageView(resource.getThumbnail());
+        resourceImageView.setFitHeight(200);
+        resourceImageView.setFitWidth(120);
+        resourceImageView.setId(resource.getUniqueID() + "");
+        resourceImageView.setOnMouseClicked(clickHandler);
+        resourceBox.getChildren().add(resourceImageView);
+
+        VBox labelBox = new VBox();
+        labelBox.setSpacing(5);
+        labelBox.setAlignment(Pos.CENTER);
+        resourceBox.getChildren().add(labelBox);
+
+        labelBox.getChildren().add(new Label("Title:"));
+        labelBox.getChildren().add(new Label("Year:"));
+
+        VBox infoBox = new VBox();
+        infoBox.setSpacing(5);
+        infoBox.setAlignment(Pos.CENTER);
+        resourceBox.getChildren().add(infoBox);
+
+        infoBox.getChildren().add(new Text(resource.getTitle()));
+        infoBox.getChildren().add(new Text("" + resource.getYear()));
+
+        CheckBox checkBox = new CheckBox();
+        checkBox.setSelected(false);
+
+        resourceBox.getChildren().add(checkBox);
+        return resourceBox;
+    }
+
+    /**
+     * Loads an hbox for the resources the librarian can set as related into the GUI window.
+     * @param selectionMode A string saying if the librarian selects from among 
+     * resources that could be part of the same series, or any other resource.
+     * @param originalResource The resource for which we display resources so they
+     * can be set as related to the given resource.
+     */
+    public void loadResourceHboxes(String selectionMode,
+            Resource originalResource) {
         this.originalResource = originalResource;
         this.selectionMode = selectionMode;
         List<Resource> displayedResources = getResourcesToDisplay();
-        
-        for(Resource resource: displayedResources) {
+
+        for (Resource resource : displayedResources) {
             HBox h = getRelatedResourceHBox(resource, clickHandler);
-           resourcesVBox.getChildren().add(h);
+            resourcesVBox.getChildren().add(h);
         }
     }
-    
+
+    /**Ensures that when the window of this controller is closed, then the 
+     * current resource is reset to the resource for which this window 
+     * was made.*/
     public void onStageClosed() {
         ScreenManager.setCurrentResource(originalResource);
     }
-    
+
+    /**Saves the selection of related resources of originalResource to the 
+     * database and to its lists of related resources.*/
     @FXML
     private void saveRelated() {
-        for(Node node: resourcesVBox.getChildren()) {
+        for (Node node : resourcesVBox.getChildren()) {
             HBox hbox = (HBox) node;
-            int selectedResourceID = Integer.parseInt(hbox.getChildren()
-                .get(0).getId());
-            
-            CheckBox checkBox = (CheckBox) hbox.getChildren().get(
-                hbox.getChildren().size() - 1);
-            
-            if(checkBox.isSelected()) {
+            int selectedResourceID = Integer.parseInt(hbox.getChildren().
+                get(0).getId());
+
+            CheckBox checkBox = (CheckBox) hbox.getChildren().get(hbox.getChildren().
+                size() - 1);
+
+            if (checkBox.isSelected()) {
                 String table = null;
-                
-                if(selectionMode.equals("same series")) {
+
+                if (selectionMode.equals("same series")) {
                     table = "resourceSeries";
                     originalResource.getSameSeriesResources().add(
                         Integer.valueOf(selectedResourceID));
-                } else if (selectionMode.equals("other related")) {
+                }
+                else if (selectionMode.equals("other related")) {
                     table = "related";
                     originalResource.getOtherRelatedResources().add(
                         Integer.valueOf(selectedResourceID));
                 }
-                
+
                 try (Connection dbConnection = DBHelper.getConnection();
                         PreparedStatement insertStatement = dbConnection.prepareStatement(
-                        "INSERT INTO " + table + " VALUES (?, ?)")) {
-                    
+                            "INSERT INTO " + table + " VALUES (?, ?)")) {
+
                     insertStatement.setInt(1, originalResource.getUniqueID());
                     insertStatement.setInt(2, selectedResourceID);
                     insertStatement.executeUpdate();
-                    
-                } catch (SQLException e) {
+
+                }
+                catch (SQLException e) {
                     e.printStackTrace();
                     AlertBox.showErrorAlert(e.getMessage());
                 }
             }
         }
-        
+
         Stage settingsStage = (Stage) saveBtn.getScene().getWindow();
         settingsStage.close();
-        
-        AlertBox.showInfoAlert("Related resources have been saved successfully!");
+
+        AlertBox.showInfoAlert("Related resources have been saved successf" +
+            "ully!");
     }
-    
+
+    /**
+     * Calculates a list of resources to be part of the suggestion made to the 
+     * librarian, based on the selection mode.
+     * @return a list of resources to be part of the suggestion made to the 
+     * librarian.
+     */
     private List<Resource> getResourcesToDisplay() {
         List<Resource> displayedResources;
-        
+
         switch (selectionMode) {
             case "same series":
                 displayedResources = originalResource.getSameSeriesSuggestions();
@@ -195,9 +242,10 @@ public class RelatedRsrcController {
                 }
                 break;
             default:
-                throw new IllegalArgumentException("Selection mode string is not valid!");
+                throw new IllegalArgumentException(
+                    "Selection mode string is not valid!");
         }
-        
+
         return displayedResources;
     }
 }
