@@ -66,6 +66,7 @@ public class DVD extends Resource {
      * @param thumbnailPath The path to the thumbnail of the image.
      * @param director The director of the movie.
      * @param runtime The run time of the movie.
+     * @param timestamp The time this dvd was added to the database.
      */
     public DVD(int uniqueID, String title, int year, Image thumbnail,
     		String thumbnailPath, String timestamp, String director, int runtime) {

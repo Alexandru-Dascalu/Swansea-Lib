@@ -297,7 +297,8 @@ public class Book extends Resource {
     }
     
     /**
-     * Return the default limit number from resource to restrict user over requesting
+     * Return the default limit number from resource to restrict user over requesting.
+     * @return the limit number of a book counting towards the user's request load.
      */
     public int getLimitAmount() {
     	return super.getLimitAmount();
