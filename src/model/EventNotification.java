@@ -17,7 +17,6 @@ import javafx.scene.text.Text;
  * A notification about a new event or about an event being near to the current 
  * date. Event notification have a date.
  * @author Alexandru Dascalu
- *
  */
 public class EventNotification extends Notification {
 	
@@ -184,8 +183,8 @@ public class EventNotification extends Notification {
 	
 	/**
      * Returns a string that represents CSS properties which will be used when
-     *  the notification is displayed. It sets a background color with a linear
-     *  gradient, padding, and a border with a color and width.
+     *  the notification is displayed. It sets a blue background colour with a linear
+     *  gradient, padding, and a border with a blue colour and width.
      * @return A CSS string with the style properties used to display this 
      * notification.
      */
