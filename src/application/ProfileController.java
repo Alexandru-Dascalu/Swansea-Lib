@@ -336,9 +336,7 @@ public class ProfileController {
 
 			Double userBalance = ((User) currentPerson).getAccountBalance();
 			
-			//WARNING: the '�' character differs in GIT and in Java
-			//TODO: Maybe set GIT & Java to UTF-8?
-			accountBalance.setText("\u00a3" + Double.toString(userBalance));
+			//WARNING: the '�' character differs in GIT and in Java			accountBalance.setText("\u00a3" + Double.toString(userBalance));
 			
 			userAvatarView.setImage(new Image(currentPerson.getAvatar()));
 		}else {
@@ -678,9 +676,13 @@ public class ProfileController {
 	}
 
     /**
-     * intialize method that starts when the scene is intialized
+     * Initialises the profile scene. If the person is a normal user, the user
+     * notification settings and notifications are loaded, and new notifications 
+     * for imminent fines or nearing user events are created. It also disable 
+     * buttons that the user should not see, or disables buttons not meant for 
+     * librarians, depending on the current person.
      * 
-     * @throws ParseException
+     * @throws ParseException if the loading of resource images failed.
      */
     @FXML
     public void initialize() throws ParseException {
@@ -1017,6 +1019,8 @@ public class ProfileController {
             staffAvatarView.setImage(new Image(currentPerson.getAvatar()));
     }
 
+    /**Shows the window for letting librarians edit their profile.
+     * @param event The mouse event that triggered this action.*/
 	@FXML
 	private void openProfileEditor(MouseEvent event) {
 		System.out.println("Launch staff editing profile.");
@@ -1031,7 +1035,6 @@ public class ProfileController {
             stage.setScene(new Scene(root1));
             stage.show();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -1053,7 +1056,6 @@ public class ProfileController {
 			stage.show();
 
 		} catch (IOException e2) {
-			// TODO Auto-generated catch block
 			e2.printStackTrace();
 		}
 		System.out.println("Launch avatar editor.");
@@ -1077,7 +1079,6 @@ public class ProfileController {
 			stage.show();
 
 		} catch (IOException e2) {
-			// TODO Auto-generated catch block
 			e2.printStackTrace();
 		}
 		System.out.println("Open user statistics.");
@@ -1101,7 +1102,6 @@ public class ProfileController {
 			stage.show();
 
 		} catch (IOException e2) {
-			// TODO Auto-generated catch block
 			e2.printStackTrace();
 		}
 		System.out.println("Open librarian statistics.");
@@ -1449,6 +1449,7 @@ public class ProfileController {
 		}
 	}
 	
+	/**Shows a window with the past and new notifications of this user.*/
 	@FXML
 	private void showNotifications() {
 	    
@@ -1473,6 +1474,8 @@ public class ProfileController {
         notificationWindow.show();
 	}
 	
+	/**Shows a new window with the current notification settings of the current 
+	 * user. The window also lets users change their settings.*/
 	@FXML
 	private void showNotificationSettings() {
 	    FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/" +
@@ -1493,11 +1496,15 @@ public class ProfileController {
         settingsWindow.show();
 	}
 	
+	/**Disables the glow effect of the notification bell when the mouse does 
+	 * not hover over it.*/
 	@FXML
 	private void setNotificationBellNormal() {
 	    notificationBellView.setEffect(null);
 	}
 	
+	/**Enables the glow effect of the notification bell when the mouse hovers
+	 * over it.*/
 	@FXML
 	private void setNotificationBellHover() {
 	    Glow notBellGlow = new Glow();
