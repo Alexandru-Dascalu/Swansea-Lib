@@ -8,6 +8,7 @@ import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -15,6 +16,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextArea;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -45,6 +47,18 @@ import model.User;
  */
 public class CopyController {
 
+    private static final int RES_IMG_WIDTH = 200;
+    private static final int RES_IMG_HEIGHT = 200;
+    
+    private static final double ROUND = 100.0;
+    private static final double REVIEW_SPACING = 8;
+    
+ // star, name,what,when
+    private static final int STAR_INDEX = 0;
+    private static final int NAME_INDEX = 1;
+    private static final int REVIEW_INDEX = 2;
+    private static final int WHEN_INDEX = 3;
+    
     @FXML
     private BorderPane borderpane1;// borderpane
 
@@ -92,17 +106,37 @@ public class CopyController {
     @FXML
     private VBox seeReviews;
 
-    private static final int RES_IMG_WIDTH = 200;
-    private static final int RES_IMG_HEIGHT = 200;
+    @FXML
+    private HBox seriesBox;
     
-    private static final double ROUND = 100.0;
-    private static final double REVIEW_SPACING = 8;
+    @FXML
+    private HBox otherBox;
     
- // star, name,what,when
-    private static final int STAR_INDEX = 0;
-    private static final int NAME_INDEX = 1;
-    private static final int REVIEW_INDEX = 2;
-    private static final int WHEN_INDEX = 3;
+    private final EventHandler<MouseEvent> clickHandler;
+    
+    public CopyController() {
+        clickHandler = event -> {
+            for(Resource resource : ScreenManager.getResources()) {
+                if(resource.getUniqueID() ==
+                        Integer.parseInt(((ImageView) event.getSource()).getId())) {
+                    ScreenManager.setCurrentResource(resource);
+                }
+            }
+
+            try {
+                FXMLLoader fxmlLoader =
+                        new FXMLLoader(getClass().getResource("/fxml/copyScene.fxml"));
+                Parent root1 = (Parent) fxmlLoader.load();
+                Stage stage = new Stage();
+                stage.initModality(Modality.APPLICATION_MODAL);
+                stage.setTitle("Resource Information");
+                stage.setScene(new Scene(root1));
+                stage.show();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        };
+    }
     
     /**
      * Sets new scene on stage within program using fxml file provided.
@@ -453,8 +487,31 @@ public class CopyController {
         if (!(ScreenManager.currentResource.getClass() == DVD.class ||
             ScreenManager.currentResource.getClass() == Game.class)) {
             viewTrailerButton.setDisable(true);
+            viewTrailerButton.setVisible(false);
         }
-
+        
+        for(Integer id: ScreenManager.getCurrentResource().getSameSeriesResources()) {
+            Resource sameSeriesResource = Resource.getResource(id);
+            
+            ImageView resourceImageView = new ImageView(sameSeriesResource.getThumbnail());
+            resourceImageView.setFitHeight(200);
+            resourceImageView.setFitWidth(120);
+            resourceImageView.setId(id + "");
+            resourceImageView.setOnMouseClicked(clickHandler);
+            
+            seriesBox.getChildren().add(resourceImageView);
+        }
+        
+        for(Integer id: ScreenManager.getCurrentResource().getOtherRelatedResources()) {
+            Resource otherRelatedResource = Resource.getResource(id);
+            
+            ImageView resourceImageView = new ImageView(otherRelatedResource.getThumbnail());
+            resourceImageView.setFitHeight(200);
+            resourceImageView.setFitWidth(120);
+            resourceImageView.setId(id + "");
+            resourceImageView.setOnMouseClicked(clickHandler);
+            
+            seriesBox.getChildren().add(resourceImageView);
+        }
     }
-
 }
