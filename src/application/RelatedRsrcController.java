@@ -1,6 +1,9 @@
 package application;
 
 import java.io.IOException;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import java.util.List;
 
 import javafx.event.EventHandler;
@@ -8,6 +11,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -20,6 +24,7 @@ import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.scene.input.MouseEvent;
+import model.DBHelper;
 import model.Resource;
 import model.ResourceComparator;
 
@@ -111,6 +116,44 @@ public class RelatedRsrcController {
     
     public void onStageClosed() {
         ScreenManager.setCurrentResource(originalResource);
+    }
+    
+    private void saveRelated() {
+        for(Node node: resourcesVBox.getChildren()) {
+            HBox hbox = (HBox) node;
+            int selectedResourceID = Integer.parseInt(hbox.getChildren()
+                .get(0).getId());
+            
+            CheckBox checkBox = (CheckBox) hbox.getChildren().get(
+                hbox.getChildren().size() - 1);
+            
+            if(checkBox.isSelected()) {
+                String table = null;
+                
+                if(selectionMode.equals("same series")) {
+                    table = "resourceSeries";
+                    originalResource.getSameSeriesResources().add(
+                        Integer.valueOf(selectedResourceID));
+                } else if (selectionMode.equals("other related")) {
+                    table = "related";
+                    originalResource.getOtherRelatedResources().add(
+                        Integer.valueOf(selectedResourceID));
+                }
+                
+                try (Connection dbConnection = DBHelper.getConnection();
+                        PreparedStatement insertStatement = dbConnection.prepareStatement(
+                        "INSERT INTO " + table + " VALUES (?, ?)")) {
+                    
+                    insertStatement.setInt(1, originalResource.getUniqueID());
+                    insertStatement.setInt(2, selectedResourceID);
+                    insertStatement.executeUpdate();
+                    
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                    AlertBox.showErrorAlert(e.getMessage());
+                }
+            }
+        }
     }
     
     private List<Resource> resourcesToDisplay() {

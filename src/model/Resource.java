@@ -815,6 +815,26 @@ public abstract class Resource {
     }
     
     /**
+     * Gets a list of unique ids of resources which are considered to be in 
+     * the same series as this resource.
+     * @return a list of unique ids of resources which are considered to be in 
+     * the same series as this resource.
+     */
+    public List<Integer> getSameSeriesResources() {
+        return sameSeriesResources;
+    }
+    
+    /**
+     * Gets a list of the unique ids of resources which are considered related 
+     * to this one, but not part of the same series.
+     * @return a list of the unique ids of resources which are considered related 
+     * to this one, but not part of the same series.
+     */
+    public List<Integer> getOtherRelatedResources() {
+        return otherRelatedResources;
+    }
+    
+    /**
      * Method to check if user last login compared to resource added timestamp
      * @param person current user
      * @return true if user last login was before resource added time, false otherwise.
