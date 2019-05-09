@@ -118,6 +118,7 @@ public class RelatedRsrcController {
         ScreenManager.setCurrentResource(originalResource);
     }
     
+    @FXML
     private void saveRelated() {
         for(Node node: resourcesVBox.getChildren()) {
             HBox hbox = (HBox) node;
@@ -154,6 +155,11 @@ public class RelatedRsrcController {
                 }
             }
         }
+        
+        Stage settingsStage = (Stage) saveBtn.getScene().getWindow();
+        settingsStage.close();
+        
+        AlertBox.showInfoAlert("Related resources have been saved successfully!");
     }
     
     private List<Resource> resourcesToDisplay() {

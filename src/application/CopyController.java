@@ -309,6 +309,14 @@ public class CopyController {
     public void showTrailerWindow(ActionEvent actionEvent) {
         Resource currentResource = ScreenManager.currentResource;
         
+        for(Integer i: currentResource.getSameSeriesResources()) {
+            System.out.println(i.toString());
+        }
+        System.out.println();
+        for(Integer i: currentResource.getOtherRelatedResources()) {
+            System.out.println(i.toString());
+        }
+        
         if (currentResource.getClass() == DVD.class) {
             DVD currentMovie = (DVD) currentResource;
 

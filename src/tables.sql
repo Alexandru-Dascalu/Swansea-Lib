@@ -122,7 +122,7 @@ CREATE TABLE IF NOT EXISTS `resourceSeries` (
 	`rID` INTEGER,
 	`seriesResource` INTEGER,
 	PRIMARY KEY (`rID`,`seriesResource`),
-	FOREIGN KEY (`rID`,`seriesResource`) REFERENCES `resource` (`rID`,`rID`) ON UPDATE CASCADE ON DELETE CASCADE
+	FOREIGN KEY (`rID`) REFERENCES `resource` (`rID`) ON UPDATE CASCADE ON DELETE CASCADE
 );
 
 DROP TABLE IF EXISTS `related`;
@@ -130,7 +130,7 @@ CREATE TABLE IF NOT EXISTS `related` (
 	`rID` INTEGER,
 	`relatedRsrc` INTEGER,
 	PRIMARY KEY (`rID`,`relatedRsrc`),
-	FOREIGN KEY(`rID`,`relatedRsrc`) REFERENCES `resource` (`rID`,`rID`) ON UPDATE CASCADE ON DELETE CASCADE
+	FOREIGN KEY(`rID`) REFERENCES `resource` (`rID`) ON UPDATE CASCADE ON DELETE CASCADE
 );
 
 DROP TABLE IF EXISTS `fines`;
