@@ -573,7 +573,7 @@ public class ProfileController {
 
 					((ImageView) imagePane.getChildren().get(2)).setFitWidth(RES_IMG_WIDTH);
 					((ImageView) imagePane.getChildren().get(2)).setImage(
-						new Image("/graphics/" + "New.png")); //TODO: Possible bug: 'java.lang.OutOfMemoryError: Java heap space'
+						new Image("/graphics/" + "New.png"));
 					((ImageView) imagePane.getChildren().get(2)).setPreserveRatio(true);
 				}
 				else {

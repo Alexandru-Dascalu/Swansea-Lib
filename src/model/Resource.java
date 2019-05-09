@@ -20,11 +20,13 @@ import application.AlertBox;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.CheckBox;
+import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.Text;
 
 /**
  * This class represents a resource that the library has to offer. A resource is
@@ -802,10 +804,16 @@ public abstract class Resource {
         labelBox.setAlignment(Pos.CENTER);
         resourceBox.getChildren().add(labelBox);
         
+        labelBox.getChildren().add(new Label("Title:"));
+        labelBox.getChildren().add(new Label("Year:"));
+        
         VBox infoBox = new VBox();
         infoBox.setSpacing(5);
         infoBox.setAlignment(Pos.CENTER);
         resourceBox.getChildren().add(infoBox);
+        
+        infoBox.getChildren().add(new Text(title));
+        infoBox.getChildren().add(new Text("" + year));
         
         CheckBox checkBox = new CheckBox();
         checkBox.setSelected(false);
