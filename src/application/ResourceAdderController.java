@@ -39,7 +39,6 @@ public class ResourceAdderController {
 		ResultSet result = statement.getGeneratedKeys();
 		addActualBook(result.getInt(1));
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 	}
 	}
@@ -136,12 +135,10 @@ public class ResourceAdderController {
 				stage.setScene(new Scene(root1));
 				stage.show();
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}

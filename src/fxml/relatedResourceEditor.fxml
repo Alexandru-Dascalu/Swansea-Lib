@@ -11,7 +11,7 @@
    <center>
       <ScrollPane fitToWidth="true" hbarPolicy="NEVER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" vbarPolicy="ALWAYS">
          <content>
-            <VBox prefHeight="400.0" prefWidth="600.0" />
+            <VBox fx:id="resourcesVBox" prefHeight="400.0" prefWidth="600.0" />
          </content>
       </ScrollPane>
    </center>

@@ -1,17 +1,24 @@
 package application;
 
 import java.io.File;
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 import model.Book;
 import model.DBHelper;
 import model.DVD;
@@ -32,7 +39,7 @@ import model.User;
 public class ResourceController {
 
 	@FXML
-	VBox resourceBlock;
+	private VBox resourceBlock;
 	
 	/**
 	 * Sets up the book resource screen.
@@ -86,11 +93,32 @@ public class ResourceController {
 		
 		Button button = new Button("Save");
 		button.setOnAction(e -> {
+		    boolean isNewAddition = (book.getTitle() == null);
 			updateBook(titleField.getText(), yearField.getText(), 
 					authorField.getText(), publishField.getText(), 
 					genreField.getText(), iField.getText(), 
 					languageField.getText(), imgField.getText());
-			ResourceNotification.makeNewRsrcNotification(book);
+
+			if(isNewAddition) {
+			    ResourceNotification.makeNewRsrcNotification(book);
+			    
+			    try {
+			        FXMLLoader loader = new FXMLLoader(getClass().getResource(
+	                        "/fxml/relatedResourceEditor.fxml"));
+			        Parent root = loader.load();
+		            RelatedRsrcController controller =  loader.getController();
+		            controller.loadResourceHboxes("same series", book);
+		            
+		            Stage stage = new Stage();
+	                stage.setTitle("Resources that might be part of the same series");
+	                stage.setScene(new Scene(root));
+	                stage.setOnHidden(event -> controller.onStageClosed());
+	                stage.show();
+		            
+		        } catch (IOException e2) {
+		            e2.printStackTrace();
+		        }
+			}
 		});
 		resourceBlock.getChildren().addAll(titleBox,yearBox,
 				authorBox,publishBox,genreBox,iBox,languageBox,imgBox,button);
@@ -144,10 +172,30 @@ public class ResourceController {
 		
 		Button button = new Button("Save");
 		button.setOnAction(e -> {
+		    boolean isNewAddition = (game.getTitle() == null);
 			updateGame(titleField.getText(), yearField.getText(), publishField.getText(), 
 					genreField.getText(), ratingField.getText(), 
 					multiField.getText(), imgField.getText());
-			ResourceNotification.makeNewRsrcNotification(game);
+			
+			if(isNewAddition) {
+                ResourceNotification.makeNewRsrcNotification(game);
+                
+                try {
+                    FXMLLoader loader = new FXMLLoader(getClass().getResource(
+                            "/fxml/relatedResourceEditor.fxml"));
+                    Parent root = loader.load();
+                    RelatedRsrcController controller =  loader.getController();
+                    controller.loadResourceHboxes("same series", game);
+                    
+                    Stage stage = new Stage();
+                    stage.setTitle("Resources that might be part of the same series");
+                    stage.setScene(new Scene(root));
+                    stage.setOnHidden(event -> controller.onStageClosed());
+                    stage.show();
+                } catch (IOException e2) {
+                    e2.printStackTrace();
+                }
+            }
 		});
 		resourceBlock.getChildren().addAll(titleBox,yearBox,
 				publishBox,genreBox,ratingBox,multiBox,imgBox,button);
@@ -209,11 +257,31 @@ public class ResourceController {
 		
 		Button button = new Button("Save");
 		button.setOnAction(e -> {
+		    boolean isNewAddition = (dvd.getTitle() == null);
 			updateDVD(titleField.getText(),yearField.getText(),
 					directorField.getText(),runtimeField.getText(),
 					langField.getText(),subtitlesField.getText(),
 					imgField.getText());
-			ResourceNotification.makeNewRsrcNotification(dvd);
+			
+			if(isNewAddition) {
+                ResourceNotification.makeNewRsrcNotification(dvd);
+                
+                try {
+                    FXMLLoader loader = new FXMLLoader(getClass().getResource(
+                            "/fxml/relatedResourceEditor.fxml"));
+                    Parent root = loader.load();
+                    RelatedRsrcController controller =  loader.getController();
+                    controller.loadResourceHboxes("same series", dvd);
+                    
+                    Stage stage = new Stage();
+                    stage.setTitle("Resources that might be part of the same series");
+                    stage.setScene(new Scene(root));
+                    stage.setOnHidden(event -> controller.onStageClosed());
+                    stage.show();
+                } catch (IOException e2) {
+                    e2.printStackTrace();
+                }
+            }
 		});
 		resourceBlock.getChildren().addAll(titleBox,yearBox,
 				directorBox,runtimeBox,langBox,subtitlesBox,imgBox,button);
@@ -261,10 +329,30 @@ public class ResourceController {
 		
 		Button button = new Button("Save");
 		button.setOnAction(e -> {
+		    boolean isNewAddition = (laptop.getTitle() == null);
 			updateLaptop(titleField.getText(),yearField.getText(),
 					manuField.getText(),modelField.getText(),OSField.getText(),
 					imgField.getText());
-			ResourceNotification.makeNewRsrcNotification(laptop);
+			
+			if(isNewAddition) {
+                ResourceNotification.makeNewRsrcNotification(laptop);
+                
+                try {
+                    FXMLLoader loader = new FXMLLoader(getClass().getResource(
+                            "/fxml/relatedResourceEditor.fxml"));
+                    Parent root = loader.load();
+                    RelatedRsrcController controller =  loader.getController();
+                    controller.loadResourceHboxes("same series", laptop);
+                    
+                    Stage stage = new Stage();
+                    stage.setTitle("Resources that might be part of the same series");
+                    stage.setScene(new Scene(root));
+                    stage.setOnHidden(event -> controller.onStageClosed());
+                    stage.show();
+                } catch (IOException e2) {
+                    e2.printStackTrace();
+                }
+            }
 		});
 		resourceBlock.getChildren().addAll(titleBox,yearBox,manuBox,modelBox,
 				OSBox,imgBox,button);

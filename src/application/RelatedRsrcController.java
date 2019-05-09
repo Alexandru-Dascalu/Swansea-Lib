@@ -1,11 +1,15 @@
 package application;
 
+import java.io.IOException;
 import java.util.List;
 
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
@@ -14,6 +18,8 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 import javafx.scene.input.MouseEvent;
 import model.Resource;
 import model.ResourceComparator;
@@ -24,25 +30,25 @@ public class RelatedRsrcController {
     private Button saveBtn;
     
     @FXML
-    private VBox resourcesBox;
+    private VBox resourcesVBox;
     
     private Resource originalResource;
     
+    private final EventHandler<MouseEvent> clickHandler;
+            
     private static HBox getRelatedResourceHBox(Resource resource, 
             EventHandler<MouseEvent> clickHandler) {
         HBox resourceBox = new HBox();
         resourceBox.setSpacing(20);
-        resourceBox.setAlignment(Pos.CENTER_LEFT);
+        resourceBox.setAlignment(Pos.CENTER);
         resourceBox.setPadding(new Insets(10, 10, 10, 20));
         
-        StackPane stackPane = new StackPane();
         ImageView resourceImageView = new ImageView(resource.getThumbnail());
         resourceImageView.setFitHeight(200);
         resourceImageView.setFitWidth(120);
-        stackPane.getChildren().add(resourceImageView);
-        stackPane.setId(resource.getUniqueID() + "");
-        stackPane.setOnMouseClicked(clickHandler);
-        resourceBox.getChildren().add(stackPane);
+        resourceImageView.setId(resource.getUniqueID() + "");
+        resourceImageView.setOnMouseClicked(clickHandler);
+        resourceBox.getChildren().add(resourceImageView);
         
         VBox labelBox = new VBox();
         labelBox.setSpacing(5);
@@ -67,13 +73,37 @@ public class RelatedRsrcController {
         return resourceBox;
     }
     
-    public void loadResourceHboxes(String selectionMode, Resource originalResource, 
-            EventHandler<MouseEvent> clickHandler) {
-        List<Resource> displayedResources = resourcesToDisplay(selectionMode);
+    public RelatedRsrcController() {
+        clickHandler = event -> {
+            for(Resource resource : ScreenManager.getResources()) {
+                if(resource.getUniqueID() ==
+                        Integer.parseInt(((ImageView) event.getSource()).getId())) {
+                    ScreenManager.setCurrentResource(resource);
+                }
+            }
+
+            try {
+                FXMLLoader fxmlLoader =
+                        new FXMLLoader(getClass().getResource("/fxml/copyScene.fxml"));
+                Parent root1 = (Parent) fxmlLoader.load();
+                Stage stage = new Stage();
+                stage.initModality(Modality.APPLICATION_MODAL);
+                stage.setTitle("Resource Information");
+                stage.setScene(new Scene(root1));
+                stage.show();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        };
+    }
+    
+    public void loadResourceHboxes(String selectionMode, Resource originalResource) {
         this.originalResource = originalResource;
+        List<Resource> displayedResources = resourcesToDisplay(selectionMode);
         
         for(Resource resource: displayedResources) {
-           resourcesBox.getChildren().add(getRelatedResourceHBox(resource, clickHandler));
+            HBox h = getRelatedResourceHBox(resource, clickHandler);
+           resourcesVBox.getChildren().add(h);
         }
     }
     

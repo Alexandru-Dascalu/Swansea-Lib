@@ -780,8 +780,7 @@ public abstract class Resource {
         String thisFirstWord = title.split(" ")[0];
         String otherFirstWord = otherResource.getTitle().split(" ")[0];
         
-        if(thisFirstWord.equals(otherFirstWord) && !thisFirstWord.equalsIgnoreCase("a")
-                && !thisFirstWord.equalsIgnoreCase("the")) {
+        if(thisFirstWord.equals(otherFirstWord)) {
             return true;
         } else {
             return false;

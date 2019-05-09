@@ -277,15 +277,16 @@ public class Book extends Resource {
      * Says if this book is possibly in the same series as another book. 
      * It calculates it by seeing if they have the same author and genre, as 
      * well the result of the Resource method of the same name.
-     * @param otherBook Another book we want to see if it can be of the 
+     * @param otherResource Another book we want to see if it can be of the 
      * same series.
      * @return True if it is possibly of the same series, false if not.
      */
-    public boolean isPossiblySameSeries(Book otherBook) {
-        if(!super.isPossiblySameSeries(otherBook)) {
+    public boolean isPossiblySameSeries(Resource otherResource) {
+        if(!super.isPossiblySameSeries(otherResource)) {
             return false;
         }
         
+        Book otherBook = (Book) otherResource;
         if(author.equals(otherBook.getAuthor())) {
             if(genre != null && genre.equalsIgnoreCase(otherBook.getGenre())) {
                 return true;
