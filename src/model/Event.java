@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.concurrent.TimeUnit;
 
+import application.AlertBox;
 import application.ScreenManager;
 
 /**
@@ -88,47 +89,54 @@ public class Event {
 	 * Loads appropriate events from database. Users will see upcoming events they're
 	 * currently not joined to in one table, and events they're joined to in another.
 	 * Librarians will see all events.
-	 * @throws SQLException
 	 */
-	public static void loadEventsFromDB() throws SQLException {
-		
-		Connection connectionToDB = DBHelper.getConnection();
-        Statement stmt = connectionToDB.createStatement();
-        ResultSet rs = stmt.executeQuery("SELECT * FROM events");
-        
-        allEvents.clear();
-        usersEvents.clear();
-        
-        //if normal user, get all events IDs they're joined to.
-        ArrayList<Integer> usersEventIDs = null;
-        if(ScreenManager.getCurrentUser() instanceof User) {
-        	usersEventIDs = ((User) ScreenManager.getCurrentUser()).loadUserEvents();
-        }
+    public static void loadEventsFromDB() {
 
-		while(rs.next()) {
-			
-			totalEventNo += 1;
-		
-			if(ScreenManager.getCurrentUser() instanceof User) {
-				//if event is upcoming and user isn't already joined to it
-				if(checkFutureDate(rs.getString(4)) && !(usersEventIDs.contains(rs.getInt(1)))) {
-					allEvents.add(new Event(rs.getString(2), rs.getString(3), rs.getString(4), rs.getInt(5)));
-					allEvents.get(allEvents.size()-1).setID(rs.getInt(1));
-				//if user is already joined to event
-				} else if (usersEventIDs.contains(rs.getInt(1))) {
-					usersEvents.add(new Event(rs.getString(2), rs.getString(3), rs.getString(4), rs.getInt(5)));
-					usersEvents.get(usersEvents.size()-1).setID(rs.getInt(1));
-				}
-			} else {
-				//add all events if librarian
-				allEvents.add(new Event(rs.getString(2), rs.getString(3), rs.getString(4), rs.getInt(5)));
-				allEvents.get(allEvents.size()-1).setID(rs.getInt(1));
-			}
-		}
-		
-		
-		connectionToDB.close();
-	}
+        try (Connection connectionToDB = DBHelper.getConnection();
+                Statement stmt = connectionToDB.createStatement();
+                ResultSet rs = stmt.executeQuery("SELECT * FROM events")) {
+
+            allEvents.clear();
+            usersEvents.clear();
+
+            // if normal user, get all events IDs they're joined to.
+            ArrayList<Integer> usersEventIDs = null;
+            if (ScreenManager.getCurrentUser() instanceof User) {
+                usersEventIDs = ((User) ScreenManager.getCurrentUser()).loadUserEvents();
+            }
+
+            while (rs.next()) {
+
+                totalEventNo += 1;
+
+                if (ScreenManager.getCurrentUser() instanceof User) {
+                    // if event is upcoming and user isn't already joined to it
+                    if (checkFutureDate(rs.getString(4)) &&
+                        !(usersEventIDs.contains(rs.getInt(1)))) {
+                        allEvents.add(new Event(rs.getString(2), rs.getString(3), rs.getString(4),
+                            rs.getInt(5)));
+                        allEvents.get(allEvents.size() - 1).setID(rs.getInt(1));
+                        // if user is already joined to event
+                    }
+                    else if (usersEventIDs.contains(rs.getInt(1))) {
+                        usersEvents.add(new Event(rs.getString(2), rs.getString(3), rs.getString(4),
+                            rs.getInt(5)));
+                        usersEvents.get(usersEvents.size() - 1).setID(rs.getInt(1));
+                    }
+                }
+                else {
+                    // add all events if librarian
+                    allEvents.add(
+                        new Event(rs.getString(2), rs.getString(3), rs.getString(4), rs.getInt(5)));
+                    allEvents.get(allEvents.size() - 1).setID(rs.getInt(1));
+                }
+            }
+        }
+        catch (SQLException e) {
+            e.printStackTrace();
+            AlertBox.showErrorAlert(e.getMessage());
+        }
+    }
 	
 	/**
 	 * Updates the given event in the database.
