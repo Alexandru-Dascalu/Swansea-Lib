@@ -946,7 +946,7 @@ public class ProfileController {
 	}
 
 	/**
-	 * Checks whether a copyID exists in the database
+	 * Checks whether a copyID exists in the database.
 	 * @param copyID String
 	 * @return true if copyId exists
 	 */
@@ -969,7 +969,7 @@ public class ProfileController {
 
 
 	/**
-	 * Opens the profile editor when the button is clicked
+	 * Opens the profile editor when the button is clicked.
 	 * @param event button being clicked
 	 */
 	@FXML
@@ -1034,7 +1034,7 @@ public class ProfileController {
 	}
 
 	/**
-	 * Opens the avatar drawing scene when the button is clicked
+	 * Opens the avatar drawing scene when the button is clicked.
 	 * @param event button being clicked
 	 */
 	@FXML
@@ -1056,8 +1056,8 @@ public class ProfileController {
 	}
 	
 	/**
-	 * Opens the statistics scene when the button is clicked
-	 * Different scene opens depending on current user
+	 * Opens the statistics scene when the button is clicked.
+	 * Different scene opens depending on current user.
 	 * @param event button being clicked
 	 */
 	@FXML
@@ -1079,8 +1079,8 @@ public class ProfileController {
 	}
 	
 	/**
-	 * Opens the statistics scene when the button is clicked
-	 * Different scene opens depending on current user
+	 * Opens the statistics scene when the button is clicked.
+	 * Different scene opens depending on current user.
 	 * @param event button being clicked
 	 */
 	@FXML
@@ -1261,7 +1261,7 @@ public class ProfileController {
 	}
 
 	/**
-	 * Method that shows the table of the selected user when button is clicked
+	 * Method that shows the table of the selected user when button is clicked.
 	 * @param event when the button is clicked
 	 */
 	@FXML
@@ -1272,7 +1272,7 @@ public class ProfileController {
 	}
 
 	/**
-	 * Deletes a user from the database when the button is clicked
+	 * Deletes a user from the database when the button is clicked.
 	 * @param event the button being clicked
 	 */
 	@FXML
@@ -1306,7 +1306,7 @@ public class ProfileController {
 	
 
 	/**
-	 * Method that allows librarian to add funds to a user when the button is clicked
+	 * Method that allows librarian to add funds to a user when the button is clicked.
 	 * @param event the button being pressed
 	 */
 	@FXML
