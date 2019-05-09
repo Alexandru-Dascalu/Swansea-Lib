@@ -108,10 +108,4 @@ public class LoginController {
 		}
 		//changeScene(event, "/fxml/registerScene.fxml");
 	}
-
-	@FXML
-	public void initialize() {
-
-	 }
-
 }
