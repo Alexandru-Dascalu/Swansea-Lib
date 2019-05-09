@@ -511,7 +511,7 @@ public class CopyController {
             resourceImageView.setId(id + "");
             resourceImageView.setOnMouseClicked(clickHandler);
             
-            seriesBox.getChildren().add(resourceImageView);
+            otherBox.getChildren().add(resourceImageView);
         }
     }
 }
