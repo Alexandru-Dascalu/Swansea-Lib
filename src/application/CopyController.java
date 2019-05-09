@@ -48,6 +48,12 @@ import model.User;
  */
 public class CopyController {
 
+    /**The width of the image showing related resources. Its value is {@value}.*/
+    private static final int PREVIEW_IMG_WIDTH = 110;
+    
+    /**The height of the image showing related resources. Its value is {@value}.*/
+    private static final int PREVIEW_IMG_HEIGHT = 140;
+    
     private static final int RES_IMG_WIDTH = 200;
     private static final int RES_IMG_HEIGHT = 200;
 
@@ -510,8 +516,8 @@ public class CopyController {
 
             ImageView resourceImageView = new ImageView(
                 sameSeriesResource.getThumbnail());
-            resourceImageView.setFitHeight(200);
-            resourceImageView.setFitWidth(120);
+            resourceImageView.setFitHeight(PREVIEW_IMG_HEIGHT);
+            resourceImageView.setFitWidth(PREVIEW_IMG_WIDTH);
             resourceImageView.setId(id + "");
             resourceImageView.setOnMouseClicked(clickHandler);
 
@@ -524,8 +530,8 @@ public class CopyController {
 
             ImageView resourceImageView = new ImageView(
                 otherRelatedResource.getThumbnail());
-            resourceImageView.setFitHeight(200);
-            resourceImageView.setFitWidth(120);
+            resourceImageView.setFitHeight(PREVIEW_IMG_HEIGHT);
+            resourceImageView.setFitWidth(PREVIEW_IMG_WIDTH);
             resourceImageView.setId(id + "");
             resourceImageView.setOnMouseClicked(clickHandler);
 

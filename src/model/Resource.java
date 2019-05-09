@@ -1187,6 +1187,9 @@ public abstract class Resource {
      *  resources.
      */
     private void loadRelatedResources() {
+        sameSeriesResources.clear();
+        otherRelatedResources.clear();
+        
         try (Connection dbConnection = DBHelper.getConnection();
                 PreparedStatement selectStatement = dbConnection.prepareStatement(
                 "SELECT seriesResource FROM resourceSeries WHERE rID = " + uniqueID);
