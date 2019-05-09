@@ -90,6 +90,14 @@ public abstract class Resource {
      * that need to be authorised by a librarian.*/
     private ArrayList<User> pendingRequests;
     
+    /**The unique IDs of other resources that are set as part of the same series
+     * in the database.*/
+    private LinkedList<Integer> sameSeriesResources;
+    
+    /**The unique IDs of other resources that are set as being related in the
+     * database.*/
+    private LinkedList<Integer> otherRelatedResources;
+    
     /**
      * Makes a new resource whose details are the given arguments.
      * 
@@ -117,7 +125,10 @@ public abstract class Resource {
         noDueDateCopies = new PriorityQueue<Copy>();
         userRequestQueue = new Queue<User>();
         pendingRequests = new ArrayList<User>();
+        sameSeriesResources = new LinkedList<Integer>();
+        otherRelatedResources = new LinkedList<Integer>();
 
+        loadRelatedResources();
         loadCopyList();
         loadCopyPriorityQueue();
         loadUserQueue();
@@ -1150,6 +1161,34 @@ public abstract class Resource {
         }
     }
 
+    private void loadRelatedResources() {
+        try (Connection dbConnection = DBHelper.getConnection();
+                PreparedStatement selectStatement = dbConnection.prepareStatement(
+                "SELECT seriesResource FROM resourceSeries WHERE rID = " + uniqueID);
+                ResultSet inSameSeries = selectStatement.executeQuery()) {
+            
+            while(inSameSeries.next()) {
+                sameSeriesResources.add(Integer.valueOf(inSameSeries.getInt(1)));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            AlertBox.showErrorAlert(e.getMessage());
+        }
+        
+        try (Connection dbConnection = DBHelper.getConnection();
+                PreparedStatement selectStatement = dbConnection.prepareStatement(
+                "SELECT relatedRsrc FROM related WHERE rID = " + uniqueID);
+                ResultSet related = selectStatement.executeQuery()) {
+            
+            while(related.next()) {
+                otherRelatedResources.add(Integer.valueOf(related.getInt(1)));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            AlertBox.showErrorAlert(e.getMessage());
+        }
+    }
+    
     /**
      * Saves the given copy to the database.
      * @param copy The copy being saved.
