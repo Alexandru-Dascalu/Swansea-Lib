@@ -238,4 +238,16 @@ public abstract class Notification {
         HBox.setHgrow(spacer, Priority.NEVER);
         return spacer;
     }
+    
+    /**
+     * Removes the package name from the name of the class of a resource.
+     * 
+     * @param resource The resource for which we want its class name.
+     * @return The class name of the resource, withot the package name.
+     */
+    protected static String getClassName(Resource resource) {
+        String className = resource.getClass().getName();
+        className = className.substring(6);
+        return className;
+    }
 }

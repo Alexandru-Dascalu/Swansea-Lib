@@ -59,8 +59,6 @@ public class FineNotification extends Notification {
             getClassName(resource) + " you are currently borrowing: " + resource.getTitle() + ".";
     }
 
-    
-
     /**
      * Makes a new notification in the database for an imminent fine for the given
      * user and copy. It also associates in the database the newly made notification
@@ -121,8 +119,8 @@ public class FineNotification extends Notification {
      * notification is displayed. It sets a firebrick red background colour with a
      * linear gradient, padding, and a border with a red colour and width.
      * 
-     * @return A CSS string with the style properties used to display this
-     *         notification.
+     * @return A CSS string with the style properties used to display this 
+     * notification.
      */
     public String getStyle() {
         return "-fx-background-color: linear-gradient(firebrick, #d81111);\r\n" +
@@ -154,15 +152,5 @@ public class FineNotification extends Notification {
         return notificationBox;
     }
     
-    /**
-     * Removes the package name from the name of the class of a resource.
-     * 
-     * @param resource The resource for which we want its class name.
-     * @return The class name of the resource, withot the package name.
-     */
-    private static String getClassName(Resource resource) {
-        String className = resource.getClass().getName();
-        className = className.substring(6);
-        return className;
-    }
+    
 }
