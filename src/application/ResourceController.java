@@ -109,11 +109,12 @@ public class ResourceController {
                     RelatedRsrcController controller = loader.getController();
                     controller.loadResourceHboxes("other related", book);
 
-                    Stage otherResourcesSTage = new Stage();
-                    otherResourcesSTage.setTitle("Other resources that might " + "be related");
-                    otherResourcesSTage.setScene(new Scene(otherReleatedRoot));
-                    otherResourcesSTage.setOnHidden(event -> controller.onStageClosed());
-                    otherResourcesSTage.show();
+                    Stage otherResourcesStage = new Stage();
+                    otherResourcesStage.setTitle("Other resources that might " + "be related");
+                    otherResourcesStage.setScene(new Scene(otherReleatedRoot));
+                    otherResourcesStage.setOnHidden(event -> controller.onStageClosed());
+                    otherResourcesStage.setResizable(false);
+                    otherResourcesStage.show();
 
                     loader = new FXMLLoader(
                         getClass().getResource("/fxml/r" + "elatedResourceEditor.fxml"));
@@ -125,6 +126,7 @@ public class ResourceController {
                     sameSeriesStage.setTitle("Resources that might be part of the same series");
                     sameSeriesStage.setScene(new Scene(sameSeriesRoot));
                     sameSeriesStage.setOnHidden(event -> sameSeriesController.onStageClosed());
+                    sameSeriesStage.setResizable(false);
                     sameSeriesStage.show();
 
                 }
@@ -201,11 +203,12 @@ public class ResourceController {
                     RelatedRsrcController controller = loader.getController();
                     controller.loadResourceHboxes("other related", game);
 
-                    Stage otherResourcesSTage = new Stage();
-                    otherResourcesSTage.setTitle("Other resources that might be related");
-                    otherResourcesSTage.setScene(new Scene(otherReleatedRoot));
-                    otherResourcesSTage.setOnHidden(event -> controller.onStageClosed());
-                    otherResourcesSTage.show();
+                    Stage otherResourcesStage = new Stage();
+                    otherResourcesStage.setTitle("Other resources that might be related");
+                    otherResourcesStage.setScene(new Scene(otherReleatedRoot));
+                    otherResourcesStage.setOnHidden(event -> controller.onStageClosed());
+                    otherResourcesStage.setResizable(false);
+                    otherResourcesStage.show();
 
                     loader = new FXMLLoader(
                         getClass().getResource("/fxml/relatedResourceEditor.fxml"));
@@ -219,6 +222,7 @@ public class ResourceController {
                     sameSeriesStage.setScene(new Scene(sameSeriesRoot));
                     sameSeriesStage.setOnHidden(event -> 
                         sameSeriesController.onStageClosed());
+                    sameSeriesStage.setResizable(false);
                     sameSeriesStage.show();
                 }
                 catch (IOException e2) {
