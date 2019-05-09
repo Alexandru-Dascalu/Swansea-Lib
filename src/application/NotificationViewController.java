@@ -13,6 +13,10 @@ import model.DBHelper;
 import model.Notification;
 import model.User;
 
+/**
+ * A controller for the window showing the user their notifications.
+ * @author Alexandru Dascalu
+ */
 public class NotificationViewController {
     
     @FXML
@@ -27,6 +31,11 @@ public class NotificationViewController {
     @FXML
     private Button markReadBtn;
     
+    /**
+     * Initializes the window of this controller by getting the notifications of
+     * this user from the database and adding a corresponding HBox to the 
+     * correct pane.
+     */
     @FXML
     public void initialize() {
         List<Notification> userNotifications = ((User)ScreenManager.
@@ -39,10 +48,11 @@ public class NotificationViewController {
                 newNotificationsBox.getChildren().add(notification.getNotificationBox());
             }
         }
-        
-        System.out.println("vbox "+newNotificationsBox.getPrefWidth());
     }
     
+    /**Marks all notifications displayed in the new notification pane as having
+     * been read, updates the database accordingly and moves to the past
+     * notifications pane.*/
     @FXML
     private void markAllAsRead() {
         User currentUser = (User) ScreenManager.getCurrentUser();
