@@ -326,15 +326,11 @@ public class ProfileController {
 			phoneLabel.setText("Phone Number: " + currentPerson.getPhoneNumber());
 			lastLoginLabel1.setText("Last Login: " + currentPerson.getLastLogin());
 			
-			try {
-				((User) currentPerson).loadUserEvents();
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
+			((User) currentPerson).loadUserEvents();
 
 			Double userBalance = ((User) currentPerson).getAccountBalance();
 			
-			//WARNING: the '�' character differs in GIT and in Java			accountBalance.setText("\u00a3" + Double.toString(userBalance));
+			accountBalance.setText("\u00a3" + Double.toString(userBalance));
 			
 			userAvatarView.setImage(new Image(currentPerson.getAvatar()));
 		}else {
@@ -1340,41 +1336,37 @@ public class ProfileController {
 	 * Reloads data from database for both Upcoming and User event tables.
 	 */
 	@FXML
-	private void loadEventTable() {
-		
-		try {
-			
-			model.Event.loadEventsFromDB(); //loads appropriate events from DB depending on user.
-			
-			//set upcoming event table cell property value to event attribute names.
-			eventTitleField.setCellValueFactory(new PropertyValueFactory<>("title"));
-			eventDetailsField.setCellValueFactory(new PropertyValueFactory<>("details"));
-			eventTimeField.setCellValueFactory(new PropertyValueFactory<>("dateTime"));
-			eventSpacesField.setCellValueFactory(new PropertyValueFactory<>("maxAttending"));
-			
-			//set user event table cell property value to event attribute names.
-			userEventTitleField.setCellValueFactory(new PropertyValueFactory<>("title"));
-			userEventDetailsField.setCellValueFactory(new PropertyValueFactory<>("details"));
-			userEventTimeField.setCellValueFactory(new PropertyValueFactory<>("dateTime"));
-			userEventSpacesField.setCellValueFactory(new PropertyValueFactory<>("maxAttending"));
-			
-			ObservableList<model.Event> tableData = FXCollections.observableArrayList();
-			ObservableList<model.Event> userTableData = FXCollections.observableArrayList();
-			
-			tableData.addAll(model.Event.getAllEvents()); //add all appropriate events to upcoming events data.
-			userTableData.addAll(model.Event.getUserEvents()); //add all user events to user events table data.
+    private void loadEventTable() {
+        model.Event.loadEventsFromDB(); // loads appropriate events from DB depending on user.
 
-			eventTable.setItems(tableData);
-			userEventTable.setItems(userTableData);
-			
-			eventTable.refresh();
-			userEventTable.refresh();
-			
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
+        // set upcoming event table cell property value to event attribute names.
+        eventTitleField.setCellValueFactory(new PropertyValueFactory<>("title"));
+        eventDetailsField.setCellValueFactory(new PropertyValueFactory<>("details"));
+        eventTimeField.setCellValueFactory(new PropertyValueFactory<>("dateTime"));
+        eventSpacesField.setCellValueFactory(new PropertyValueFactory<>("maxAttending"));
 
-	}
+        // set user event table cell property value to event attribute names.
+        userEventTitleField.setCellValueFactory(new PropertyValueFactory<>("title"));
+        userEventDetailsField.setCellValueFactory(new PropertyValueFactory<>("details"));
+        userEventTimeField.setCellValueFactory(new PropertyValueFactory<>("dateTime"));
+        userEventSpacesField.setCellValueFactory(new PropertyValueFactory<>("maxAttending"));
+
+        ObservableList<model.Event> tableData = FXCollections.observableArrayList();
+        ObservableList<model.Event> userTableData = FXCollections.observableArrayList();
+
+        // add all appropriate events to upcoming events data.
+        tableData.addAll(model.Event.getAllEvents()); 
+        
+        //add all user events to user events table data.
+        userTableData.addAll(model.Event.getUserEvents()); 
+
+        eventTable.setItems(tableData);
+        userEventTable.setItems(userTableData);
+
+        eventTable.refresh();
+        userEventTable.refresh();
+
+    }
 	
 	/**
 	 * Called when user selects an event within the upcoming events table.
