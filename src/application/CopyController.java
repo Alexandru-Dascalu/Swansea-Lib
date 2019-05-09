@@ -107,9 +107,11 @@ public class CopyController {
     @FXML
     private VBox seeReviews;
 
+    /**An Hbox used to show resources that are part of the same series.*/
     @FXML
     private HBox seriesBox;
 
+    /**An Hbox used to show resources that are related to this one.*/
     @FXML
     private HBox otherBox;
 

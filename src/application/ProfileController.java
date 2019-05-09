@@ -61,620 +61,622 @@ import model.ResourceNotification;
 import model.User;
 
 /**
- * Profile Controller is responsible for handling events within the library resources,
- * my profile, and staff profile tabs.
+ * Profile Controller is responsible for handling events within the library
+ * resources, my profile, and staff profile tabs.
+ * 
  * @author Kane Miles
  * @version 1.1
  */
 public class ProfileController {
 
-	@FXML
-	private HBox resourceImages;//hbox that holds the resource images
+    @FXML
+    private HBox resourceImages;// hbox that holds the resource images
 
-	@FXML
-	private ScrollPane scrollPane;//allows the user to scroll through the images
+    @FXML
+    private ScrollPane scrollPane;// allows the user to scroll through the images
 
-	@FXML
-	private VBox vResourceBox;//vbox that contains the hbox of resources
+    @FXML
+    private VBox vResourceBox;// vbox that contains the hbox of resources
 
-	@FXML
-	private TextField searchTextBox;//allows the user to search for resources
+    @FXML
+    private TextField searchTextBox;// allows the user to search for resources
 
-	@FXML
-	private LoginController TextField;//log out link
+    @FXML
+    private LoginController TextField;// log out link
 
-	//User Profile
-	@FXML
-	private Label userLabel;//label displaying "Username"
-	@FXML
-	private Label fullnameLabel;//label displaying "Full name"
-	@FXML
-	private Label phoneLabel;//label displaying "Phone number"
-	@FXML
-	private Label addressLabel;//label displaying "Address"
-	@FXML
-	private Label postcodeLabel;//label displaying "Post code"
-	@FXML
-	private Label lastLoginLabel1;//label displaying "Last Login"
-	@FXML
-	private Label balanceLabel;//label displaying "Balance"
+    // User Profile
+    @FXML
+    private Label userLabel;// label displaying "Username"
+    @FXML
+    private Label fullnameLabel;// label displaying "Full name"
+    @FXML
+    private Label phoneLabel;// label displaying "Phone number"
+    @FXML
+    private Label addressLabel;// label displaying "Address"
+    @FXML
+    private Label postcodeLabel;// label displaying "Post code"
+    @FXML
+    private Label lastLoginLabel1;// label displaying "Last Login"
+    @FXML
+    private Label balanceLabel;// label displaying "Balance"
 
-	//Staff Profile
-	@FXML
-	private Label userLabel1;//label displaying the username from the database
-	@FXML
-	private Label fullnameLabel1;//label displaying the fullanme of the user from the database
-	@FXML
-	private Label phoneLabel1;//label displaying the phone number of the user from the database
-	@FXML
-	private Label addressLabel1;//label displaying the address of the user from the database
-	@FXML
-	private Label postcodeLabel1;//label displaying the postcode of the user from the database
-	@FXML
-	private Label dateLabel1;//label displaying the employment date of the staff from the database
-	@FXML
-	private Label staffIDLabel1;//label displaying the staff id from the database
-	@FXML
-	private Label lastLoginLabel2;//label displaying the staff last login time
+    // Staff Profile
+    @FXML
+    private Label userLabel1;// label displaying the username from the database
+    @FXML
+    private Label fullnameLabel1;// label displaying the fullanme of the user from the database
+    @FXML
+    private Label phoneLabel1;// label displaying the phone number of the user from the database
+    @FXML
+    private Label addressLabel1;// label displaying the address of the user from the database
+    @FXML
+    private Label postcodeLabel1;// label displaying the postcode of the user from the database
+    @FXML
+    private Label dateLabel1;// label displaying the employment date of the staff from the database
+    @FXML
+    private Label staffIDLabel1;// label displaying the staff id from the database
+    @FXML
+    private Label lastLoginLabel2;// label displaying the staff last login time
 
-	@FXML
-	private Tab userProfileTab;//my profile tab
+    @FXML
+    private Tab userProfileTab;// my profile tab
 
-	@FXML
-	private Tab resourcesTab;// library resources tab
+    @FXML
+    private Tab resourcesTab;// library resources tab
 
-	@FXML
-	private Tab transactionTab;//transaction tab
+    @FXML
+    private Tab transactionTab;// transaction tab
 
-	@FXML
-	private Tab staffProfileTab;//staff profile tab
+    @FXML
+    private Tab staffProfileTab;// staff profile tab
 
-	@FXML
-	private TabPane tabs;//tab pane that holds the tabs
+    @FXML
+    private TabPane tabs;// tab pane that holds the tabs
 
-	@FXML
-	private Label accountBalance;//label that displays an users balance
+    @FXML
+    private Label accountBalance;// label that displays an users balance
 
-	@FXML
-	private Button userEditProfileButton;//allows user to edit their profile
+    @FXML
+    private Button userEditProfileButton;// allows user to edit their profile
 
-	@FXML
-	private Button staffEditProfileButton;//allows staff to edit their profile
+    @FXML
+    private Button staffEditProfileButton;// allows staff to edit their profile
 
-	@FXML
-	private Button staffEditAvatar;//allows staff to edit avatar
-	@FXML
-	private Button userEditAvatar;//allows user to edit avatar
-	
-	@FXML
-	private Button statsButton;
+    @FXML
+    private Button staffEditAvatar;// allows staff to edit avatar
+    @FXML
+    private Button userEditAvatar;// allows user to edit avatar
 
-	//check boxes
-	@FXML
-	private CheckBox dvdCheck;
-	@FXML
-	private CheckBox bookCheck;
-	@FXML
-	private CheckBox laptopCheck;
-	@FXML
-	private CheckBox gameCheck;
+    @FXML
+    private Button statsButton;
 
-	//Copies Explorer
-	@FXML
-	private Button staffOverdueFilter;
-	@FXML
-	private Button staffRequestedFilter;
-	@FXML
-	private Button staffAllFilter;
-	@FXML
-	private Button staffHistoryFind;
-	@FXML
-	private Button staffApproveCopy;
-	@FXML
-	private Button staffReturnCopy;
-	@FXML
-	private TextField staffCopyIDField;
-	@FXML
-	private TableView staffCopiesExplorerTable;
+    // check boxes
+    @FXML
+    private CheckBox dvdCheck;
+    @FXML
+    private CheckBox bookCheck;
+    @FXML
+    private CheckBox laptopCheck;
+    @FXML
+    private CheckBox gameCheck;
 
-	//Manage Users
-	@FXML
-	private TableView<Person> staffUsersTable;
-	@FXML
-	private Label selectedUserLabel;
-	@FXML
-	private TextField staffAmountField;
+    // Copies Explorer
+    @FXML
+    private Button staffOverdueFilter;
+    @FXML
+    private Button staffRequestedFilter;
+    @FXML
+    private Button staffAllFilter;
+    @FXML
+    private Button staffHistoryFind;
+    @FXML
+    private Button staffApproveCopy;
+    @FXML
+    private Button staffReturnCopy;
+    @FXML
+    private TextField staffCopyIDField;
+    @FXML
+    private TableView staffCopiesExplorerTable;
 
-	@FXML
-	private VBox leftVbox;
+    // Manage Users
+    @FXML
+    private TableView<Person> staffUsersTable;
+    @FXML
+    private Label selectedUserLabel;
+    @FXML
+    private TextField staffAmountField;
 
-	//Avatars
-	@FXML
-	private ImageView staffAvatarView;
-	@FXML
-	private ImageView userAvatarView;
-	
-	@FXML
-	private TableView<model.Event> eventTable;
-	
-	@FXML
-	private TableColumn<model.Event, String> eventTitleField;
-	
-	@FXML
-	private TableColumn<model.Event, String> eventDetailsField;
-	
-	@FXML
-	private TableColumn<model.Event, String> eventTimeField;
-	
-	@FXML
-	private TableColumn<model.Event, Integer> eventSpacesField;
-	
-	@FXML
-	private TableView<model.Event> userEventTable;
-	
-	@FXML
-	private TableColumn<model.Event, String> userEventTitleField;
-	
-	@FXML
-	private TableColumn<model.Event, String> userEventDetailsField;
-	
-	@FXML
-	private TableColumn<model.Event, String> userEventTimeField;
-	
-	@FXML
-	private TableColumn<model.Event, Integer> userEventSpacesField;
-	
-	
-	@FXML
-	private Button eventViewButton;
-	
-	@FXML
-	private Button refreshEventsButton;
-	
-	@FXML
-	private Button joinEventButton;
-	
-	@FXML
-	private Button createEventButton;
-	
-	@FXML
-	private Button staffStatsButton;
+    @FXML
+    private VBox leftVbox;
 
-	@FXML
-	private ImageView notificationBellView;
-	
-	@FXML
-	private StackPane notificationStack;
-	
-	@FXML 
-	private Button notificationSettingBtn;
-	
-	//may remove fixed size resource images
-	//when dealing with window resizing.
-	private final int RES_IMG_WIDTH = 220;
-	private final int RES_IMG_HEIGHT = 330;
+    // Avatars
+    @FXML
+    private ImageView staffAvatarView;
+    @FXML
+    private ImageView userAvatarView;
 
-	private Person currentPerson;
-	private ArrayList<Resource> resources;
+    @FXML
+    private TableView<model.Event> eventTable;
 
-	/**
-	 * Sets new scene on stage within program using fxml file provided.
-	 * @param sceneFXML Scene location
-	 * @param event The mouse event.
-	 */
-	public void changeScene(MouseEvent event, String sceneFXML) {
-		try {
-			//create new scene object
-			Parent root = FXMLLoader.load(getClass().getResource(sceneFXML));
-			Stage stage = (Stage) ((Node)event.getSource()).getScene().getWindow();
-			stage.getScene().setRoot(root);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+    @FXML
+    private TableColumn<model.Event, String> eventTitleField;
 
-	}
+    @FXML
+    private TableColumn<model.Event, String> eventDetailsField;
 
+    @FXML
+    private TableColumn<model.Event, String> eventTimeField;
 
-	/**
-	 * Switches the tabs.
-	 * @param event Event
-	 */
-	@FXML
-	private void searchBarSwitch (MouseEvent event) {
-		//tabPane.getSelectionModel().select(2);
-	}
+    @FXML
+    private TableColumn<model.Event, Integer> eventSpacesField;
 
-	/**
-	 * Method that searches for resources
-	 * @param event when something is typed into the search box
-	 * @throws ParseException 
-	 */
-	@FXML
+    @FXML
+    private TableView<model.Event> userEventTable;
+
+    @FXML
+    private TableColumn<model.Event, String> userEventTitleField;
+
+    @FXML
+    private TableColumn<model.Event, String> userEventDetailsField;
+
+    @FXML
+    private TableColumn<model.Event, String> userEventTimeField;
+
+    @FXML
+    private TableColumn<model.Event, Integer> userEventSpacesField;
+
+    @FXML
+    private Button eventViewButton;
+
+    @FXML
+    private Button refreshEventsButton;
+
+    @FXML
+    private Button joinEventButton;
+
+    @FXML
+    private Button createEventButton;
+
+    @FXML
+    private Button staffStatsButton;
+
+    /**An image view showing a notification bell image for showing notifications.*/
+    @FXML
+    private ImageView notificationBellView;
+
+    /**A stack pane used to display notification bell and unread notification 
+     * red dot.*/
+    @FXML
+    private StackPane notificationStack;
+
+    /**A button used to show the current users notifications.*/
+    @FXML
+    private Button notificationSettingBtn;
+
+    // may remove fixed size resource images
+    // when dealing with window resizing.
+    private final int RES_IMG_WIDTH = 220;
+    private final int RES_IMG_HEIGHT = 330;
+
+    private Person currentPerson;
+    private ArrayList<Resource> resources;
+
+    /**
+     * Sets new scene on stage within program using fxml file provided.
+     * 
+     * @param sceneFXML Scene location
+     * @param event The mouse event.
+     */
+    public void changeScene(MouseEvent event, String sceneFXML) {
+        try {
+            // create new scene object
+            Parent root = FXMLLoader.load(getClass().getResource(sceneFXML));
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            stage.getScene().setRoot(root);
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    /**
+     * Switches the tabs.
+     * 
+     * @param event Event
+     */
+    @FXML
+    private void searchBarSwitch(MouseEvent event) {
+        // tabPane.getSelectionModel().select(2);
+    }
+
+    /**
+     * Method that searches for resources
+     * 
+     * @param event when something is typed into the search box
+     * @throws ParseException
+     */
+    @FXML
     void searchThis(Event event) throws ParseException {
-		tabs.getSelectionModel().select(resourcesTab);
-		vResourceBox.getChildren().clear();
-		HBox hbox = new HBox();
-		hbox.setSpacing(5);
-		vResourceBox.getChildren().add(hbox);
-		loadResourceImages();
-	}
+        tabs.getSelectionModel().select(resourcesTab);
+        vResourceBox.getChildren().clear();
+        HBox hbox = new HBox();
+        hbox.setSpacing(5);
+        vResourceBox.getChildren().add(hbox);
+        loadResourceImages();
+    }
 
+    /**
+     * Called when logout link is clicked.
+     * 
+     * @param event Passed when mouse event occurs
+     */
+    @FXML
+    public void logoutAction(MouseEvent event) {
+        changeScene(event, "/fxml/loginScene.fxml");
+    }
 
-	/**
-	 * Called when logout link is clicked.
-	 * @param event Passed when mouse event occurs
-	 */
-	@FXML
-	public void logoutAction(MouseEvent event) {
-		changeScene(event, "/fxml/loginScene.fxml");
-	}
-	
+    /**
+     * Loads user information from Screen Manager class, so that it can be displayed
+     * within the UI.
+     */
+    private void loadUserInformation() {
+        if (ScreenManager.getCurrentUser() instanceof User) {
 
-	/**
-	 * Loads user information from Screen Manager class, so that
-	 * it can be displayed within the UI.
-	 */
-	private void loadUserInformation() {
-		if (ScreenManager.getCurrentUser() instanceof User) {
+            // change text in labels to appropriate user information.
+            userLabel.setText(currentPerson.getUsername());
+            fullnameLabel.setText(
+                "Full Name: " + currentPerson.getFirstName() + " " + currentPerson.getLastName());
+            addressLabel.setText("Address: " + currentPerson.getAddress());
+            postcodeLabel.setText("Post Code: " + currentPerson.getPostcode());
+            phoneLabel.setText("Phone Number: " + currentPerson.getPhoneNumber());
+            lastLoginLabel1.setText("Last Login: " + currentPerson.getLastLogin());
 
-			//change text in labels to appropriate user information.
-			userLabel.setText(currentPerson.getUsername());
-			fullnameLabel.setText("Full Name: " + currentPerson.getFirstName() + " "
-			+ currentPerson.getLastName());
-			addressLabel.setText("Address: " + currentPerson.getAddress());
-			postcodeLabel.setText("Post Code: " + currentPerson.getPostcode());
-			phoneLabel.setText("Phone Number: " + currentPerson.getPhoneNumber());
-			lastLoginLabel1.setText("Last Login: " + currentPerson.getLastLogin());
-			
-			((User) currentPerson).loadUserEvents();
+            ((User) currentPerson).loadUserEvents();
 
-			Double userBalance = ((User) currentPerson).getAccountBalance();
-			
-			accountBalance.setText("\u00a3" + Double.toString(userBalance));
-			
-			userAvatarView.setImage(new Image(currentPerson.getAvatar()));
-		}else {
-			//get all information in about user from ScreenManager class.
-			Librarian staff = (Librarian) currentPerson;
-			String fullname = staff.getFirstName() + " " + staff.getLastName();
+            Double userBalance = ((User) currentPerson).getAccountBalance();
 
-			userLabel1.setText(staff.getUsername());
-			fullnameLabel1.setText("Full name: " +
-					" " + fullname);
-			addressLabel1.setText("Address: " +
-					" " + staff.getAddress());
-			phoneLabel1.setText("Phone Number: " +
-					" " + staff.getPhoneNumber());
-			postcodeLabel1.setText("Postcode: " +
-					" " + staff.getPostcode());
-			dateLabel1.setText("Employment Date: " +
-					" " + staff.getEmploymentDate());
-			staffIDLabel1.setText("Staff ID: " +
-					" " + staff.getStaffID());
-			lastLoginLabel2.setText("Last login: " +
-					" " + staff.getLastLogin());
+            accountBalance.setText("\u00a3" + Double.toString(userBalance));
 
-			staffAvatarView.setImage(new Image(currentPerson.getAvatar()));
-		}
-	}
+            userAvatarView.setImage(new Image(currentPerson.getAvatar()));
+        }
+        else {
+            // get all information in about user from ScreenManager class.
+            Librarian staff = (Librarian) currentPerson;
+            String fullname = staff.getFirstName() + " " + staff.getLastName();
 
-	/**
-	 * Event handler that handles when a resource is clicked.
-	 */
-	final EventHandler<MouseEvent> enterHandler = event -> {
-		StackPane currentPane = (StackPane) event.getSource();
-		currentPane.getChildren().get(4).setVisible(true);
-		currentPane.getChildren().get(3).setVisible(true);
-	};
+            userLabel1.setText(staff.getUsername());
+            fullnameLabel1.setText("Full name: " + " " + fullname);
+            addressLabel1.setText("Address: " + " " + staff.getAddress());
+            phoneLabel1.setText("Phone Number: " + " " + staff.getPhoneNumber());
+            postcodeLabel1.setText("Postcode: " + " " + staff.getPostcode());
+            dateLabel1.setText("Employment Date: " + " " + staff.getEmploymentDate());
+            staffIDLabel1.setText("Staff ID: " + " " + staff.getStaffID());
+            lastLoginLabel2.setText("Last login: " + " " + staff.getLastLogin());
 
-	/**
-	 * Event handler that handles when a resource is clicked.
-	 */
-	final EventHandler<MouseEvent> exitHandler = event -> {
-		StackPane currentPane = (StackPane) event.getSource();
-		currentPane.getChildren().get(4).setVisible(false);
-		currentPane.getChildren().get(3).setVisible(false);
-	};
+            staffAvatarView.setImage(new Image(currentPerson.getAvatar()));
+        }
+    }
 
-	final EventHandler<MouseEvent> clickHandler = event -> {
+    /**
+     * Event handler that handles when a resource is clicked.
+     */
+    final EventHandler<MouseEvent> enterHandler = event -> {
+        StackPane currentPane = (StackPane) event.getSource();
+        currentPane.getChildren().get(4).setVisible(true);
+        currentPane.getChildren().get(3).setVisible(true);
+    };
 
-		//find the resource that was clicked.
-		for(Resource resource : resources) {
-			if(resource.getUniqueID() ==
-					Integer.parseInt(((StackPane) event.getSource()).getId())) {
-				ScreenManager.setCurrentResource(resource);
-			}
-		}
+    /**
+     * Event handler that handles when a resource is clicked.
+     */
+    final EventHandler<MouseEvent> exitHandler = event -> {
+        StackPane currentPane = (StackPane) event.getSource();
+        currentPane.getChildren().get(4).setVisible(false);
+        currentPane.getChildren().get(3).setVisible(false);
+    };
 
-		try {
-			FXMLLoader fxmlLoader =
-					new FXMLLoader(getClass().getResource("/fxml/copyScene.fxml"));
+    final EventHandler<MouseEvent> clickHandler = event -> {
+
+        // find the resource that was clicked.
+        for (Resource resource : resources) {
+            if (resource.getUniqueID() == Integer
+                .parseInt(((StackPane) event.getSource()).getId())) {
+                ScreenManager.setCurrentResource(resource);
+            }
+        }
+
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/copyScene.fxml"));
             Parent root1 = (Parent) fxmlLoader.load();
             Stage stage = new Stage();
             stage.initModality(Modality.APPLICATION_MODAL);
-            //stage.initStyle(StageStyle.UNDECORATED);
+            // stage.initStyle(StageStyle.UNDECORATED);
             stage.setTitle("Resource Information");
             stage.setScene(new Scene(root1));
             stage.show();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+        }
 
-	};
+    };
 
-	/**
-	 * Makes the image and resource text for the resource
-	 * @param copyResource the copy of the resource
-	 * @param width width of image
-	 * @param height height of image
-	 * @return the image pane
-	 */
-	private StackPane createImage(Resource copyResource, int width, int height) {
+    /**
+     * Makes the image and resource text for the resource
+     * 
+     * @param copyResource the copy of the resource
+     * @param width width of image
+     * @param height height of image
+     * @return the image pane
+     */
+    private StackPane createImage(Resource copyResource, int width, int height) {
 
-		//create stackpane to add image layers to.
-		StackPane imagePane = new StackPane();
+        // create stackpane to add image layers to.
+        StackPane imagePane = new StackPane();
 
-		//create white backround just in case image is small.
-		Rectangle background = new Rectangle();
-		background.setWidth(width);
-		background.setHeight(height);
-		background.setFill(Color.WHITE);
+        // create white backround just in case image is small.
+        Rectangle background = new Rectangle();
+        background.setWidth(width);
+        background.setHeight(height);
+        background.setFill(Color.WHITE);
 
-		//create text containing resource information
-		//this text only shows when mouse enters image.
-		Text resourceText = new Text();
-		resourceText.setFont(Font.font("Arial", 20));
-		resourceText.setStyle("-fx-font-weight: bold");
-		resourceText.setFill(Color.WHITE);
-		resourceText.setText("ID: " + copyResource.getUniqueID() + "\n" +
-		copyResource.getTitle() + "\n" + copyResource.getYear());
-		resourceText.setVisible(false);
-		resourceText.setTextAlignment(TextAlignment.CENTER);
-		resourceText.setWrappingWidth(width);
+        // create text containing resource information
+        // this text only shows when mouse enters image.
+        Text resourceText = new Text();
+        resourceText.setFont(Font.font("Arial", 20));
+        resourceText.setStyle("-fx-font-weight: bold");
+        resourceText.setFill(Color.WHITE);
+        resourceText.setText("ID: " + copyResource.getUniqueID() + "\n" + copyResource.getTitle() +
+            "\n" + copyResource.getYear());
+        resourceText.setVisible(false);
+        resourceText.setTextAlignment(TextAlignment.CENTER);
+        resourceText.setWrappingWidth(width);
 
-		//create imageview containg resource image.
-		ImageView image = new ImageView();
-		image.setFitWidth(width);
-		image.setFitHeight(height);
-		image.setImage(copyResource.getThumbnail());
+        // create imageview containg resource image.
+        ImageView image = new ImageView();
+        image.setFitWidth(width);
+        image.setFitHeight(height);
+        image.setImage(copyResource.getThumbnail());
 
-		//if image is of a laptop, keep aspect ratio.
-		if(copyResource instanceof Laptop) {
-			image.setPreserveRatio(true);
-		}
+        // if image is of a laptop, keep aspect ratio.
+        if (copyResource instanceof Laptop) {
+            image.setPreserveRatio(true);
+        }
 
-		//make image as smooth as possible.
-		image.setCache(true);
-		image.setCacheHint(CacheHint.SCALE);
-		image.setSmooth(true);
+        // make image as smooth as possible.
+        image.setCache(true);
+        image.setCacheHint(CacheHint.SCALE);
+        image.setSmooth(true);
 
-		//add black colour overlay
-		//only shows when mouse is in image.
-		Rectangle rect = new Rectangle();
-		rect.setWidth(width);
-		rect.setHeight(height);
-		rect.setFill(Color.BLACK);
-		rect.setOpacity(0.7);
-		rect.setVisible(false);
+        // add black colour overlay
+        // only shows when mouse is in image.
+        Rectangle rect = new Rectangle();
+        rect.setWidth(width);
+        rect.setHeight(height);
+        rect.setFill(Color.BLACK);
+        rect.setOpacity(0.7);
+        rect.setVisible(false);
 
-		//add all elements to stack pane.
-		imagePane.getChildren().add(background);
-		imagePane.getChildren().add(image);
-		imagePane.getChildren().add(new ImageView());
-		imagePane.getChildren().add(rect);
-		imagePane.getChildren().add(resourceText);
+        // add all elements to stack pane.
+        imagePane.getChildren().add(background);
+        imagePane.getChildren().add(image);
+        imagePane.getChildren().add(new ImageView());
+        imagePane.getChildren().add(rect);
+        imagePane.getChildren().add(resourceText);
 
-		//set id of imagePane to it's index so it can be accessed
-		//within the event handler.
-		imagePane.setId(String.valueOf(copyResource.getUniqueID()));
+        // set id of imagePane to it's index so it can be accessed
+        // within the event handler.
+        imagePane.setId(String.valueOf(copyResource.getUniqueID()));
 
-		return imagePane;
-	}
+        return imagePane;
+    }
 
-	/**
-	 * Search resources and checks to see if the checkboxes are selected which filter the search
-	 * @param i ID of the resource
-	 * @return the search results or false
-	 * @throws ParseException 
-	 */
-	private boolean search(int i) throws ParseException {
-		//Get the Resource
-		Resource r = resources.get(i);
-		String searchText = searchTextBox.getText();
+    /**
+     * Search resources and checks to see if the checkboxes are selected which
+     * filter the search
+     * 
+     * @param i ID of the resource
+     * @return the search results or false
+     * @throws ParseException
+     */
+    private boolean search(int i) throws ParseException {
+        // Get the Resource
+        Resource r = resources.get(i);
+        String searchText = searchTextBox.getText();
 
-		if(bookCheck.isSelected() && r instanceof Book) {
-			return r.contains(searchText);
-		}
-		if(dvdCheck.isSelected() && r instanceof DVD) {
-			return r.contains(searchText);
-		}
-		if(laptopCheck.isSelected() && r instanceof Laptop) {
-			return r.contains(searchText);
-		}
-		
-		//Added on 16/03/19 by Charles Day
-		if(gameCheck.isSelected() && r instanceof Game) {
-		    return r.contains(searchText);
-		}
+        if (bookCheck.isSelected() && r instanceof Book) {
+            return r.contains(searchText);
+        }
+        if (dvdCheck.isSelected() && r instanceof DVD) {
+            return r.contains(searchText);
+        }
+        if (laptopCheck.isSelected() && r instanceof Laptop) {
+            return r.contains(searchText);
+        }
 
-		return false;
+        // Added on 16/03/19 by Charles Day
+        if (gameCheck.isSelected() && r instanceof Game) {
+            return r.contains(searchText);
+        }
 
-	}
+        return false;
 
-	@FXML
-	private void reloadVisuals(Event event) throws ParseException {
+    }
 
-		vResourceBox.getChildren().clear();
-		vResourceBox.getChildren().add(new HBox());
+    @FXML
+    private void reloadVisuals(Event event) throws ParseException {
 
-		if(resourceImages != null) {
-		    resourceImages.getChildren().clear();
-		}
-		
-		Resource.loadDatabaseResources();
-		
-		if(ScreenManager.getCurrentUser() instanceof User) {
-		    User currentUser = (User) ScreenManager.getCurrentUser();
-		    currentUser.loadUserCopies();
-		}
-		
-		try
-		{
-			loadUserInformation();
-			loadCopies();
-			loadRequested();
-			loadBorrowHistory();
-			loadResourceImages();
-		}
-		catch(NullPointerException e)
-		{
-			System.out.println("Caught stupind null pointer exception caused by JavaFX.");
-		}	
-	}
+        vResourceBox.getChildren().clear();
+        vResourceBox.getChildren().add(new HBox());
 
+        if (resourceImages != null) {
+            resourceImages.getChildren().clear();
+        }
 
-	/**
-	 * Loads resource images from Resource class, so that they can
-	 * be displayed within the UI.
-	 * @throws ParseException 
-	 */
-	private void loadResourceImages() throws ParseException {
-		if (ScreenManager.getCurrentUser() instanceof Librarian) {
-			staffProfileTab.setDisable(false);
-			userProfileTab.setDisable(true);
-		} else {
-			staffProfileTab.setDisable(true);
-			userProfileTab.setDisable(false);
-		}
-		
-		//get resources
-		resources = Resource.getResources();
+        Resource.loadDatabaseResources();
 
-		System.out.println(resources.size());
-		ScreenManager.setResources(resources);
-		
-		//for each resource in resources array
-		for(int i = 0; i < resources.size(); i++) {
-		    System.out.println(resources.get(i).getTitle());
-		    
-			if(search(i)) {
-				StackPane imagePane;
-				
-				if(resources.get(i).compareTimeDifference(currentPerson)) {
-					imagePane = createImage(resources.get(i), RES_IMG_WIDTH, RES_IMG_HEIGHT);
+        if (ScreenManager.getCurrentUser() instanceof User) {
+            User currentUser = (User) ScreenManager.getCurrentUser();
+            currentUser.loadUserCopies();
+        }
 
-					((ImageView) imagePane.getChildren().get(2)).setFitWidth(RES_IMG_WIDTH);
-					((ImageView) imagePane.getChildren().get(2)).setImage(
-						new Image("/graphics/" + "New.png"));
-					((ImageView) imagePane.getChildren().get(2)).setPreserveRatio(true);
-				}
-				else {
-					imagePane = createImage(resources.get(i),
-							RES_IMG_WIDTH, RES_IMG_HEIGHT);
-				}
-				
-				//get last image in last resource HBox.
-				HBox latestHBox = (HBox)
-						vResourceBox.getChildren().get(
-								vResourceBox.getChildren().size() - 1);
-				latestHBox.setSpacing(5);
+        try {
+            loadUserInformation();
+            loadCopies();
+            loadRequested();
+            loadBorrowHistory();
+            loadResourceImages();
+        }
+        catch (NullPointerException e) {
+            System.out.println("Caught stupind null pointer exception caused by JavaFX.");
+        }
+    }
 
-				//if there is at least one image in last resource HBox
-				if(!latestHBox.getChildren().isEmpty()) {
-					//if the number of resources in resource HBox is more than
-					//the width of the resource VBox / the width of a resource image
-					if(latestHBox.getChildren().size() > (vResourceBox.getPrefWidth() 
-					        - RES_IMG_WIDTH) / RES_IMG_WIDTH) {
-						//create new HBox below last HBox
-						HBox hResourceBox = new HBox();
-						hResourceBox.setSpacing(5);
-						//add image to new HBox
-						hResourceBox.getChildren().add(imagePane);
-						vResourceBox.getChildren().add(hResourceBox);
-					} else {
-						latestHBox.getChildren().add(imagePane); //add new image to last HBox
-					}
-				} else {
-					latestHBox.getChildren().add(imagePane); //add new image to last HBox
-				}
+    /**
+     * Loads resource images from Resource class, so that they can be displayed
+     * within the UI.
+     * 
+     * @throws ParseException
+     */
+    private void loadResourceImages() throws ParseException {
+        if (ScreenManager.getCurrentUser() instanceof Librarian) {
+            staffProfileTab.setDisable(false);
+            userProfileTab.setDisable(true);
+        }
+        else {
+            staffProfileTab.setDisable(true);
+            userProfileTab.setDisable(false);
+        }
 
-				imagePane.setOnMouseEntered(enterHandler);
-				imagePane.setOnMouseExited(exitHandler);
-				imagePane.setOnMouseClicked(clickHandler);
-			}
-		}	
-	}
+        // get resources
+        resources = Resource.getResources();
 
-	/**
-	 * Loads the resource images from the arraylist.
-	 * @param resources instances of the resources.
-	 * @param bannerName name of the banner.
-	 */
-	private void loadCopyImages(ArrayList<Resource> resources, String bannerName) {
+        System.out.println(resources.size());
+        ScreenManager.setResources(resources);
 
-		for(Resource resource : resources) {
+        // for each resource in resources array
+        for (int i = 0; i < resources.size(); i++) {
+            System.out.println(resources.get(i).getTitle());
 
-			StackPane imagePane = createImage(resource, RES_IMG_WIDTH, RES_IMG_HEIGHT);
+            if (search(i)) {
+                StackPane imagePane;
 
-			((ImageView) imagePane.getChildren().get(2)).setFitWidth(RES_IMG_WIDTH);
-			((ImageView) imagePane.getChildren().get(2)).setImage(
-				new Image("/graphics/" + bannerName));
-			((ImageView) imagePane.getChildren().get(2)).setPreserveRatio(true);
+                if (resources.get(i).compareTimeDifference(currentPerson)) {
+                    imagePane = createImage(resources.get(i), RES_IMG_WIDTH, RES_IMG_HEIGHT);
 
-			resourceImages.getChildren().add(imagePane);
+                    ((ImageView) imagePane.getChildren().get(2)).setFitWidth(RES_IMG_WIDTH);
+                    ((ImageView) imagePane.getChildren().get(2))
+                        .setImage(new Image("/graphics/" + "New.png"));
+                    ((ImageView) imagePane.getChildren().get(2)).setPreserveRatio(true);
+                }
+                else {
+                    imagePane = createImage(resources.get(i), RES_IMG_WIDTH, RES_IMG_HEIGHT);
+                }
 
-			imagePane.setOnMouseEntered(enterHandler);
-			imagePane.setOnMouseExited(exitHandler);
-			imagePane.setOnMouseClicked(clickHandler);
+                // get last image in last resource HBox.
+                HBox latestHBox = (HBox) vResourceBox.getChildren()
+                    .get(vResourceBox.getChildren().size() - 1);
+                latestHBox.setSpacing(5);
 
-			}
-	}
+                // if there is at least one image in last resource HBox
+                if (!latestHBox.getChildren().isEmpty()) {
+                    // if the number of resources in resource HBox is more than
+                    // the width of the resource VBox / the width of a resource image
+                    if (latestHBox.getChildren()
+                        .size() > (vResourceBox.getPrefWidth() - RES_IMG_WIDTH) / RES_IMG_WIDTH) {
+                        // create new HBox below last HBox
+                        HBox hResourceBox = new HBox();
+                        hResourceBox.setSpacing(5);
+                        // add image to new HBox
+                        hResourceBox.getChildren().add(imagePane);
+                        vResourceBox.getChildren().add(hResourceBox);
+                    }
+                    else {
+                        latestHBox.getChildren().add(imagePane); // add new image to last HBox
+                    }
+                }
+                else {
+                    latestHBox.getChildren().add(imagePane); // add new image to last HBox
+                }
 
-	/**
-	 * Method that loads copies that the user is currently borrowing
-	 */
-	private void loadCopies() {
+                imagePane.setOnMouseEntered(enterHandler);
+                imagePane.setOnMouseExited(exitHandler);
+                imagePane.setOnMouseClicked(clickHandler);
+            }
+        }
+    }
 
-		if(currentPerson instanceof User) {
-			ArrayList<Copy> userCopies = ((User) currentPerson).getBorrowedCopies();
-			ArrayList<Resource> copyResources = new ArrayList<Resource>();
+    /**
+     * Loads the resource images from the arraylist.
+     * 
+     * @param resources instances of the resources.
+     * @param bannerName name of the banner.
+     */
+    private void loadCopyImages(ArrayList<Resource> resources, String bannerName) {
 
-			for(Copy copy : userCopies) {
-				copyResources.add(copy.getResource());
-			}
+        for (Resource resource : resources) {
 
-			loadCopyImages(copyResources, "borrowed.png");
-		}
-	}
+            StackPane imagePane = createImage(resource, RES_IMG_WIDTH, RES_IMG_HEIGHT);
 
-	/**
-	 * Loads the resources that have been requested so the librarian can confirm then
-	 */
-	@FXML
-	private void loadRequested() {
-		if(currentPerson instanceof User) {
-			ArrayList<Resource> requestedResources =
-					((User) currentPerson).getRequestedResources();
-			loadCopyImages(requestedResources, "requested.png");
-		}
+            ((ImageView) imagePane.getChildren().get(2)).setFitWidth(RES_IMG_WIDTH);
+            ((ImageView) imagePane.getChildren().get(2))
+                .setImage(new Image("/graphics/" + bannerName));
+            ((ImageView) imagePane.getChildren().get(2)).setPreserveRatio(true);
 
-	}
+            resourceImages.getChildren().add(imagePane);
 
-	@FXML
-	private void loadBorrowHistory() {
-		if(currentPerson instanceof User) {
-			ArrayList<Resource> borrowHistory =
-					((User) currentPerson).loadUserHistory();
-			loadCopyImages(borrowHistory, "returned.png");
-		}
-	}
+            imagePane.setOnMouseEntered(enterHandler);
+            imagePane.setOnMouseExited(exitHandler);
+            imagePane.setOnMouseClicked(clickHandler);
+
+        }
+    }
+
+    /**
+     * Method that loads copies that the user is currently borrowing
+     */
+    private void loadCopies() {
+
+        if (currentPerson instanceof User) {
+            ArrayList<Copy> userCopies = ((User) currentPerson).getBorrowedCopies();
+            ArrayList<Resource> copyResources = new ArrayList<Resource>();
+
+            for (Copy copy : userCopies) {
+                copyResources.add(copy.getResource());
+            }
+
+            loadCopyImages(copyResources, "borrowed.png");
+        }
+    }
+
+    /**
+     * Loads the resources that have been requested so the librarian can confirm
+     * then
+     */
+    @FXML
+    private void loadRequested() {
+        if (currentPerson instanceof User) {
+            ArrayList<Resource> requestedResources = ((User) currentPerson).getRequestedResources();
+            loadCopyImages(requestedResources, "requested.png");
+        }
+
+    }
+
+    @FXML
+    private void loadBorrowHistory() {
+        if (currentPerson instanceof User) {
+            ArrayList<Resource> borrowHistory = ((User) currentPerson).loadUserHistory();
+            loadCopyImages(borrowHistory, "returned.png");
+        }
+    }
 
     /**
      * Initialises the profile scene. If the person is a normal user, the user
-     * notification settings and notifications are loaded, and new notifications 
-     * for imminent fines or nearing user events are created. It also disable 
-     * buttons that the user should not see, or disables buttons not meant for 
-     * librarians, depending on the current person.
+     * notification settings and notifications are loaded, and new notifications for
+     * imminent fines or nearing user events are created. It also disable buttons
+     * that the user should not see, or disables buttons not meant for librarians,
+     * depending on the current person.
      * 
      * @throws ParseException if the loading of resource images failed.
      */
@@ -684,232 +686,220 @@ public class ProfileController {
         currentPerson = ScreenManager.getCurrentUser();
         resources = ScreenManager.getResources();
 
-        if(currentPerson instanceof User) {
+        if (currentPerson instanceof User) {
             User currentUser = (User) currentPerson;
             currentUser.loadNotificationSettings();
             currentUser.checkForNearingEvents();
             currentUser.checkImminentFines();
             currentUser.loadNotifications();
-            
-            if(currentUser.hasUnreadNotifications()) {
-                Circle circle = new Circle (7, Color.RED);
+
+            if (currentUser.hasUnreadNotifications()) {
+                Circle circle = new Circle(7, Color.RED);
                 notificationStack.getChildren().add(circle);
                 StackPane.setAlignment(circle, Pos.TOP_RIGHT);
             }
-        } else {
+        }
+        else {
             notificationStack.setVisible(false);
             notificationSettingBtn.setVisible(false);
         }
-        
+
         loadUserTableColumns();
         displayAll();
 
         loadResourceImages();
         loadEventTable();
 
-        createEventButton.setDisable(ScreenManager.getCurrentUser() 
-            instanceof User);
-        joinEventButton.setDisable(ScreenManager.getCurrentUser() 
-            instanceof Librarian);
+        createEventButton.setDisable(ScreenManager.getCurrentUser() instanceof User);
+        joinEventButton.setDisable(ScreenManager.getCurrentUser() instanceof Librarian);
 
         scrollPane.setHvalue(0.5);
     }
-    
-    /**Removes the red notification dot from the notification bell stack pane.*/
+
+    /** Removes the red notification dot from the notification bell stack pane. */
     private void removeNotificationDot() {
         int nrOfChildren = notificationStack.getChildren().size();
-        if(nrOfChildren > 1) {
+        if (nrOfChildren > 1) {
             notificationStack.getChildren().remove(nrOfChildren - 1);
         }
     }
 
-	//
-	//Staff Profile -----------------------------------------------------------
-	//
+    //
+    // Staff Profile -----------------------------------------------------------
+    //
 
-	//
-	//Staff: Copies Explorer
-	//
-	
-	@FXML
-	private void displayAll() {
-		staffHistoryFind.setDisable(false);
-		staffApproveCopy.setDisable(true);
-		staffReturnCopy.setDisable(false);
+    //
+    // Staff: Copies Explorer
+    //
 
-		loadExplorerTableColumns("all");
-		ObservableList<ExplorerRow> copiesList = FXCollections.observableArrayList();
+    @FXML
+    private void displayAll() {
+        staffHistoryFind.setDisable(false);
+        staffApproveCopy.setDisable(true);
+        staffReturnCopy.setDisable(false);
 
-		try (Connection conn = DBHelper.getConnection();
-	            Statement stmt = conn.createStatement();
-	            ResultSet rs = stmt.executeQuery("SELECT * FROM copies,"
-	                    + " resource WHERE copies.rID = resource.rID")) {
-		    
-		    while(rs.next()) {
-				copiesList.add(new ExplorerRow(
-						rs.getString(9),
-						rs.getString(3),
-						rs.getInt(1),
-						rs.getInt(2),
-						rs.getInt(4),
-						rs.getString(5),
-						rs.getString(6),
-						rs.getString(7)
-						));
-			}
+        loadExplorerTableColumns("all");
+        ObservableList<ExplorerRow> copiesList = FXCollections.observableArrayList();
 
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
+        try (Connection conn = DBHelper.getConnection();
+                Statement stmt = conn.createStatement();
+                ResultSet rs = stmt.executeQuery(
+                    "SELECT * FROM copies," + " resource WHERE copies.rID = resource.rID")) {
 
-		staffCopiesExplorerTable.setItems(copiesList);
-		staffCopiesExplorerTable.autosize();
-	}
+            while (rs.next()) {
+                copiesList.add(new ExplorerRow(rs.getString(9), rs.getString(3), rs.getInt(1),
+                    rs.getInt(2), rs.getInt(4), rs.getString(5), rs.getString(6), rs.getString(7)));
+            }
 
-	/**
-	 * Displays what is overdue
-	 */
-	@FXML
-	private void displayOverdue() {
-		staffHistoryFind.setDisable(false);
-		staffApproveCopy.setDisable(true);
-		staffReturnCopy.setDisable(false);
+        }
+        catch (SQLException e) {
+            e.printStackTrace();
+        }
 
-		loadExplorerTableColumns("overdue");
-		ObservableList<ExplorerRow> copiesList = FXCollections.observableArrayList();
+        staffCopiesExplorerTable.setItems(copiesList);
+        staffCopiesExplorerTable.autosize();
+    }
 
-		try (Connection conn = DBHelper.getConnection();
-	            Statement stmt = conn.createStatement();
-	            ResultSet rs = stmt.executeQuery("SELECT * FROM fines, "
-	                    + "resource, copies WHERE fines.rID = resource.rID AND "
-	                    + "copies.rID = resource.rID AND copies.keeper = "
-	                    + "fines.username")) {
-			
-		    while(rs.next()) {
-				copiesList.add(new ExplorerRow(
-						rs.getString(9),
-						rs.getString(2),
-						rs.getInt(12),
-						rs.getInt(3),
-						rs.getString(16),
-						rs.getString(18)
-						));
-			}
+    /**
+     * Displays what is overdue
+     */
+    @FXML
+    private void displayOverdue() {
+        staffHistoryFind.setDisable(false);
+        staffApproveCopy.setDisable(true);
+        staffReturnCopy.setDisable(false);
 
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
+        loadExplorerTableColumns("overdue");
+        ObservableList<ExplorerRow> copiesList = FXCollections.observableArrayList();
 
-		staffCopiesExplorerTable.setItems(copiesList);
-		staffCopiesExplorerTable.autosize();
-	}
+        try (Connection conn = DBHelper.getConnection();
+                Statement stmt = conn.createStatement();
+                ResultSet rs = stmt.executeQuery("SELECT * FROM fines, " +
+                    "resource, copies WHERE fines.rID = resource.rID AND " +
+                    "copies.rID = resource.rID AND copies.keeper = " + "fines.username")) {
 
-	/**
-	 * Displays what is requested
-	 */
-	@FXML
-	private void displayRequested() {
-		staffHistoryFind.setDisable(true);
-		staffApproveCopy.setDisable(false);
-		staffReturnCopy.setDisable(true);
+            while (rs.next()) {
+                copiesList.add(new ExplorerRow(rs.getString(9), rs.getString(2), rs.getInt(12),
+                    rs.getInt(3), rs.getString(16), rs.getString(18)));
+            }
 
-		loadExplorerTableColumns("requested");
-		ObservableList<ExplorerRow> copiesList = FXCollections.observableArrayList();
+        }
+        catch (SQLException e) {
+            e.printStackTrace();
+        }
 
-		try (Connection conn = DBHelper.getConnection();
-	            Statement stmt = conn.createStatement();
-		        ResultSet rs = stmt.executeQuery("SELECT * FROM requestsToApprove")) {
-			
-			/*ResultSet rs = stmt.executeQuery("SELECT * FROM requestsToApprove, "
-					+ "users where requestsToApprove.userName = users.username");*/
+        staffCopiesExplorerTable.setItems(copiesList);
+        staffCopiesExplorerTable.autosize();
+    }
 
-			while(rs.next()) {
-				copiesList.add(new ExplorerRow(
-						rs.getString(2),
-						rs.getInt(1)
-						));
-			}
+    /**
+     * Displays what is requested
+     */
+    @FXML
+    private void displayRequested() {
+        staffHistoryFind.setDisable(true);
+        staffApproveCopy.setDisable(false);
+        staffReturnCopy.setDisable(true);
 
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
+        loadExplorerTableColumns("requested");
+        ObservableList<ExplorerRow> copiesList = FXCollections.observableArrayList();
 
-		staffCopiesExplorerTable.setItems(copiesList);
-		staffCopiesExplorerTable.autosize();
-	}
+        try (Connection conn = DBHelper.getConnection();
+                Statement stmt = conn.createStatement();
+                ResultSet rs = stmt.executeQuery("SELECT * FROM requestsToApprove")) {
 
-	/**
-	 * prints display history
-	 */
-	@FXML
-	private void displayCopyHistory() {
-		String copyID = staffCopyIDField.getText();
-		if (copyID.equals("")) {
-			System.out.println("No copyID entered!");
+            /*
+             * ResultSet rs = stmt.executeQuery("SELECT * FROM requestsToApprove, " +
+             * "users where requestsToApprove.userName = users.username");
+             */
 
-		} else {
-			if (checkCopyID(copyID) == true) {
-				loadExplorerTableColumns("history");
-				ObservableList<ExplorerRow> historyList = 
-						FXCollections.observableArrayList();
+            while (rs.next()) {
+                copiesList.add(new ExplorerRow(rs.getString(2), rs.getInt(1)));
+            }
 
-				try {
-					Connection conn = DBHelper.getConnection();
-					PreparedStatement sqlStatement = conn.prepareStatement(
-							"SELECT * FROM borrowRecords WHERE copyID = ?");
-					sqlStatement.setInt(1, Integer.parseInt(copyID));
-					ResultSet rs = sqlStatement.executeQuery();
+        }
+        catch (SQLException e) {
+            e.printStackTrace();
+        }
 
-					while(rs.next()) {
+        staffCopiesExplorerTable.setItems(copiesList);
+        staffCopiesExplorerTable.autosize();
+    }
 
-						historyList.add(new ExplorerRow(
-								rs.getInt(2),
-								rs.getString(3),
-								rs.getString(4)));
-					}
+    /**
+     * prints display history
+     */
+    @FXML
+    private void displayCopyHistory() {
+        String copyID = staffCopyIDField.getText();
+        if (copyID.equals("")) {
+            System.out.println("No copyID entered!");
 
-				} catch (SQLException e) {
-					e.printStackTrace();
-				}
+        }
+        else {
+            if (checkCopyID(copyID) == true) {
+                loadExplorerTableColumns("history");
+                ObservableList<ExplorerRow> historyList = FXCollections.observableArrayList();
 
-				staffCopiesExplorerTable.setItems(historyList);
-				staffCopiesExplorerTable.autosize();
+                try {
+                    Connection conn = DBHelper.getConnection();
+                    PreparedStatement sqlStatement = conn
+                        .prepareStatement("SELECT * FROM borrowRecords WHERE copyID = ?");
+                    sqlStatement.setInt(1, Integer.parseInt(copyID));
+                    ResultSet rs = sqlStatement.executeQuery();
 
-			} else {
-				System.out.println("Copy not found!");
-				staffCopyIDField.setText("");
-			}
-		}
-	}
+                    while (rs.next()) {
 
-	/**
-	 * Approves the loaning of a copy to a user from the Staff Copies Explorer.
-	 * @throws IllegalStateException if this method is called when the user is 
-	 * over the request limit. The request button should not have been available
-	 * in the first place.
-	 */
-	@FXML
-	private void approveCopy() throws IllegalStateException{
-		ExplorerRow row  = (ExplorerRow)
-				staffCopiesExplorerTable.getSelectionModel().getSelectedItem();
-		int resourceID = row.getResourceID();
-		String username = row.getKeeper();
-		Resource resourceToLoan = Resource.getResource(resourceID);
-		
-		User user = (User)Person.loadPerson(username);
-		
-		if (user.getBorrowLoad() + resourceToLoan.getLimitAmount() > 5) {
-		    throw new IllegalStateException("approveCopy should not have "
-                    + "been called if user is over request limit.");
-		}
-		
+                        historyList
+                            .add(new ExplorerRow(rs.getInt(2), rs.getString(3), rs.getString(4)));
+                    }
+
+                }
+                catch (SQLException e) {
+                    e.printStackTrace();
+                }
+
+                staffCopiesExplorerTable.setItems(historyList);
+                staffCopiesExplorerTable.autosize();
+
+            }
+            else {
+                System.out.println("Copy not found!");
+                staffCopyIDField.setText("");
+            }
+        }
+    }
+
+    /**
+     * Approves the loaning of a copy to a user from the Staff Copies Explorer.
+     * 
+     * @throws IllegalStateException if this method is called when the user is over
+     *         the request limit. The request button should not have been available
+     *         in the first place.
+     */
+    @FXML
+    private void approveCopy() throws IllegalStateException {
+        ExplorerRow row = (ExplorerRow) staffCopiesExplorerTable.getSelectionModel()
+            .getSelectedItem();
+        int resourceID = row.getResourceID();
+        String username = row.getKeeper();
+        Resource resourceToLoan = Resource.getResource(resourceID);
+
+        User user = (User) Person.loadPerson(username);
+
+        if (user.getBorrowLoad() + resourceToLoan.getLimitAmount() > 5) {
+            throw new IllegalStateException(
+                "approveCopy should not have " + "been called if user is over request limit.");
+        }
+
         if (!resourceToLoan.loanToUser(user)) {
             AlertBox.showInfoAlert("Waiting for free copy");
-        } else {
-            
+        }
+        else {
+
             try (Connection dbConnection = DBHelper.getConnection();
                     PreparedStatement sqlStatement = dbConnection.prepareStatement(
-                    "DELETE FROM requestsToApprove WHERE rID = ? AND userName = ?")) {
+                        "DELETE FROM requestsToApprove WHERE rID = ? AND userName = ?")) {
 
                 sqlStatement.setInt(1, resourceID);
                 sqlStatement.setString(2, username);
@@ -922,420 +912,419 @@ public class ProfileController {
             ResourceNotification.makeApprovalNotification(resourceToLoan, user);
         }
         System.out.println("Approved copy!");
-		displayRequested();
-	}
+        displayRequested();
+    }
 
-	/**
-	 * Returns the selected copy from a user in the Copies Explorer
-	 */
-	@FXML
-	private void returnCopy() {
-		ExplorerRow row  = (ExplorerRow)
-				staffCopiesExplorerTable.getSelectionModel().getSelectedItem();
-		int copyID = row.getCopyID();
+    /**
+     * Returns the selected copy from a user in the Copies Explorer
+     */
+    @FXML
+    private void returnCopy() {
+        ExplorerRow row = (ExplorerRow) staffCopiesExplorerTable.getSelectionModel()
+            .getSelectedItem();
+        int copyID = row.getCopyID();
 
-		for (Resource resource : Resource.getResources()) {
-			for (Copy copy : resource.getCopies()) {
-				if (copy.getCopyID() == copyID) {
-					resource.processReturn(copy);
-				}
-			}
-		}
-		System.out.println("Returned copy!");
-		displayAll();
-	}
+        for (Resource resource : Resource.getResources()) {
+            for (Copy copy : resource.getCopies()) {
+                if (copy.getCopyID() == copyID) {
+                    resource.processReturn(copy);
+                }
+            }
+        }
+        System.out.println("Returned copy!");
+        displayAll();
+    }
 
-	/**
-	 * Checks whether a copyID exists in the database.
-	 * @param copyID String
-	 * @return true if copyId exists
-	 */
-	private boolean checkCopyID(String copyID) {
-		try {
-			Connection conn = DBHelper.getConnection();
-			PreparedStatement sqlStatement = conn.prepareStatement(
-					"SELECT COUNT(*) FROM copies WHERE copyID = ?");
-			sqlStatement.setString(1, copyID);
-			ResultSet rs = sqlStatement.executeQuery();
+    /**
+     * Checks whether a copyID exists in the database.
+     * 
+     * @param copyID String
+     * @return true if copyId exists
+     */
+    private boolean checkCopyID(String copyID) {
+        try {
+            Connection conn = DBHelper.getConnection();
+            PreparedStatement sqlStatement = conn
+                .prepareStatement("SELECT COUNT(*) FROM copies WHERE copyID = ?");
+            sqlStatement.setString(1, copyID);
+            ResultSet rs = sqlStatement.executeQuery();
             if (rs.getInt(1) == 1) {
-            	return true;
+                return true;
             }
 
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		return false;
-	}
+        }
+        catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
 
+    /**
+     * Opens the profile editor when the button is clicked.
+     * 
+     * @param event button being clicked
+     */
+    @FXML
+    private void explorerTableClicked(MouseEvent event) {
+        ExplorerRow row = (ExplorerRow) staffCopiesExplorerTable.getSelectionModel()
+            .getSelectedItem();
+        staffCopyIDField.setText(Integer.toString(row.getCopyID()));
+    }
 
-	/**
-	 * Opens the profile editor when the button is clicked.
-	 * @param event button being clicked
-	 */
-	@FXML
-	private void explorerTableClicked(MouseEvent event) {
-		ExplorerRow row  = (ExplorerRow)
-				staffCopiesExplorerTable.getSelectionModel().getSelectedItem();
-		staffCopyIDField.setText(Integer.toString(row.getCopyID()));
-	}
+    //
+    // Staff: Profile
+    //
 
-	//
-	//Staff: Profile
-	//
+    @FXML
+    void pickAvatar(Event e) {
+        FileChooser chooser = new FileChooser();
+        FileChooser.ExtensionFilter extentionFilter = new FileChooser.ExtensionFilter(
+            "PNG files (*.png)", "*.png");
+        chooser.getExtensionFilters().add(extentionFilter);
+        chooser.setTitle("Open File");
+        File file = chooser.showOpenDialog(new Stage());
+        System.out.println(file.getAbsolutePath());
 
+        ScreenManager.getCurrentUser()
+            .setAvatar(new File(file.getAbsolutePath()).toURI().toString());
+        userAvatarView.setImage(new Image(currentPerson.getAvatar()));
+        staffAvatarView.setImage(new Image(currentPerson.getAvatar()));
 
-	@FXML
-	void pickAvatar(Event e) {
-		  FileChooser chooser = new FileChooser();
-		    FileChooser.ExtensionFilter extentionFilter =
-		    		new FileChooser.ExtensionFilter("PNG files (*.png)", "*.png");
-			chooser.getExtensionFilters().add(extentionFilter);
-		    chooser.setTitle("Open File");
-		    File file = chooser.showOpenDialog(new Stage());
-		    System.out.println(file.getAbsolutePath());
+    }
 
-
-		    ScreenManager.getCurrentUser().setAvatar(
-		    		new File(file.getAbsolutePath()).toURI().toString());
-		    userAvatarView.setImage(new Image(currentPerson.getAvatar()));
-		    staffAvatarView.setImage(new Image(currentPerson.getAvatar()));
-
-	}
-
-	/**
+    /**
      * Sets the current user avatar to the image in the given file.
+     * 
      * @param imageFile The file containing the new avatar image.
      */
     public void changeUserAvatar(File imageFile) {
-            ScreenManager.getCurrentUser().setAvatar(new
-                File(imageFile.getAbsolutePath()).toURI().toString());
-            userAvatarView.setImage(new Image(currentPerson.getAvatar()));
-            staffAvatarView.setImage(new Image(currentPerson.getAvatar()));
+        ScreenManager.getCurrentUser()
+            .setAvatar(new File(imageFile.getAbsolutePath()).toURI().toString());
+        userAvatarView.setImage(new Image(currentPerson.getAvatar()));
+        staffAvatarView.setImage(new Image(currentPerson.getAvatar()));
     }
 
-    /**Shows the window for letting librarians edit their profile.
-     * @param event The mouse event that triggered this action.*/
-	@FXML
-	private void openProfileEditor(MouseEvent event) {
-		System.out.println("Launch staff editing profile.");
+    /**
+     * Shows the window for letting librarians edit their profile.
+     * 
+     * @param event The mouse event that triggered this action.
+     */
+    @FXML
+    private void openProfileEditor(MouseEvent event) {
+        System.out.println("Launch staff editing profile.");
 
-		try {
-			FXMLLoader fxmlLoader =
-					new FXMLLoader(getClass().getResource("/fxml/staffEdit.fxml"));
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/staffEdit.fxml"));
             Parent root1 = (Parent) fxmlLoader.load();
             Stage stage = new Stage();
             stage.initModality(Modality.APPLICATION_MODAL);
             stage.setTitle("Edit Profile");
             stage.setScene(new Scene(root1));
             stage.show();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-	}
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
-	/**
-	 * Opens the avatar drawing scene when the button is clicked.
-	 * @param event button being clicked
-	 */
-	@FXML
-	private void openAvatarEditor(MouseEvent event) {
-		try {
-			FXMLLoader fxmlLoader =
-					new FXMLLoader(getClass().getResource("/fxml/drawAvatar.fxml"));
-			Parent root1 = (Parent) fxmlLoader.load();
-			Stage stage = new Stage();
-			stage.initModality(Modality.APPLICATION_MODAL);
-			stage.setTitle("Avatar!");
-			stage.setScene(new Scene(root1));
-			stage.show();
+    /**
+     * Opens the avatar drawing scene when the button is clicked.
+     * 
+     * @param event button being clicked
+     */
+    @FXML
+    private void openAvatarEditor(MouseEvent event) {
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/drawAvatar.fxml"));
+            Parent root1 = (Parent) fxmlLoader.load();
+            Stage stage = new Stage();
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.setTitle("Avatar!");
+            stage.setScene(new Scene(root1));
+            stage.show();
 
-		} catch (IOException e2) {
-			e2.printStackTrace();
-		}
-		System.out.println("Launch avatar editor.");
-	}
-	
-	/**
-	 * Opens the statistics scene when the button is clicked.
-	 * Different scene opens depending on current user.
-	 * @param event button being clicked
-	 */
-	@FXML
-	private void openStatistics(MouseEvent event) {
-		try {
-			FXMLLoader fxmlLoader =
-					new FXMLLoader(getClass().getResource("/fxml/userStatistics.fxml"));
-			Parent root1 = (Parent) fxmlLoader.load();
-			Stage stage = new Stage();
-			stage.initModality(Modality.APPLICATION_MODAL);
-			stage.setTitle("Statistics");
-			stage.setScene(new Scene(root1));
-			stage.show();
+        }
+        catch (IOException e2) {
+            e2.printStackTrace();
+        }
+        System.out.println("Launch avatar editor.");
+    }
 
-		} catch (IOException e2) {
-			e2.printStackTrace();
-		}
-		System.out.println("Open user statistics.");
-	}
-	
-	/**
-	 * Opens the statistics scene when the button is clicked.
-	 * Different scene opens depending on current user.
-	 * @param event button being clicked
-	 */
-	@FXML
-	private void openStaffStatistics(MouseEvent event) {
-		try {
-			FXMLLoader fxmlLoader =
-					new FXMLLoader(getClass().getResource("/fxml/LibrarianStatistics.fxml"));
-			Parent root1 = (Parent) fxmlLoader.load();
-			Stage stage = new Stage();
-			stage.initModality(Modality.APPLICATION_MODAL);
-			stage.setTitle("Statistics");
-			stage.setScene(new Scene(root1));
-			stage.show();
+    /**
+     * Opens the statistics scene when the button is clicked. Different scene opens
+     * depending on current user.
+     * 
+     * @param event button being clicked
+     */
+    @FXML
+    private void openStatistics(MouseEvent event) {
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(
+                getClass().getResource("/fxml/userStatistics.fxml"));
+            Parent root1 = (Parent) fxmlLoader.load();
+            Stage stage = new Stage();
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.setTitle("Statistics");
+            stage.setScene(new Scene(root1));
+            stage.show();
 
-		} catch (IOException e2) {
-			e2.printStackTrace();
-		}
-		System.out.println("Open librarian statistics.");
-	}
+        }
+        catch (IOException e2) {
+            e2.printStackTrace();
+        }
+        System.out.println("Open user statistics.");
+    }
 
+    /**
+     * Opens the statistics scene when the button is clicked. Different scene opens
+     * depending on current user.
+     * 
+     * @param event button being clicked
+     */
+    @FXML
+    private void openStaffStatistics(MouseEvent event) {
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(
+                getClass().getResource("/fxml/LibrarianStatistics.fxml"));
+            Parent root1 = (Parent) fxmlLoader.load();
+            Stage stage = new Stage();
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.setTitle("Statistics");
+            stage.setScene(new Scene(root1));
+            stage.show();
 
-	//Integer.toString(cd.getValue().getLoanDuration())
+        }
+        catch (IOException e2) {
+            e2.printStackTrace();
+        }
+        System.out.println("Open librarian statistics.");
+    }
 
-	/**
-	 * Loads the user table so the staff can manage the users.
-	 * @param tableToLoad The table requested (all,overdue,history,requested)
-	 */
-	private void loadExplorerTableColumns(String tableToLoad) {
+    // Integer.toString(cd.getValue().getLoanDuration())
 
-		TableColumn<ExplorerRow, String> titleCol = new TableColumn<ExplorerRow,
-				String>("Title");
-		titleCol.setCellValueFactory(cd ->
-		new SimpleStringProperty(cd.getValue().getResourceTitle()));
+    /**
+     * Loads the user table so the staff can manage the users.
+     * 
+     * @param tableToLoad The table requested (all,overdue,history,requested)
+     */
+    private void loadExplorerTableColumns(String tableToLoad) {
 
-		TableColumn<ExplorerRow, String> keeperCol = new TableColumn<ExplorerRow,
-				String>("Keeper");
-		keeperCol.setCellValueFactory(cd ->
-		new SimpleStringProperty(cd.getValue().getKeeper()));
+        TableColumn<ExplorerRow, String> titleCol = new TableColumn<ExplorerRow, String>("Title");
+        titleCol
+            .setCellValueFactory(cd -> new SimpleStringProperty(cd.getValue().getResourceTitle()));
 
-		TableColumn<ExplorerRow, String> copyIDCol = new TableColumn<ExplorerRow,
-				String>("Copy ID");
-		copyIDCol.setCellValueFactory(cd ->
-		new SimpleStringProperty(Integer.toString(cd.getValue().getCopyID())));
+        TableColumn<ExplorerRow, String> keeperCol = new TableColumn<ExplorerRow, String>("Keeper");
+        keeperCol.setCellValueFactory(cd -> new SimpleStringProperty(cd.getValue().getKeeper()));
 
-		TableColumn<ExplorerRow, String> resourceIDCol = new
-				TableColumn<ExplorerRow, String>("Resource ID");
-		resourceIDCol.setCellValueFactory(cd ->
-		new SimpleStringProperty(Integer.toString(cd.getValue().getResourceID())));
+        TableColumn<ExplorerRow,
+            String> copyIDCol = new TableColumn<ExplorerRow, String>("Copy ID");
+        copyIDCol.setCellValueFactory(
+            cd -> new SimpleStringProperty(Integer.toString(cd.getValue().getCopyID())));
 
-		TableColumn<ExplorerRow, String> loanDurationCol = new
-				TableColumn<ExplorerRow, String>("Loan Duration");
-		loanDurationCol.setCellValueFactory(cd ->
-		new SimpleStringProperty(Integer.toString(cd.getValue().getLoanDuration())));
+        TableColumn<ExplorerRow,
+            String> resourceIDCol = new TableColumn<ExplorerRow, String>("Resource ID");
+        resourceIDCol.setCellValueFactory(
+            cd -> new SimpleStringProperty(Integer.toString(cd.getValue().getResourceID())));
 
-		TableColumn<ExplorerRow, String> orderNumberCol = new
-				TableColumn<ExplorerRow, String>("Order Number");
-		orderNumberCol.setCellValueFactory(cd ->
-		new SimpleStringProperty(Integer.toString(cd.getValue().getOrderNumber())));
+        TableColumn<ExplorerRow,
+            String> loanDurationCol = new TableColumn<ExplorerRow, String>("Loan Duration");
+        loanDurationCol.setCellValueFactory(
+            cd -> new SimpleStringProperty(Integer.toString(cd.getValue().getLoanDuration())));
 
-		TableColumn<ExplorerRow, String> borrowDateCol = new
-				TableColumn<ExplorerRow, String>("Borrow Date");
-		borrowDateCol.setCellValueFactory(cd ->
-		new SimpleStringProperty(cd.getValue().getBorrowDate()));
+        TableColumn<ExplorerRow,
+            String> orderNumberCol = new TableColumn<ExplorerRow, String>("Order Number");
+        orderNumberCol.setCellValueFactory(
+            cd -> new SimpleStringProperty(Integer.toString(cd.getValue().getOrderNumber())));
 
-		TableColumn<ExplorerRow, String> lastRenewalCol = new
-				TableColumn<ExplorerRow, String>("Last Renewal");
-		lastRenewalCol.setCellValueFactory(cd ->
-		new SimpleStringProperty(cd.getValue().getLastRenewal()));
+        TableColumn<ExplorerRow,
+            String> borrowDateCol = new TableColumn<ExplorerRow, String>("Borrow Date");
+        borrowDateCol
+            .setCellValueFactory(cd -> new SimpleStringProperty(cd.getValue().getBorrowDate()));
 
-		TableColumn<ExplorerRow, String> dueDateCol = new
-				TableColumn<ExplorerRow, String>("Due Date");
-		dueDateCol.setCellValueFactory(cd ->
-		new SimpleStringProperty(cd.getValue().getDueDate()));
+        TableColumn<ExplorerRow,
+            String> lastRenewalCol = new TableColumn<ExplorerRow, String>("Last Renewal");
+        lastRenewalCol
+            .setCellValueFactory(cd -> new SimpleStringProperty(cd.getValue().getLastRenewal()));
 
-		TableColumn<ExplorerRow, String> historyCol = new
-				TableColumn<ExplorerRow, String>("History");
-		historyCol.setCellValueFactory(cd ->
-		new SimpleStringProperty(cd.getValue().getHistory()));
+        TableColumn<ExplorerRow,
+            String> dueDateCol = new TableColumn<ExplorerRow, String>("Due Date");
+        dueDateCol.setCellValueFactory(cd -> new SimpleStringProperty(cd.getValue().getDueDate()));
 
-		switch (tableToLoad) {
-			case "all":
-				staffCopiesExplorerTable.getColumns().clear();
-				staffCopiesExplorerTable.getColumns().addAll(
-						copyIDCol,resourceIDCol,titleCol,keeperCol,loanDurationCol,
-						borrowDateCol,lastRenewalCol,dueDateCol);
-				break;
-			case "overdue":
-				staffCopiesExplorerTable.getColumns().clear();
-				staffCopiesExplorerTable.getColumns().addAll(
-						titleCol,keeperCol,copyIDCol,resourceIDCol,borrowDateCol,
-						dueDateCol);
-				break;
+        TableColumn<ExplorerRow,
+            String> historyCol = new TableColumn<ExplorerRow, String>("History");
+        historyCol.setCellValueFactory(cd -> new SimpleStringProperty(cd.getValue().getHistory()));
 
-			case "requested":
-				staffCopiesExplorerTable.getColumns().clear();
-				staffCopiesExplorerTable.getColumns().addAll(
-						keeperCol,resourceIDCol);
-				break;
+        switch (tableToLoad) {
+            case "all":
+                staffCopiesExplorerTable.getColumns().clear();
+                staffCopiesExplorerTable.getColumns().addAll(copyIDCol, resourceIDCol, titleCol,
+                    keeperCol, loanDurationCol, borrowDateCol, lastRenewalCol, dueDateCol);
+                break;
+            case "overdue":
+                staffCopiesExplorerTable.getColumns().clear();
+                staffCopiesExplorerTable.getColumns().addAll(titleCol, keeperCol, copyIDCol,
+                    resourceIDCol, borrowDateCol, dueDateCol);
+                break;
 
-			case "history":
-				staffCopiesExplorerTable.getColumns().clear();
-				staffCopiesExplorerTable.getColumns().addAll(
-						copyIDCol,keeperCol,historyCol);
-		}
+            case "requested":
+                staffCopiesExplorerTable.getColumns().clear();
+                staffCopiesExplorerTable.getColumns().addAll(keeperCol, resourceIDCol);
+                break;
 
-	}
+            case "history":
+                staffCopiesExplorerTable.getColumns().clear();
+                staffCopiesExplorerTable.getColumns().addAll(copyIDCol, keeperCol, historyCol);
+        }
 
-	//
-	//Staff: Manage Users
-	//
+    }
 
-	private void loadUserTableColumns() {
-		TableColumn<Person, String> usernameCol =
-				new TableColumn<Person, String>("Username");
+    //
+    // Staff: Manage Users
+    //
+
+    private void loadUserTableColumns() {
+        TableColumn<Person, String> usernameCol = new TableColumn<Person, String>("Username");
         usernameCol.setCellValueFactory(new PropertyValueFactory<>("username"));
 
-		TableColumn<Person, String> firstnameCol =
-				new TableColumn<Person, String>("Firstname");
-		firstnameCol.setCellValueFactory(new PropertyValueFactory<>("firstName"));
+        TableColumn<Person, String> firstnameCol = new TableColumn<Person, String>("Firstname");
+        firstnameCol.setCellValueFactory(new PropertyValueFactory<>("firstName"));
 
+        TableColumn<Person, String> lastnameCol = new TableColumn<Person, String>("Lastname");
+        lastnameCol.setCellValueFactory(new PropertyValueFactory<>("lastName"));
 
-		TableColumn<Person, String> lastnameCol =
-				new TableColumn<Person, String>("Lastname");
-		lastnameCol.setCellValueFactory(new PropertyValueFactory<>("lastName"));
+        TableColumn<Person, Integer> telephoneCol = new TableColumn<Person, Integer>("Telephone");
+        telephoneCol.setCellValueFactory(new PropertyValueFactory<>("phoneNumber"));
 
-		TableColumn<Person, Integer> telephoneCol =
-				new TableColumn<Person, Integer>("Telephone");
-		telephoneCol.setCellValueFactory(new PropertyValueFactory<>("phoneNumber"));
+        TableColumn<Person, String> addressCol = new TableColumn<Person, String>("Address");
+        addressCol.setCellValueFactory(new PropertyValueFactory<>("address"));
 
-		TableColumn<Person, String> addressCol =
-				new TableColumn<Person, String>("Address");
-		addressCol.setCellValueFactory(new PropertyValueFactory<>("address"));
+        TableColumn<Person, String> postcodeCol = new TableColumn<Person, String>("Postcode");
+        postcodeCol.setCellValueFactory(new PropertyValueFactory<>("postcode"));
 
-		TableColumn<Person, String> postcodeCol =
-				new TableColumn<Person, String>("Postcode");
-		postcodeCol.setCellValueFactory(new PropertyValueFactory<>("postcode"));
+        TableColumn<Person, String> avatarCol = new TableColumn<Person, String>("Avatar Path");
+        avatarCol.setCellValueFactory(new PropertyValueFactory<>("avatarPath"));
 
-		TableColumn<Person, String> avatarCol =
-				new TableColumn<Person, String>("Avatar Path");
-		avatarCol.setCellValueFactory(new PropertyValueFactory<>("avatarPath"));
+        TableColumn<Person,
+            String> accountBalanceCol = new TableColumn<Person, String>("accountBalance");
+        accountBalanceCol.setCellValueFactory(new PropertyValueFactory<>("accountBalance"));
 
-		TableColumn<Person, String> accountBalanceCol =
-				new TableColumn<Person, String>("accountBalance");
-		accountBalanceCol.setCellValueFactory(
-				new PropertyValueFactory<>("accountBalance"));
+        staffUsersTable.getColumns().clear();
+        staffUsersTable.getColumns().addAll(usernameCol, firstnameCol, lastnameCol, addressCol,
+            postcodeCol, accountBalanceCol);
+    }
 
-		staffUsersTable.getColumns().clear();
-		staffUsersTable.getColumns().addAll(usernameCol,firstnameCol,
-				lastnameCol,addressCol,postcodeCol,accountBalanceCol);
-	}
-	/**
-	 * loads all the users from the table which aren't staff when the button is clicked
-	 * @param event the button being clicked
-	 */
-	@FXML
-	private void loadUsersTable(MouseEvent event) {
-		ObservableList<Person> usersList = FXCollections.observableArrayList();
-		try {
-			Connection conn = DBHelper.getConnection();
-			PreparedStatement pstmt = conn.prepareStatement(
-					"SELECT username FROM users WHERE "
-					+ "username NOT IN (SELECT username FROM staff);");
+    /**
+     * loads all the users from the table which aren't staff when the button is
+     * clicked
+     * 
+     * @param event the button being clicked
+     */
+    @FXML
+    private void loadUsersTable(MouseEvent event) {
+        ObservableList<Person> usersList = FXCollections.observableArrayList();
+        try {
+            Connection conn = DBHelper.getConnection();
+            PreparedStatement pstmt = conn.prepareStatement("SELECT username FROM users WHERE " +
+                "username NOT IN (SELECT username FROM staff);");
             ResultSet rs = pstmt.executeQuery();
 
-            while(rs.next()) {
-            	usersList.add(Person.loadPerson(rs.getString(1)));
+            while (rs.next()) {
+                usersList.add(Person.loadPerson(rs.getString(1)));
             }
 
             staffUsersTable.setItems(usersList);
             staffUsersTable.autosize();
 
+        }
+        catch (SQLException e) {
+            System.out.println("Error: Failed to load users from Database.");
+            e.printStackTrace();
+        }
 
-		} catch (SQLException e) {
-			System.out.println("Error: Failed to load users from Database.");
-			e.printStackTrace();
-		}
+    }
 
-	}
+    /**
+     * Method that shows the table of the selected user when button is clicked.
+     * 
+     * @param event when the button is clicked
+     */
+    @FXML
+    private void userTableClicked(MouseEvent event) {
+        Person selectedUser = staffUsersTable.getSelectionModel().getSelectedItem();
+        selectedUserLabel.setText(selectedUser.getUsername());
+        // System.out.println("Cell clicked?");
+    }
 
-	/**
-	 * Method that shows the table of the selected user when button is clicked.
-	 * @param event when the button is clicked
-	 */
-	@FXML
-	private void userTableClicked(MouseEvent event) {
-		Person selectedUser = staffUsersTable.getSelectionModel().getSelectedItem();
-		selectedUserLabel.setText(selectedUser.getUsername());
-		//System.out.println("Cell clicked?");
-	}
+    /**
+     * Deletes a user from the database when the button is clicked.
+     * 
+     * @param event the button being clicked
+     */
+    @FXML
+    private void userDeleteButton(MouseEvent event) {
+        if (selectedUserLabel.getText().equals("-")) {
+            System.out.println("No user selected!");
+        }
+        else {
+            System.out.println("Delete User: " + selectedUserLabel.getText());
+            if (selectedUserLabel.getText().equals(ScreenManager.getCurrentUser().getUsername())) {
+                AlertBox.showInfoAlert("You can't delete yourself!");
+            }
+            else {
+                if (Person.removePerson(selectedUserLabel.getText())) {
 
-	/**
-	 * Deletes a user from the database when the button is clicked.
-	 * @param event the button being clicked
-	 */
-	@FXML
-	private void userDeleteButton(MouseEvent event) {
-		if (selectedUserLabel.getText().equals("-")) {
-			System.out.println("No user selected!");
-		} else {
-			System.out.println("Delete User: " + selectedUserLabel.getText());
-			if(selectedUserLabel.getText().equals(
-					ScreenManager.getCurrentUser().getUsername())) {
-				AlertBox.showInfoAlert("You can't delete yourself!");
-			}else {
-				if(Person.removePerson(selectedUserLabel.getText())) {
+                }
+                else {
+                    AlertBox.showInfoAlert("They can't be deleted at the moment");
+                }
+            }
+            // Delete user
+            selectedUserLabel.setText("-");
+            staffUsersTable.getItems().clear();
+            loadUsersTable(null);
+        }
 
-				}else {
-					AlertBox.showInfoAlert("They can't be deleted at the moment");
-				}
-			}
-			//Delete user
-			selectedUserLabel.setText("-");
-			staffUsersTable.getItems().clear();
-			loadUsersTable(null);
-		}
+    }
 
-	}
+    //
+    // End of Staff Tab
+    //
 
-	//
-	// End of Staff Tab
-	//
+    /**
+     * Method that allows librarian to add funds to a user when the button is
+     * clicked.
+     * 
+     * @param event the button being pressed
+     */
+    @FXML
+    private void userAddFundsButton(MouseEvent event) {
+        if (selectedUserLabel.getText().equals("-")) {
+            System.out.println("No user selected!");
+        }
+        else {
+            try {
+                double amount = Float.parseFloat(staffAmountField.getText());
+                if (amount > 0.01) {
+                    System.out.println("Add: " + amount + " to " + selectedUserLabel.getText());
+                    User.addBalance(selectedUserLabel.getText(), amount);
+                }
+            }
+            catch (RuntimeException e) {
+                System.out.println("User entered non-float.");
+            }
+            finally {
+                staffAmountField.setText("");
+                staffUsersTable.getItems().clear();
+                loadUsersTable(null);
+            }
+        }
 
-	
+    }
 
-	/**
-	 * Method that allows librarian to add funds to a user when the button is clicked.
-	 * @param event the button being pressed
-	 */
-	@FXML
-	private void userAddFundsButton(MouseEvent event) {
-		if (selectedUserLabel.getText().equals("-")) {
-			System.out.println("No user selected!");
-		} else {
-			try {
-				double amount = Float.parseFloat(staffAmountField.getText());
-				if (amount > 0.01) {
-					System.out.println("Add: " +
-				amount + " to " + selectedUserLabel.getText());
-					User.addBalance(selectedUserLabel.getText(), amount);
-				}
-			} catch (RuntimeException e) {
-				System.out.println("User entered non-float.");
-			} finally {
-				staffAmountField.setText("");
-				staffUsersTable.getItems().clear();
-				loadUsersTable(null);
-			}
-		}
-
-	}
-	
-	/**
-	 * Reloads data from database for both Upcoming and User event tables.
-	 */
-	@FXML
+    /**
+     * Reloads data from database for both Upcoming and User event tables.
+     */
+    @FXML
     private void loadEventTable() {
         model.Event.loadEventsFromDB(); // loads appropriate events from DB depending on user.
 
@@ -1355,10 +1344,10 @@ public class ProfileController {
         ObservableList<model.Event> userTableData = FXCollections.observableArrayList();
 
         // add all appropriate events to upcoming events data.
-        tableData.addAll(model.Event.getAllEvents()); 
-        
-        //add all user events to user events table data.
-        userTableData.addAll(model.Event.getUserEvents()); 
+        tableData.addAll(model.Event.getAllEvents());
+
+        // add all user events to user events table data.
+        userTableData.addAll(model.Event.getUserEvents());
 
         eventTable.setItems(tableData);
         userEventTable.setItems(userTableData);
@@ -1367,138 +1356,152 @@ public class ProfileController {
         userEventTable.refresh();
 
     }
-	
-	/**
-	 * Called when user selects an event within the upcoming events table.
-	 * @throws SQLException
-	 * @throws ParseException
-	 */
-	@FXML
-	private void onTableSelection() throws SQLException, ParseException {
-		
-		joinEventButton.setDisable(true);
-		
-		//get selected event from upcoming events table.
-		model.Event selectedEvent = eventTable.getSelectionModel().getSelectedItem();
-		
-		//if user is not a librarian and has selected an event
-		if(ScreenManager.getCurrentUser() instanceof User && selectedEvent != null) {
-			//if event is happening in the future
-			if(model.Event.checkFutureDate(selectedEvent.getDateTime())) {
-				ArrayList<Integer> usersEvents = ((User) ScreenManager.getCurrentUser()).loadUserEvents();
-				//if event has spaces and user isn't already going
-				if(selectedEvent.getMaxAttending() > 0 && !(usersEvents.contains(selectedEvent.getID()))) {
-					joinEventButton.setDisable(false); //enable join event button.
-				}
-			}
-			
-		}
 
-	}
-	
-	/**
-	 * Called when user clicks the join event button (will only be called when join event button
-	 * is enabled). 
-	 * @throws SQLException
-	 * @throws ParseException
-	 */
-	@FXML
-	private void onJoinEventClick() {
-		
-		model.Event selectedEvent = eventTable.getSelectionModel().getSelectedItem();
-		int selectedIndex = eventTable.getSelectionModel().getSelectedIndex();
+    /**
+     * Called when user selects an event within the upcoming events table.
+     * 
+     * @throws SQLException
+     * @throws ParseException
+     */
+    @FXML
+    private void onTableSelection() throws SQLException, ParseException {
 
-		//decrease no. of available spaces for event by one, and update in DB.
-		selectedEvent.setMaxAttending(selectedEvent.getMaxAttending()-1);
-		ArrayList<model.Event> newEvents = model.Event.getAllEvents();
-		newEvents.set(selectedIndex, selectedEvent);
-		model.Event.updateEventInDB(selectedEvent);
-		
-		//add event to list of current user events.
-		model.Event.addUserEventInDB(ScreenManager.getCurrentUser().getUsername(), selectedEvent.getID());
-		
-		loadEventTable(); //reload tables.
-	}
-	
-	/**
-	 * Opens Event Scene when librarian clicks "create event" button.
-	 */
-	@FXML
-	private void openEventCreator() {
-		
-		try {
-			FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("createEvent.fxml"));
+        joinEventButton.setDisable(true);
+
+        // get selected event from upcoming events table.
+        model.Event selectedEvent = eventTable.getSelectionModel().getSelectedItem();
+
+        // if user is not a librarian and has selected an event
+        if (ScreenManager.getCurrentUser() instanceof User && selectedEvent != null) {
+            // if event is happening in the future
+            if (model.Event.checkFutureDate(selectedEvent.getDateTime())) {
+                ArrayList<
+                    Integer> usersEvents = ((User) ScreenManager.getCurrentUser()).loadUserEvents();
+                // if event has spaces and user isn't already going
+                if (selectedEvent.getMaxAttending() > 0 &&
+                    !(usersEvents.contains(selectedEvent.getID()))) {
+                    joinEventButton.setDisable(false); // enable join event button.
+                }
+            }
+
+        }
+
+    }
+
+    /**
+     * Called when user clicks the join event button (will only be called when join
+     * event button is enabled).
+     * 
+     * @throws SQLException
+     * @throws ParseException
+     */
+    @FXML
+    private void onJoinEventClick() {
+
+        model.Event selectedEvent = eventTable.getSelectionModel().getSelectedItem();
+        int selectedIndex = eventTable.getSelectionModel().getSelectedIndex();
+
+        // decrease no. of available spaces for event by one, and update in DB.
+        selectedEvent.setMaxAttending(selectedEvent.getMaxAttending() - 1);
+        ArrayList<model.Event> newEvents = model.Event.getAllEvents();
+        newEvents.set(selectedIndex, selectedEvent);
+        model.Event.updateEventInDB(selectedEvent);
+
+        // add event to list of current user events.
+        model.Event.addUserEventInDB(ScreenManager.getCurrentUser().getUsername(),
+            selectedEvent.getID());
+
+        loadEventTable(); // reload tables.
+    }
+
+    /**
+     * Opens Event Scene when librarian clicks "create event" button.
+     */
+    @FXML
+    private void openEventCreator() {
+
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("createEvent.fxml"));
             Parent root1 = (Parent) fxmlLoader.load();
             Stage stage = new Stage();
             stage.initModality(Modality.APPLICATION_MODAL);
             stage.setTitle("Create Event");
             stage.setScene(new Scene(root1));
             stage.show();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-	}
-	
-	/**Shows a window with the past and new notifications of this user.*/
-	@FXML
-	private void showNotifications() {
-	    
-	    if(!((User)ScreenManager.getCurrentUser()).hasUnreadNotifications()) {
-	        removeNotificationDot();
-	    }
-	    FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/" +
-	        "notificationView.fxml"));
-	    
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /** Shows a window with the past and new notifications of this user. */
+    @FXML
+    private void showNotifications() {
+
+        if (!((User) ScreenManager.getCurrentUser()).hasUnreadNotifications()) {
+            removeNotificationDot();
+        }
+        FXMLLoader fxmlLoader = new FXMLLoader(
+            getClass().getResource("/fxml/" + "notificationView.fxml"));
+
         Parent notificationsRoot = null;
         try {
             notificationsRoot = (Parent) fxmlLoader.load();
-        } catch (IOException e) {
+        }
+        catch (IOException e) {
             e.printStackTrace();
             System.exit(-1);
         }
-        
+
         Stage notificationWindow = new Stage();
         notificationWindow.initModality(Modality.APPLICATION_MODAL);
         notificationWindow.setTitle("Your Notifications");
         notificationWindow.setScene(new Scene(notificationsRoot));
         notificationWindow.show();
-	}
-	
-	/**Shows a new window with the current notification settings of the current 
-	 * user. The window also lets users change their settings.*/
-	@FXML
-	private void showNotificationSettings() {
-	    FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/" +
-	            "notificationSettings.fxml"));
-	    
-	    Parent notificationsRoot = null;
+    }
+
+    /**
+     * Shows a new window with the current notification settings of the current
+     * user. The window also lets users change their settings.
+     */
+    @FXML
+    private void showNotificationSettings() {
+        FXMLLoader fxmlLoader = new FXMLLoader(
+            getClass().getResource("/fxml/" + "notificationSettings.fxml"));
+
+        Parent notificationsRoot = null;
         try {
             notificationsRoot = (Parent) fxmlLoader.load();
-        } catch (IOException e) {
+        }
+        catch (IOException e) {
             e.printStackTrace();
             System.exit(-1);
         }
-        
+
         Stage settingsWindow = new Stage();
         settingsWindow.initModality(Modality.APPLICATION_MODAL);
         settingsWindow.setTitle("Notification Settings");
         settingsWindow.setScene(new Scene(notificationsRoot));
         settingsWindow.show();
-	}
-	
-	/**Disables the glow effect of the notification bell when the mouse does 
-	 * not hover over it.*/
-	@FXML
-	private void setNotificationBellNormal() {
-	    notificationBellView.setEffect(null);
-	}
-	
-	/**Enables the glow effect of the notification bell when the mouse hovers
-	 * over it.*/
-	@FXML
-	private void setNotificationBellHover() {
-	    Glow notBellGlow = new Glow();
-	    notBellGlow.setLevel(1);
+    }
+
+    /**
+     * Disables the glow effect of the notification bell when the mouse does not
+     * hover over it.
+     */
+    @FXML
+    private void setNotificationBellNormal() {
+        notificationBellView.setEffect(null);
+    }
+
+    /**
+     * Enables the glow effect of the notification bell when the mouse hovers over
+     * it.
+     */
+    @FXML
+    private void setNotificationBellHover() {
+        Glow notBellGlow = new Glow();
+        notBellGlow.setLevel(1);
         notificationBellView.setEffect(notBellGlow);
     }
 }
