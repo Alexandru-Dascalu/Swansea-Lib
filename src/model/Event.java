@@ -37,6 +37,13 @@ public class Event {
 	//all events user has joined to.
 	private static ArrayList<Event> usersEvents = new ArrayList<Event>();
 
+	/**
+	 * Makes a new even with the given title, details, date and attending limit.
+	 * @param title The title of the new event.
+	 * @param details The description of the new event.
+	 * @param date The date when the event will be held.
+	 * @param maxAttending The limit of people that can attend this event.
+	 */
 	public Event(String title, String details, String date, int maxAttending) {
 		this.title = title;
 		this.details = details;
@@ -44,10 +51,18 @@ public class Event {
 		this.maxAttending = maxAttending;
 	}
 	
+	/**
+	 * Gets the total number of events the library has ever had.
+	 * @return the number of events that have ever existed.
+	 */
 	public static int getTotalEventNo() {
 		return totalEventNo;
 	}
 
+	/**
+	 * Sets the total number of events the library has ever had.
+	 * @param totalEventNo The total number of events.
+	 */
 	public static void setTotalEventNo(int totalEventNo) {
 		Event.totalEventNo = totalEventNo;
 	}
@@ -116,8 +131,8 @@ public class Event {
 	}
 	
 	/**
-	 * Update Event object in database.
-	 * @param event
+	 * Updates the given event in the database.
+	 * @param event The event to be updated.
 	 */
 	public static void updateEventInDB(Event event) {
 		try {
@@ -244,6 +259,11 @@ public class Event {
 		this.maxAttending = maxAttending;
 	}
 	
+	/**
+	 * Calculates the number of days until an event is to be held. If the event 
+	 * is in the past, it returns a negative number.
+	 * @return the number of days until the event will be held.
+	 */
 	public int getDaysUntilEvent() {
 		SimpleDateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd HH:mm");
 		Date eventDate = null;
