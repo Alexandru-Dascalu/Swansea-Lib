@@ -36,9 +36,12 @@ import model.ResourceComparator;
  */
 public class RelatedRsrcController {
 
+    /**A button that for saving the selection of resources as related resources.*/
     @FXML
     private Button saveBtn;
 
+    /**A VBox inside a scroll pane used to store HBoxes showing resources that 
+     * might be related to the newly made resource.*/
     @FXML
     private VBox resourcesVBox;
     
@@ -128,11 +131,6 @@ public class RelatedRsrcController {
         VBox.setVgrow(resourceBox, Priority.ALWAYS);
         resourceBox.getChildren().add(checkBox);
         return resourceBox;
-    }
-    
-    @FXML
-    public void initialize() {
-        
     }
 
     /**
