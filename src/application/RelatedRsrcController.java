@@ -19,6 +19,7 @@ import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.stage.Modality;
@@ -40,7 +41,7 @@ public class RelatedRsrcController {
 
     @FXML
     private VBox resourcesVBox;
-
+    
     /**The original resource, for which the librarian can associate with resources that are related.*/
     private Resource originalResource;
 
@@ -124,8 +125,14 @@ public class RelatedRsrcController {
         CheckBox checkBox = new CheckBox();
         checkBox.setSelected(false);
 
+        VBox.setVgrow(resourceBox, Priority.ALWAYS);
         resourceBox.getChildren().add(checkBox);
         return resourceBox;
+    }
+    
+    @FXML
+    public void initialize() {
+        
     }
 
     /**
