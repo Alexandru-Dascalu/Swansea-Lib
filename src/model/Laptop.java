@@ -190,8 +190,9 @@ public class Laptop extends Resource {
     }
     
     /**
-     * override the limit amount from resource super class and set laptop limit
+     * Overrides the limit amount from resource super class and set laptop limit
      * to 3 instead of default 1 to restrict user from over requesting.
+     * @return the limit amount a laptop contributes to the users borrow load.
      */
     public int getLimitAmount() {
     	return LIMIT_AMOUNT;

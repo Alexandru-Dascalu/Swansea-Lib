@@ -31,15 +31,16 @@ public class Librarian extends Person {
     * @param address The address of the librarian.
     * @param postcode The post code of the librarian.
     * @param avatarPath The path to the avatar image of the librarian.
+    * @param timeStamp The time when this librarian last logged in.
     * @param employmentDate The date the librarian as employed.
     * @param staffID The ID of the librarian.
     */
     public Librarian(String userName, String firstName, String lastName, 
     		String phoneNumber, String address,
-            String postcode, String avatarPath, String stamp, String employmentDate, 
+            String postcode, String avatarPath, String timeStamp, String employmentDate, 
             int staffID) {
         super(userName, firstName, lastName, phoneNumber, address, 
-        		postcode, avatarPath, stamp);
+        		postcode, avatarPath, timeStamp);
         this.staffID = staffID;
 
         Date date = null;

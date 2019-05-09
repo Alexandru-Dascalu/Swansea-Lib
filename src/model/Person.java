@@ -4,8 +4,6 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.sql.Timestamp;
 
 /**
@@ -41,8 +39,6 @@ public abstract class Person {
     
     private String lastLogin;
 
-    
-    private static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("yyyy.MM.dd.HH.mm.ss");
     /**
      * Creates a new Person object from the given arguments.
      * @param username The user name of this person.
@@ -52,6 +48,7 @@ public abstract class Person {
      * @param address Address of this person.
      * @param postcode Post code of this person.
      * @param avatarPath Path to the avatar image of this person.
+     * @param lastLogin The time of the last login of this person.
      */
     public Person(String username, String firstName, String lastName,
     		String phoneNumber, String address,
@@ -271,7 +268,7 @@ public abstract class Person {
     }
 
     /**
-     * Changes last login in the database
+     * Changes last login in the database.
      */
     public void updateLogin() {
     	   Connection connectionToDb;
