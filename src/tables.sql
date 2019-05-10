@@ -109,7 +109,7 @@ INSERT INTO `resource`(rID,title,year,thumbnail) VALUES (26,'The Lord of the Rin
 INSERT INTO `resource`(rID,title,year,thumbnail) VALUES (27,'Star Wars: Episode III - Revenge of the Sith',2005,'/graphics/revenge of the Sith.jpg');
 INSERT INTO `resource`(rID,title,year,thumbnail) VALUES (28,'Moromete Family: On the Edge of Time',2018,'/graphics/morometii 2.jpg');
 INSERT INTO `resource`(rID,title,year,thumbnail) VALUES (29,'A Dance with Dragons',2011,'/graphics/a dance with dragons.jpg');
-INSERT INTO `resource`(rID,title,year,thumbnail) VALUES (30,'Game of Thrones',1996,'/graphics/a game of thrones.jpg');
+INSERT INTO `resource`(rID,title,year,thumbnail) VALUES (30,'Fire and Blood',2018,'/graphics/fire and blood.jpeg');
 INSERT INTO `resource`(rID,title,year,thumbnail) VALUES (31,'The Mysterious Island',1874,'/graphics/mysterious island.jpg');
 INSERT INTO `resource`(rID,title,year,thumbnail) VALUES (32,'Ion',1920,'/graphics/ion.jpg');
 INSERT INTO `resource`(rID,title,year,thumbnail) VALUES (33,'Software Engineering (10th Edition)',2015,'/graphics/soft eng sommerville.jpg');
@@ -117,7 +117,6 @@ INSERT INTO `resource`(rID,title,year,thumbnail) VALUES (34,'Acer Aspire VX 15',
 INSERT INTO `resource`(rID,title,year,thumbnail) VALUES (35,'Acer Swift 1',2016,'/graphics/acer swift 1.png');
 INSERT INTO `resource`(rID,title,year,thumbnail) VALUES (36,'Lenovo IdeaPad 530S',2018,'/graphics/lenovo ideapad.jpg');
 INSERT INTO `resource`(rID,title,year,thumbnail) VALUES (37,'Game of Thrones Season 1',2011,'/graphics/got season 1.jpg');
-INSERT INTO `resource`(rID,title,year,thumbnail) VALUES (38,'Fire and Blood',2018,'/graphics/fire and blood.jpeg');
 
 DROP TABLE IF EXISTS `resourceSeries`;
 CREATE TABLE IF NOT EXISTS `resourceSeries` (
@@ -176,11 +175,10 @@ INSERT INTO `book` VALUES ('Yuval Noah Harari','Harvill Secker','Non-Fiction','9
 INSERT INTO `book` VALUES ('Unknown Author','Harvill Secker','Fiction','978-191-070-187-6','English',9);
 INSERT INTO `book` VALUES ('Neil Gaimen','Harvill Secker','Fiction','978-191-070-187-7','English',10);
 INSERT INTO `book` VALUES ('George R. R. Martin','Bantam Spectra','Epic Fantasy','9780007456376','English',29);
-INSERT INTO `book` VALUES ('George R. R. Martin','Bantam Spectra','Epic Fantasy','9780007456389','English',30);
 INSERT INTO `book` VALUES ('Jules Verne','Pierre-Jules Hetzel','Adventure novel','978-0812972122','English',31);
 INSERT INTO `book` VALUES ('Liviu Rebreanu','Viata Romaneasca','Realist novel','978-973-1898-21-6','Romanian',32);
 INSERT INTO `book` VALUES ('Ian Sommerville','Pearson','Computer Science','978-0133943030','English',33);
-INSERT INTO `book` VALUES ('George R. R. Martin','Bantam Books','Epic Fantasy','978-1-524-79628-0','English',38);
+INSERT INTO `book` VALUES ('George R. R. Martin','Bantam Books','Epic Fantasy','978-1-524-79628-0','English',30);
 
 DROP TABLE IF EXISTS `game`;
 CREATE TABLE IF NOT EXISTS `game` (

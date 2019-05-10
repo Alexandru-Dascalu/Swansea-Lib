@@ -8,7 +8,7 @@ import model.Resource;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 /**
- *
+ * Class that loads the database and loads the log in scene.
  * @author Kane Miles.
  * @version 1.
  */
