@@ -97,7 +97,7 @@ public class RelatedRsrcController {
      * image view of its thumbnail that you can click on, and a checkbox that 
      * will be used to save the given resource as related to the original 
      * resource.
-     * @param resource The reosurce for which this box is made.
+     * @param resource The resource for which this box is made.
      * @param clickHandler The click handler used for the image view of the
      * image of the given resource.
      * @return An HBox used for selecting related resources.*/
