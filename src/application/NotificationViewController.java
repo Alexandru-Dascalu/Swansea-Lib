@@ -15,7 +15,7 @@ import model.User;
 /**
  * A controller for the window showing the user their notifications.
  * 
- * @author Alexandru Dascalu
+ * @author Alexandru Dascalu.
  */
 public class NotificationViewController {
 

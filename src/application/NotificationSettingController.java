@@ -11,7 +11,7 @@ import model.User;
  * A controller for the window that shows the user their notification 
  * settings. This controller allows the user to change their notification
  * settings.
- * @author Alexandru Dascalu
+ * @author Alexandru Dascalu.
  */
 public class NotificationSettingController {
 
