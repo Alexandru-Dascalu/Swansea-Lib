@@ -614,8 +614,8 @@ public abstract class Resource {
         
         try {
             dbConnection = DBHelper.getConnection();
-            sqlStatement = dbConnection
-                .prepareStatement("DELETE FROM userRequests");
+            sqlStatement = dbConnection.prepareStatement("DELETE FROM " +
+                "userRequests");
             sqlStatement.executeUpdate();
             sqlStatement = dbConnection.prepareStatement(
                 "INSERT INTO userRequests VALUES (" + uniqueID + ",?,?)");
