@@ -728,10 +728,24 @@ public abstract class Resource {
     public int getLikenessScore(Resource otherResource) {
         int score = 0;
 
-        if (title.equals(otherResource.getTitle())) {
-            score += 4;
+        /*Add one to the score counter for each matching word in the titles of 
+         * the two resources.*/
+        String[] titleWords = title.split(" ");
+        String[] otherTitleWords = otherResource.getTitle().split(" ");
+        int smallerLength;
+        
+        if(titleWords.length <= otherTitleWords.length) {
+            smallerLength = titleWords.length;
+        } else {
+            smallerLength = otherTitleWords.length;
         }
-
+                
+        for(int i = 0; i < smallerLength; i++) {
+            if(titleWords[i].equals(otherTitleWords[i])) {
+                score++;
+            }
+        }
+        
         if (year == otherResource.getYear()) {
             score++;
         }
@@ -776,9 +790,8 @@ public abstract class Resource {
     
     /**
      * Says if this resource is possibly in the same series as another resource. 
-     * It calculates it by just seeing if it is of the same type and if the first 
-     * word of both titles is the same. Should be overridden to provide a better 
-     * implementation for different resource types.
+     * It calculates it by just seeing if it is of the same type. Should be 
+     * overridden to provide a better implementation for different resource types.
      * @param otherResource Another resource we want to see if it can be of the 
      * same series.
      * @return True if it is possibly of the same series, false if not.
@@ -786,15 +799,8 @@ public abstract class Resource {
     public boolean isPossiblySameSeries(Resource otherResource) {
         if(getClass() != otherResource.getClass()) {
             return false;
-        }
-        
-        String thisFirstWord = title.split(" ")[0];
-        String otherFirstWord = otherResource.getTitle().split(" ")[0];
-        
-        if(thisFirstWord.equals(otherFirstWord)) {
-            return true;
         } else {
-            return false;
+            return true;
         }
     }
     
