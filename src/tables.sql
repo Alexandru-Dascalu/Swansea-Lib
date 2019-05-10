@@ -116,7 +116,7 @@ INSERT INTO `resource`(rID,title,year,thumbnail) VALUES (33,'Software Engineerin
 INSERT INTO `resource`(rID,title,year,thumbnail) VALUES (34,'Acer Aspire VX 15',2017,'/graphics/acer vx 15.jpg');
 INSERT INTO `resource`(rID,title,year,thumbnail) VALUES (35,'Acer Swift 1',2016,'/graphics/acer swift 1.png');
 INSERT INTO `resource`(rID,title,year,thumbnail) VALUES (36,'Lenovo IdeaPad 530S',2018,'/graphics/lenovo ideapad.jpg');
-INSERT INTO `resource`(rID,title,year,thumbnail) VALUES (37,'Game of Thrones',2011,'/graphics/got season 1.jpg');
+INSERT INTO `resource`(rID,title,year,thumbnail) VALUES (37,'Game of Thrones Season 1',2011,'/graphics/got season 1.jpg');
 INSERT INTO `resource`(rID,title,year,thumbnail) VALUES (38,'Fire and Blood',2018,'/graphics/fire and blood.jpeg');
 
 DROP TABLE IF EXISTS `resourceSeries`;
@@ -292,8 +292,8 @@ CREATE TABLE IF NOT EXISTS `copies` (
 	FOREIGN KEY(`rID`) REFERENCES `resource`(`rID`)
 );
 
-INSERT INTO `copies` VALUES (1,1,'Manny',8,'09/12/2018','17/12/2018','08/05/2019');
-INSERT INTO `copies` VALUES (3,1,'Alexandru',7,'22/04/2019','29/04/2019','09/05/2019');
+INSERT INTO `copies` VALUES (1,1,'Manny',8,'09/12/2018','17/12/2018','11/05/2019');
+INSERT INTO `copies` VALUES (3,1,'Alexandru',7,'22/04/2019','29/04/2019',NULL);
 INSERT INTO `copies` VALUES (4,1,NULL,7,NULL,NULL,NULL);
 INSERT INTO `copies` VALUES (5,1,NULL,7,NULL,NULL,NULL);
 
@@ -411,6 +411,7 @@ INSERT INTO `copies` VALUES (83,34,NULL,30,NULL,NULL,NULL);
 INSERT INTO `copies` VALUES (84,35,NULL,20,NULL,NULL,NULL);
 
 INSERT INTO `copies` VALUES (85,36,NULL,20,NULL,NULL,NULL);
+INSERT INTO `copies` VALUES (86,38,'Manny',1,'08/05/2019','10/05/2019',NULL);
 
 DROP TABLE IF EXISTS `borrowRecords`;
 CREATE TABLE IF NOT EXISTS `borrowRecords` (
