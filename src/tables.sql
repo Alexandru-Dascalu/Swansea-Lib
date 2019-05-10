@@ -211,7 +211,7 @@ INSERT INTO `events` VALUES (1,'Zilele ASMI','Jocuri sociale si training ASMI','
 INSERT INTO `events` VALUES (2,'Cardiff Varsity Cup Theft','We are going to sneak into Cardiff University 
 and steal the Varsity Cup and Shield and escape to 
 bring it back to Swansea. We just need 20 good men.
-#FuckCardiff #UppaSwans','2019-05-11 11:00', 20);
+ #UppaSwans','2019-05-11 11:00', 20);
 INSERT INTO `events` VALUES (3,'Examen auto','Iau carnetul in sfarsit.','2019-05-16 11:00', 2);
 
 DROP TABLE IF EXISTS `dvd`;
