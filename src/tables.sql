@@ -117,6 +117,7 @@ INSERT INTO `resource`(rID,title,year,thumbnail) VALUES (34,'Acer Aspire VX 15',
 INSERT INTO `resource`(rID,title,year,thumbnail) VALUES (35,'Acer Swift 1',2016,'/graphics/acer swift 1.png');
 INSERT INTO `resource`(rID,title,year,thumbnail) VALUES (36,'Lenovo IdeaPad 530S',2018,'/graphics/lenovo ideapad.jpg');
 INSERT INTO `resource`(rID,title,year,thumbnail) VALUES (37,'Game of Thrones Season 1',2011,'/graphics/got season 1.jpg');
+INSERT INTO `resource`(rID,title,year,thumbnail) VALUES (38,'Game of Thrones',1996,'/graphics/a game of thrones.jpg');
 
 DROP TABLE IF EXISTS `resourceSeries`;
 CREATE TABLE IF NOT EXISTS `resourceSeries` (
@@ -179,6 +180,7 @@ INSERT INTO `book` VALUES ('Jules Verne','Pierre-Jules Hetzel','Adventure novel'
 INSERT INTO `book` VALUES ('Liviu Rebreanu','Viata Romaneasca','Realist novel','978-973-1898-21-6','Romanian',32);
 INSERT INTO `book` VALUES ('Ian Sommerville','Pearson','Computer Science','978-0133943030','English',33);
 INSERT INTO `book` VALUES ('George R. R. Martin','Bantam Books','Epic Fantasy','978-1-524-79628-0','English',30);
+INSERT INTO `book` VALUES ('George R. R. Martin','Bantam Spectra','Epic Fantasy','9780007456389','English',38);
 
 DROP TABLE IF EXISTS `game`;
 CREATE TABLE IF NOT EXISTS `game` (
