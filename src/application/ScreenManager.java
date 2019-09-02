@@ -69,7 +69,14 @@ public class ScreenManager {
 	* @return resources a list of resources.
 	*/
 	public static ArrayList<Resource> getResources() {
-		return (ArrayList<Resource>) resources.clone();
+		if(resources != null) 
+		{
+			return (ArrayList<Resource>) resources.clone();
+		} 
+		else 
+		{
+			return null;
+		}
 	}
 
 	/**
