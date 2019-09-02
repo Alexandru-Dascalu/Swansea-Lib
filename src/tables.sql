@@ -117,7 +117,7 @@ INSERT INTO `resource`(rID,title,year,thumbnail) VALUES (34,'Acer Aspire VX 15',
 INSERT INTO `resource`(rID,title,year,thumbnail) VALUES (35,'Acer Swift 1',2016,'/graphics/acer swift 1.png');
 INSERT INTO `resource`(rID,title,year,thumbnail) VALUES (36,'Lenovo IdeaPad 530S',2018,'/graphics/lenovo ideapad.jpg');
 INSERT INTO `resource`(rID,title,year,thumbnail) VALUES (37,'Game of Thrones Season 1',2011,'/graphics/got season 1.jpg');
-INSERT INTO `resource`(rID,title,year,thumbnail) VALUES (38,'Game of Thrones',1996,'/graphics/a game of thrones.jpg');
+INSERT INTO `resource`(rID,title,year,thumbnail) VALUES (38,'A Game of Thrones',1996,'/graphics/a game of thrones.jpg');
 
 DROP TABLE IF EXISTS `resourceSeries`;
 CREATE TABLE IF NOT EXISTS `resourceSeries` (
@@ -127,6 +127,8 @@ CREATE TABLE IF NOT EXISTS `resourceSeries` (
 	FOREIGN KEY (`rID`) REFERENCES `resource` (`rID`) ON UPDATE CASCADE ON DELETE CASCADE
 );
 
+INSERT INTO `resourceSeries` VALUES (38,29);
+
 DROP TABLE IF EXISTS `related`;
 CREATE TABLE IF NOT EXISTS `related` (
 	`rID` INTEGER,
@@ -134,6 +136,11 @@ CREATE TABLE IF NOT EXISTS `related` (
 	PRIMARY KEY (`rID`,`relatedRsrc`),
 	FOREIGN KEY(`rID`) REFERENCES `resource` (`rID`) ON UPDATE CASCADE ON DELETE CASCADE
 );
+
+INSERT INTO `related` VALUES (38, 30);
+INSERT INTO `related` VALUES (38, 37);
+INSERT INTO `related` VALUES (30, 37);
+INSERT INTO `related` VALUES (37, 30);
 
 DROP TABLE IF EXISTS `fines`;
 CREATE TABLE IF NOT EXISTS `fines` (
