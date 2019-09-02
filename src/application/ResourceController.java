@@ -117,7 +117,7 @@ public class ResourceController {
                     otherResourcesStage.show();
 
                     loader = new FXMLLoader(
-                        getClass().getResource("/fxml/r" + "elatedResourceEditor.fxml"));
+                        getClass().getResource("/fxml/relatedResourceEditor.fxml"));
                     Parent sameSeriesRoot = loader.load();
                     RelatedRsrcController sameSeriesController = loader.getController();
                     sameSeriesController.loadResourceHboxes("same series", book);

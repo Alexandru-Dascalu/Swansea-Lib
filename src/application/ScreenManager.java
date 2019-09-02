@@ -69,7 +69,7 @@ public class ScreenManager {
 	* @return resources a list of resources.
 	*/
 	public static ArrayList<Resource> getResources() {
-		return resources;
+		return (ArrayList<Resource>) resources.clone();
 	}
 
 	/**
