@@ -2,6 +2,7 @@
 package application;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 
 import model.Book;
 import model.Copy;
@@ -20,7 +21,7 @@ import model.Resource;
 public class ScreenManager {
 
 	private static Person currentUser;
-	private static ArrayList<Resource> resources;
+	private static LinkedList<Resource> resources;
 	private static Librarian currentLibrarian;
 
 	public static Resource currentResource;
@@ -68,6 +69,7 @@ public class ScreenManager {
 	* Getter method that gets the list of resources.
 	* @return resources a list of resources.
 	*/
+	@SuppressWarnings("unchecked")
 	public static ArrayList<Resource> getResources() {
 		if(resources != null) 
 		{
@@ -84,7 +86,7 @@ public class ScreenManager {
 	* @param resources a list of resources.
 	*/
 	public static void setResources(ArrayList<Resource> resources) {
-		ScreenManager.resources = resources;
+		//ScreenManager.resources = resources;
 	}
 
 }
