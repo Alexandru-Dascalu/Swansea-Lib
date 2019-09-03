@@ -46,7 +46,7 @@ import model.User;
  * @author Joe Wright
  * @author Oliver Harris
  */
-public class CopyController {
+public class ResourceInformationController {
 
     /**The width of the image showing related resources. Its value is {@value}.*/
     private static final int PREVIEW_IMG_WIDTH = 110;
@@ -105,8 +105,6 @@ public class CopyController {
     @FXML
     private Label resourceName;// resources name
 
-    private Resource currentResource;// current instance of resource
-
     @FXML
     private Text overLimit;
 
@@ -120,6 +118,9 @@ public class CopyController {
     /**An Hbox used to show resources that are related to this one.*/
     @FXML
     private HBox otherBox;
+    
+    /**The resource for which info is displayed by the scene of this controller.*/
+    private Resource resource;
 
     /**
      * Mouse Click Handler for clicking related resources images and displaying
@@ -132,23 +133,22 @@ public class CopyController {
      * ImageView to display the detailed resource view of the resource whose
      * image is in the ImageView.
      */
-    public CopyController() {
+    public ResourceInformationController() {
         clickHandler = event -> {
-            for (Resource resource : ScreenManager.getResources()) {
-                if (resource.getUniqueID() == Integer
-                    .parseInt(((ImageView) event.getSource()).getId())) {
-                    ScreenManager.setCurrentResource(resource);
-                }
-            }
+        	Resource newSceneResource = Resource.getResource(Integer.parseInt((
+            		(ImageView) event.getSource()).getId()));
 
             try {
                 FXMLLoader fxmlLoader = new FXMLLoader(
-                    getClass().getResource("/fxml/copyScene.fxml"));
-                Parent root1 = (Parent) fxmlLoader.load();
+                    getClass().getResource("/fxml/resourceInfoScene.fxml"));
+                Parent sceneRoot = (Parent) fxmlLoader.load();
+                ResourceInformationController controller = fxmlLoader.getController();
+                controller.setResource(newSceneResource);
+                
                 Stage stage = new Stage();
                 stage.initModality(Modality.APPLICATION_MODAL);
                 stage.setTitle("Resource Information");
-                stage.setScene(new Scene(root1));
+                stage.setScene(new Scene(sceneRoot));
                 stage.show();
             }
             catch (IOException e) {
@@ -182,14 +182,14 @@ public class CopyController {
      * appears.
      */
     private void dealWithReviews() {
-        int resourceId = ScreenManager.currentResource.getUniqueID();
-        boolean hasReviews = model.Review.hasReviews(resourceId);
+        int resourceId = resource.getUniqueID();
+        boolean hasReviews = Review.hasReviews(resourceId);
 
         if (hasReviews) {
 
             HBox avg = new HBox(); // ready for images
             Text avgText = new Text("Rating: " +
-                Math.round(model.Review.getAvgStar(resourceId) * ROUND) /
+                Math.round(Review.getAvgStar(resourceId) * ROUND) /
                     ROUND);
             avgText.setStyle("-fx-font: 24 arial;");
             avg.getChildren().add(avgText);
@@ -245,9 +245,9 @@ public class CopyController {
     private void loadResourceInformation() {
 
         // Gets the common attributes between each resource
-        int uniqueId = ScreenManager.currentResource.getUniqueID();
-        String title = ScreenManager.currentResource.getTitle();
-        int year = ScreenManager.currentResource.getYear();
+        int uniqueId = resource.getUniqueID();
+        String title = resource.getTitle();
+        int year = resource.getYear();
         dealWithReviews();
 
         resourceName.setText(title);
@@ -258,13 +258,13 @@ public class CopyController {
 
         // If the resource is a Book, it will add the book attributes to the
         // text area.
-        if (ScreenManager.currentResource instanceof Book) {
-            ScreenManager.currentBook = (Book) ScreenManager.currentResource;
-            String author = ScreenManager.currentBook.getAuthor();
-            String publisher = ScreenManager.currentBook.getPublisher();
-            String genre = ScreenManager.currentBook.getGenre();
-            String isbn = ScreenManager.currentBook.getISBN();
-            String language = ScreenManager.currentBook.getLanguage();
+        if (resource instanceof Book) {
+            Book currentBook = (Book) resource;
+            String author = currentBook.getAuthor();
+            String publisher = currentBook.getPublisher();
+            String genre = currentBook.getGenre();
+            String isbn = currentBook.getISBN();
+            String language = currentBook.getLanguage();
 
             centertextarea.appendText("\nAuthor: " + author + "\nPublisher: " +
                 publisher + "\nGenre: " + genre + "\nISBN: " + isbn +
@@ -273,11 +273,11 @@ public class CopyController {
             // If the resource is a Laptop, it will add the laptop attributes to
             // the text area.
         }
-        else if (ScreenManager.currentResource instanceof Laptop) {
-            ScreenManager.currentLaptop = (Laptop) ScreenManager.currentResource;
-            String manufacturer = ScreenManager.currentLaptop.getManufacturer();
-            String model = ScreenManager.currentLaptop.getModel();
-            String operatingSystem = ScreenManager.currentLaptop.getOS();
+        else if (resource instanceof Laptop) {
+            Laptop currentLaptop = (Laptop) resource;
+            String manufacturer = currentLaptop.getManufacturer();
+            String model = currentLaptop.getModel();
+            String operatingSystem = currentLaptop.getOS();
 
             centertextarea.appendText("\nManufacturer: " + manufacturer +
                 "\nModel: " + model + "\nOS: " + operatingSystem);
@@ -285,11 +285,11 @@ public class CopyController {
             // If the resource is a DVD, it will add the attributes of a dvd to
             // the text area.
         }
-        else if (ScreenManager.currentResource instanceof DVD) {
-            ScreenManager.currentDVD = (DVD) ScreenManager.currentResource;
-            String director = ScreenManager.currentDVD.getDirector();
-            int runtime = ScreenManager.currentDVD.getRuntime();
-            String language = ScreenManager.currentDVD.getLanguage();
+        else if (resource instanceof DVD) {
+            DVD currentDVD = (DVD) resource;
+            String director = currentDVD.getDirector();
+            int runtime = currentDVD.getRuntime();
+            String language = currentDVD.getLanguage();
 
             centertextarea
                 .appendText("\nDirector: " + director + "\nRuntime: " +
@@ -299,14 +299,13 @@ public class CopyController {
             // to
             // the text area.
         }
-        else if (ScreenManager.currentResource instanceof Game) {
-            ScreenManager.currentGame = (Game) ScreenManager.currentResource;
+        else if (resource instanceof Game) {
+            Game currentGame = (Game) resource;
 
-            String publisher = ScreenManager.currentGame.getPublisher();
-            String genre = ScreenManager.currentGame.getGenre();
-            String rating = ScreenManager.currentGame.getRating();
-            String multiplayer = ScreenManager.currentGame
-                .getMultiplayerSupport();
+            String publisher = currentGame.getPublisher();
+            String genre = currentGame.getGenre();
+            String rating = currentGame.getRating();
+            String multiplayer = currentGame.getMultiplayerSupport();
 
             centertextarea.appendText("\nPublisher: " + publisher +
                 "\nGenre: " + genre + "\nRating: " + rating +
@@ -315,12 +314,12 @@ public class CopyController {
 
         // This sets the textbox depending if the number of copies is equal to 0
         // or not.
-        if (ScreenManager.currentResource.getNrOfCopies() == 0) {
+        if (resource.getNrOfCopies() == 0) {
             copytext.setText("All Copies are currently being borrowed.");
         }
         else {
             copytext.setText("Copies: " + Integer
-                .toString(ScreenManager.currentResource.getNrOfCopies()));
+                .toString(resource.getNrOfCopies()));
         }
 
     }
@@ -333,7 +332,7 @@ public class CopyController {
         // create new resource image to be added.
         resourceimage.setFitWidth(RES_IMG_WIDTH);
         resourceimage.setFitHeight(RES_IMG_HEIGHT);
-        resourceimage.setImage(ScreenManager.currentResource.getThumbnail());
+        resourceimage.setImage(resource.getThumbnail());
     }
 
     /**
@@ -344,11 +343,8 @@ public class CopyController {
      */
     @FXML
     public void requestCopy(MouseEvent event) {
-        ScreenManager.currentResource.addPendingRequest((User)
-            ScreenManager.getCurrentUser());
+        resource.addPendingRequest((User) ScreenManager.getCurrentUser());
         AlertBox.showInfoAlert("Requested!");
-        // ScreenManager.currentResource.loanToUser((User)ScreenMana
-        // ger.getCurrentUser());
     }
 
     /**
@@ -360,18 +356,17 @@ public class CopyController {
      */
     @FXML
     public void showTrailerWindow(ActionEvent actionEvent) {
-        Resource currentResource = ScreenManager.currentResource;
-
-        for (Integer i : currentResource.getSameSeriesResources()) {
+    	
+    	for (Integer i : resource.getSameSeriesResources()) {
             System.out.println(i.toString());
         }
         System.out.println();
-        for (Integer i : currentResource.getOtherRelatedResources()) {
+        for (Integer i : resource.getOtherRelatedResources()) {
             System.out.println(i.toString());
         }
 
-        if (currentResource.getClass() == DVD.class) {
-            DVD currentMovie = (DVD) currentResource;
+        if (resource.getClass() == DVD.class) {
+            DVD currentMovie = (DVD) resource;
 
             String title = currentMovie.getTitle();
 
@@ -393,8 +388,8 @@ public class CopyController {
                 trailerWindow.show();
             }
         }
-        else if (currentResource.getClass() == Game.class) {
-            Game currentGame = (Game) currentResource;
+        else if (resource.getClass() == Game.class) {
+            Game currentGame = (Game) resource;
 
             String title = currentGame.getTitle();
 
@@ -425,7 +420,7 @@ public class CopyController {
     private void checkIfBorrowed() {
         User user = (User) ScreenManager.getCurrentUser();
 
-        if (user.isBorrowing(ScreenManager.currentResource)) {
+        if (user.isBorrowing(resource)) {
 
             requestbutt.setDisable(true);
         }
@@ -458,12 +453,15 @@ public class CopyController {
             try {
                 FXMLLoader fxmlLoader = new FXMLLoader(
                     getClass().getResource("/fxml/editResource.fxml"));
-                Parent root1 = (Parent) fxmlLoader.load();
+                Parent sceneRoot = (Parent) fxmlLoader.load();
+                ResourceController editController = fxmlLoader.getController();
+                editController.setResource(resource);
+                
                 Stage stage = new Stage();
                 stage.initModality(Modality.APPLICATION_MODAL);
                 // stage.initStyle(StageStyle.UNDECORATED);
                 stage.setTitle("Resource");
-                stage.setScene(new Scene(root1));
+                stage.setScene(new Scene(sceneRoot));
                 stage.show();
             }
             catch (IOException e2) {
@@ -478,7 +476,7 @@ public class CopyController {
      */
     private void setupLimit() {
         User user = (User) ScreenManager.getCurrentUser();
-        if (user.exceedLimit(ScreenManager.getCurrentResource())) {
+        if (user.exceedLimit(resource)) {
             requestbutt.setDisable(true);
             overLimit.setVisible(true);
 
@@ -490,8 +488,7 @@ public class CopyController {
      * view trailer button if needed and loads the images of resources related
      * to this one.
      */
-    @FXML
-    public void initialize() {
+    public void prepare() {
         if (ScreenManager.getCurrentUser() instanceof User) {
             checkIfBorrowed();
             setupLimit();
@@ -504,14 +501,13 @@ public class CopyController {
         loadResourceImage();
         loadResourceInformation();
 
-        if (!(ScreenManager.currentResource.getClass() == DVD.class ||
-            ScreenManager.currentResource.getClass() == Game.class)) {
+        if (!(resource.getClass() == DVD.class || resource.getClass() == Game.class)) 
+        {
             viewTrailerButton.setDisable(true);
             viewTrailerButton.setVisible(false);
         }
 
-        for (Integer id : ScreenManager.getCurrentResource()
-            .getSameSeriesResources()) {
+        for (Integer id : resource.getSameSeriesResources()) {
             Resource sameSeriesResource = Resource.getResource(id);
 
             ImageView resourceImageView = new ImageView(
@@ -524,8 +520,7 @@ public class CopyController {
             seriesBox.getChildren().add(resourceImageView);
         }
 
-        for (Integer id : ScreenManager.getCurrentResource()
-            .getOtherRelatedResources()) {
+        for (Integer id : resource.getOtherRelatedResources()) {
             Resource otherRelatedResource = Resource.getResource(id);
 
             ImageView resourceImageView = new ImageView(
@@ -537,5 +532,24 @@ public class CopyController {
 
             otherBox.getChildren().add(resourceImageView);
         }
+    }
+    
+    /**
+     * Gets the resource whose info is displayed by the window of this controller.
+     * @return the resource whose info is displayed by the window of this controller.
+     */
+    public Resource getResource()
+    {
+    	return resource;
+    }
+    
+    /**
+	 * Changes the resource whose info is displayed by the scene of this controller.
+	 * @param resource The new resource to be viewed.
+	 */
+    public void setResource(Resource resource)
+    {
+    	this.resource = resource;
+    	prepare();
     }
 }

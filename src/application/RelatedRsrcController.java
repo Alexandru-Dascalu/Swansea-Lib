@@ -70,17 +70,15 @@ public class RelatedRsrcController {
      */
     public RelatedRsrcController() {
         clickHandler = event -> {
-            for (Resource resource : ScreenManager.getResources()) {
-                if (resource.getUniqueID() == Integer.parseInt(((ImageView)
-                        event.getSource()).getId())) {
-                    ScreenManager.setCurrentResource(resource);
-                }
-            }
-
+        	Resource newSceneResource = Resource.getResource(Integer.parseInt((
+                		(ImageView) event.getSource()).getId()));
             try {
                 FXMLLoader fxmlLoader = new FXMLLoader(
-                    getClass().getResource("/fxml/copyScene.fxml"));
+                    getClass().getResource("/fxml/resourceInfoScene.fxml"));
                 Parent root1 = (Parent) fxmlLoader.load();
+                ResourceInformationController controller = fxmlLoader.getController();
+                controller.setResource(newSceneResource);
+                
                 Stage stage = new Stage();
                 stage.initModality(Modality.APPLICATION_MODAL);
                 stage.setTitle("Resource Information");
@@ -163,13 +161,6 @@ public class RelatedRsrcController {
         }
     }
 
-    /**Ensures that when the window of this controller is closed, then the 
-     * current resource is reset to the resource for which this window 
-     * was made.*/
-    public void onStageClosed() {
-        ScreenManager.setCurrentResource(originalResource);
-    }
-
     /**Saves the selection of related resources of originalResource to the 
      * database and to its lists of related resources.*/
     @FXML
@@ -244,7 +235,7 @@ public class RelatedRsrcController {
 
                 for (int i = 0; i < displayedResources.size(); i++) {
                     Resource resource = displayedResources.get(i);
-                    if (resource == ScreenManager.currentResource ||
+                    if (resource == originalResource ||
                         originalResource.isPossiblySameSeries(resource)) {
                         displayedResources.remove(i);
                         i--;

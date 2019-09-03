@@ -24,14 +24,7 @@ public class ScreenManager {
 	private static ArrayList<Resource> resources;
 	private static Librarian currentLibrarian;
 
-	public static Resource currentResource;
 	public static Copy currentCopy;
-	
-	public static Book currentBook;
-	public static Laptop currentLaptop;
-	public static DVD currentDVD;
-	public static Game currentGame;
-	
 
 	/**
 	* Getter method for getting currentUser.
@@ -39,22 +32,6 @@ public class ScreenManager {
 	*/
 	public static Person getCurrentUser() {
 		return currentUser;
-	}
-
-	/**
-	* Getter method for getting currentResource.
-	* @return currentResource the resource being looked at.
-	*/
-	public static Resource getCurrentResource() {
-		return currentResource;
-	}
-
-	/**
-	* Setter method for currentResource.
-	* @param resource the instance of the resource.
-	*/
-	public static void setCurrentResource(Resource resource) {
-		currentResource = resource;
 	}
 
 	/**

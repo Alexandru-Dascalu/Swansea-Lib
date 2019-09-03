@@ -40,6 +40,18 @@ public class ResourceController {
     @FXML
     private VBox resourceBlock;
 
+    /**The resource for which the editing window is being shown.*/
+    private Resource resource;
+    
+    /**
+	 * Changes the resource being edited through this controller.
+	 * @param resource The new resource that will be edited.
+	 */
+    public void setResource(Resource resource)  
+    {
+    	this.resource = resource;
+    }
+    
     /**
      * Sets up the book resource screen. Shows suggestions for the librarian to set
      * related resources, but only if the resource has just been made and is not
@@ -47,7 +59,7 @@ public class ResourceController {
      */
     private void setupBook() {
         // creates instance of a book
-        Book book = (Book) ScreenManager.getCurrentResource();
+        Book book = (Book) resource;
 
         // inserts the common resource attributes
         HBox titleBox = new HBox();
@@ -112,7 +124,6 @@ public class ResourceController {
                     Stage otherResourcesStage = new Stage();
                     otherResourcesStage.setTitle("Other resources that might " + "be related");
                     otherResourcesStage.setScene(new Scene(otherReleatedRoot));
-                    otherResourcesStage.setOnHidden(event -> controller.onStageClosed());
                     otherResourcesStage.setResizable(false);
                     otherResourcesStage.show();
 
@@ -125,7 +136,6 @@ public class ResourceController {
                     Stage sameSeriesStage = new Stage();
                     sameSeriesStage.setTitle("Resources that might be part of the same series");
                     sameSeriesStage.setScene(new Scene(sameSeriesRoot));
-                    sameSeriesStage.setOnHidden(event -> sameSeriesController.onStageClosed());
                     sameSeriesStage.setResizable(false);
                     sameSeriesStage.show();
 
@@ -146,7 +156,7 @@ public class ResourceController {
      */
     private void setupGame() {
         // creates instance of a game
-        Game game = (Game) ScreenManager.getCurrentResource();
+        Game game = (Game) resource;
 
         // inserts the common resource attributes
         HBox titleBox = new HBox();
@@ -206,7 +216,6 @@ public class ResourceController {
                     Stage otherResourcesStage = new Stage();
                     otherResourcesStage.setTitle("Other resources that might be related");
                     otherResourcesStage.setScene(new Scene(otherReleatedRoot));
-                    otherResourcesStage.setOnHidden(event -> controller.onStageClosed());
                     otherResourcesStage.setResizable(false);
                     otherResourcesStage.show();
 
@@ -220,8 +229,6 @@ public class ResourceController {
                     sameSeriesStage.setTitle("Resources that might be part of " +
                         "the same series");
                     sameSeriesStage.setScene(new Scene(sameSeriesRoot));
-                    sameSeriesStage.setOnHidden(event -> 
-                        sameSeriesController.onStageClosed());
                     sameSeriesStage.setResizable(false);
                     sameSeriesStage.show();
                 }
@@ -240,7 +247,7 @@ public class ResourceController {
      * edited.
      */
     private void setupDVD() {
-        DVD dvd = (DVD) ScreenManager.getCurrentResource();
+        DVD dvd = (DVD) resource;
 
         // sets up the common attributes of all resrouces
         HBox titleBox = new HBox();
@@ -309,7 +316,6 @@ public class ResourceController {
                     Stage otherResourcesSTage = new Stage();
                     otherResourcesSTage.setTitle("Other resources that might be related");
                     otherResourcesSTage.setScene(new Scene(otherReleatedRoot));
-                    otherResourcesSTage.setOnHidden(event -> controller.onStageClosed());
                     otherResourcesSTage.show();
 
                     loader = new FXMLLoader(
@@ -321,7 +327,6 @@ public class ResourceController {
                     Stage sameSeriesStage = new Stage();
                     sameSeriesStage.setTitle("Resources that might be part of the same series");
                     sameSeriesStage.setScene(new Scene(sameSeriesRoot));
-                    sameSeriesStage.setOnHidden(event -> sameSeriesController.onStageClosed());
                     sameSeriesStage.show();
                 }
                 catch (IOException e2) {
@@ -339,7 +344,7 @@ public class ResourceController {
      * just edited.
      */
     private void setupLaptop() {
-        Laptop laptop = (Laptop) ScreenManager.getCurrentResource();
+        Laptop laptop = (Laptop) resource;
 
         // sets up the common attributes of all resrouces
         HBox titleBox = new HBox();
@@ -422,7 +427,7 @@ public class ResourceController {
         }
 
         if (goAhead) {
-            Laptop laptop = (Laptop) ScreenManager.getCurrentResource();
+            Laptop laptop = (Laptop) resource;
             if (!thumbnailPath.equals("")) {
                 laptop.setThumbnail(image);
                 laptop.setThumbnailDatabase(thumbnailPath);
@@ -474,18 +479,18 @@ public class ResourceController {
 
         // If the year is a number, update the book attributes
         if (goAhead) {
-            Game resource = (Game) ScreenManager.getCurrentResource();
+            Game game = (Game) resource;
             if (!thumbnailPath.equals("")) {
-                resource.setThumbnail(image);
-                resource.setThumbnailDatabase(thumbnailPath);
-                resource.setThumnailPath(thumbnailPath);
+            	game.setThumbnail(image);
+            	game.setThumbnailDatabase(thumbnailPath);
+            	game.setThumnailPath(thumbnailPath);
             }
-            resource.setTitle(title);
-            resource.setYear(Integer.parseInt(year));
-            resource.setPublisher(publisher);
-            resource.setGenre(genre);
-            resource.setRating(rating);
-            resource.setMultiplayerSupport(multiplayer);
+            game.setTitle(title);
+            game.setYear(Integer.parseInt(year));
+            game.setPublisher(publisher);
+            game.setGenre(genre);
+            game.setRating(rating);
+            game.setMultiplayerSupport(multiplayer);
 
             AlertBox.showInfoAlert("Updated!");
         }
@@ -529,20 +534,20 @@ public class ResourceController {
 
         // If the year is a number, update the book attributes
         if (goAhead) {
-            Book resource = (Book) ScreenManager.getCurrentResource();
+            Book book = (Book) resource;
             if (!thumnbnailPath.equals("")) {
-                resource.setThumbnail(image);
-                resource.setThumbnailDatabase(thumnbnailPath);
+                book.setThumbnail(image);
+                book.setThumbnailDatabase(thumnbnailPath);
             }
 
-            resource.setTitle(title);
-            resource.setYear(Integer.parseInt(year));
-            resource.setAuthor(author);
-            resource.setPublisher(publish);
-            resource.setGenre(genre);
-            resource.setISBN(ISBN);
-            resource.setLanguage(language);
-            resource.setThumnailPath(thumnbnailPath);
+            book.setTitle(title);
+            book.setYear(Integer.parseInt(year));
+            book.setAuthor(author);
+            book.setPublisher(publish);
+            book.setGenre(genre);
+            book.setISBN(ISBN);
+            book.setLanguage(language);
+            book.setThumnailPath(thumnbnailPath);
 
             AlertBox.showInfoAlert("Updated!");
         }
@@ -583,24 +588,24 @@ public class ResourceController {
         }
 
         if (goAhead) {
-            DVD resource = (DVD) ScreenManager.getCurrentResource();
-            resource.setTitle(title);
-            resource.setYear(Integer.parseInt(year));
-            resource.setDirector(director);
-            resource.setLanguage(language);
+            DVD dvd = (DVD) resource;
+            dvd.setTitle(title);
+            dvd.setYear(Integer.parseInt(year));
+            dvd.setDirector(director);
+            dvd.setLanguage(language);
 
             String[] subs = subtitles.split(",");
             for (String sub : subs) {
-                resource.deleteSubtitle(sub);
-                resource.addSubtitle(sub);
+                dvd.deleteSubtitle(sub);
+                dvd.addSubtitle(sub);
             }
 
             if (!thumbnailPath.equals("")) {
-                resource.setThumbnail(image);
-                resource.setThumbnailDatabase(thumbnailPath);
-                resource.setThumnailPath(thumbnailPath);
+                dvd.setThumbnail(image);
+                dvd.setThumbnailDatabase(thumbnailPath);
+                dvd.setThumnailPath(thumbnailPath);
             }
-            resource.setRuntime(Integer.parseInt(runtime));
+            dvd.setRuntime(Integer.parseInt(runtime));
 
             AlertBox.showInfoAlert("Updated!");
         }
@@ -612,7 +617,6 @@ public class ResourceController {
      */
     @FXML
     public void initialize() {
-        Resource resource = ScreenManager.getCurrentResource();
         if (resource instanceof DVD) {
             setupDVD();
         }

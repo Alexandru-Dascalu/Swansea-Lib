@@ -43,12 +43,28 @@ public class EditCopiesController {
 	@FXML
 	private TextField loanDur; //textbox which holds the loan duration
 	
-	
 	@FXML
 	private TableView<Copy> copiesTable;//table for copies
 	
+	/**Resource whose copies we want to edit.*/
+	private Resource resource;
 	
-
+	/**
+	 * Calls the setup copy method when the program starts.
+	 */
+	@FXML
+	 public void initialize() {
+		setupCopy();
+	}
+	
+	/**
+	 * Changes the resource whose copies are edited through this controller.
+	 * @param resource The new resource whose copies will be edited.
+	 */
+	public void setResource(Resource resource)
+	{
+		this.resource = resource;
+	}
 	
 	/**
 	 * Method that calls  creates the table.
@@ -87,8 +103,8 @@ public class EditCopiesController {
 	 * Repopulates the copies table.
 	 */
 	private void repop() {
-		ScreenManager.currentResource.loadCopyList();
-		copies = ScreenManager.currentResource.getCopies();
+		resource.loadCopyList();
+		copies = resource.getCopies();
 		copyData = FXCollections.observableArrayList();
 		for (Copy copy : copies) {
 		
@@ -109,7 +125,6 @@ public class EditCopiesController {
 		if(copy.getBorrower() != null) {
 			AlertBox.showInfoAlert("Copy is being borrowed");
 		}else {
-			Resource resource = ScreenManager.getCurrentResource();
 			resource.removeCopy(copy);
 			repop();
 		}
@@ -135,9 +150,8 @@ public class EditCopiesController {
 		if(goAhead) {
 			System.out.println("Copy adding");
 			int id = makeId();
-			Copy copy = new Copy(ScreenManager.getCurrentResource(),
-					id,null,Integer.parseInt(duration));
-			ScreenManager.getCurrentResource().addCopy(copy);
+			Copy copy = new Copy(resource ,id ,null ,Integer.parseInt(duration));
+			resource.addCopy(copy);
 			System.out.println("Copy.. "+copy.getLoanDuration());
 			
 			repop();
@@ -166,15 +180,14 @@ public class EditCopiesController {
 	 * @return true if its a new id, false if its the same.
 	 */
 	private boolean checkId(int id) {
-		try {
-			Connection connection = DBHelper.getConnection(); 
-			PreparedStatement statement = connection.prepareStatement("SELECT * "
-					+ "FROM copies WHERE copyID=?");
-			statement.setInt(1,id);
-			ResultSet results = statement.executeQuery(); 
+		try (Connection connection = DBHelper.getConnection(); 
+				PreparedStatement statement = connection.prepareStatement("SELECT * "
+						+ "FROM copies WHERE copyID=" + id);
+				ResultSet results = statement.executeQuery()) {
+			
 			if(results.next()) {
 				return false;
-			}else {
+			} else {
 				return true;
 			}
 			
@@ -207,11 +220,5 @@ public class EditCopiesController {
 		
 	}
 	
-	/**
-	 * Calls the setup copy method when the program starts.
-	 */
-	@FXML
-	 public void initialize() {
-		setupCopy();
-	}
+	
 }

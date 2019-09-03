@@ -7,6 +7,7 @@ import javafx.scene.control.Toggle;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import model.Resource;
 import model.Review;
 
 /**
@@ -35,6 +36,18 @@ public class WriteReviewController {
     @FXML
     private RadioButton r5;// inputs 5 rating
 
+    /**The resource for which we want to write a review.*/
+    private Resource reviewedResource;
+    
+    /**
+     * Changes the resource for which a review is made.
+     * @param resource the resource for which the review will be made.
+     */
+    public void setResource(Resource resource)
+    {
+    	reviewedResource = resource;
+    }
+    
     /**
      * Method that allows the user to submit a review and rating
      * 
@@ -71,8 +84,8 @@ public class WriteReviewController {
         // sets text variable to whatever the user has wrote in the review box
         String text = reviewBox.getText();
 
-        Review.addReview(ScreenManager.getCurrentUser().getUsername(),
-            ScreenManager.getCurrentResource().getUniqueID(), starValue, text);
+        Review.addReview(ScreenManager.getCurrentUser().getUsername(), 
+        		reviewedResource.getUniqueID(), starValue, text);
 
         reviewBox.setText("Your review has been added!");
         reviewBox.setEditable(false);
@@ -86,9 +99,9 @@ public class WriteReviewController {
     public void initialize() {
 
         if (!Review.hasBorrowed(ScreenManager.getCurrentUser().getUsername(),
-            ScreenManager.getCurrentResource().getUniqueID()) ||
+        		reviewedResource.getUniqueID()) ||
             Review.hasReviewed(ScreenManager.getCurrentUser().getUsername(),
-                ScreenManager.getCurrentResource().getUniqueID())) {
+            		reviewedResource.getUniqueID())) {
             writeReviewBox.setVisible(false);
         }
 

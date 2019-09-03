@@ -58,30 +58,31 @@ public class RecommendedController {
 	};
 	
 	final EventHandler<MouseEvent> clickHandler = event -> {
-		
-		//find the resource that was clicked.
-		for(Resource resource : ScreenManager.getResources()) {
-			if(resource.getUniqueID() == 
-					Integer.parseInt(((StackPane) event.getSource()).getId())) {
-				ScreenManager.setCurrentResource(resource);
-			}
-		}
-		
-		try {
-			FXMLLoader fxmlLoader = new FXMLLoader(
-					getClass().getResource("/fxml/copyScene.fxml"));
+		Resource newSceneResource = null;
+    	
+        for (Resource resource : ScreenManager.getResources()) {
+            if (resource.getUniqueID() == Integer.parseInt((
+            		(ImageView) event.getSource()).getId())) {
+                newSceneResource = resource;
+            }
+        }
+
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(
+                getClass().getResource("/fxml/resourceInfoScene.fxml"));
             Parent root1 = (Parent) fxmlLoader.load();
+            ResourceInformationController controller = fxmlLoader.getController();
+            controller.setResource(newSceneResource);
+            
             Stage stage = new Stage();
             stage.initModality(Modality.APPLICATION_MODAL);
-            //stage.initStyle(StageStyle.UNDECORATED);
             stage.setTitle("Resource Information");
-            stage.setScene(new Scene(root1));  
+            stage.setScene(new Scene(root1));
             stage.show();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+        }
 	};
 		
 	/**

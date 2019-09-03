@@ -377,23 +377,20 @@ public class ProfileController {
     };
 
     final EventHandler<MouseEvent> clickHandler = event -> {
-
-        // find the resource that was clicked.
-        for (Resource resource : resources) {
-            if (resource.getUniqueID() == Integer
-                .parseInt(((StackPane) event.getSource()).getId())) {
-                ScreenManager.setCurrentResource(resource);
-            }
-        }
+    	Resource newSceneResource = Resource.getResource(Integer.parseInt((
+        		(StackPane) event.getSource()).getId()));
 
         try {
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/copyScene.fxml"));
-            Parent root1 = (Parent) fxmlLoader.load();
+            FXMLLoader fxmlLoader = new FXMLLoader(
+                getClass().getResource("/fxml/resourceInfoScene.fxml"));
+            Parent sceneRoot = (Parent) fxmlLoader.load();
+            ResourceInformationController controller = fxmlLoader.getController();
+            controller.setResource(newSceneResource);
+            
             Stage stage = new Stage();
             stage.initModality(Modality.APPLICATION_MODAL);
-            // stage.initStyle(StageStyle.UNDECORATED);
             stage.setTitle("Resource Information");
-            stage.setScene(new Scene(root1));
+            stage.setScene(new Scene(sceneRoot));
             stage.show();
         }
         catch (IOException e) {
