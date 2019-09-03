@@ -1198,11 +1198,18 @@ public abstract class Resource {
         
         try (Connection dbConnection = DBHelper.getConnection();
                 PreparedStatement selectStatement = dbConnection.prepareStatement(
-                "SELECT seriesResource FROM resourceSeries WHERE rID = " + uniqueID);
+                "SELECT * FROM resourceSeries WHERE rID = " + uniqueID + " OR seriesResource = " + uniqueID);
                 ResultSet inSameSeries = selectStatement.executeQuery()) {
             
             while(inSameSeries.next()) {
-                sameSeriesResources.add(Integer.valueOf(inSameSeries.getInt(1)));
+            	if(uniqueID == Integer.valueOf(inSameSeries.getInt(1)))
+            	{
+            		sameSeriesResources.add(Integer.valueOf(inSameSeries.getInt(2)));
+            	}
+            	else
+            	{
+            		sameSeriesResources.add(Integer.valueOf(inSameSeries.getInt(1)));
+            	}       
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -1211,11 +1218,18 @@ public abstract class Resource {
         
         try (Connection dbConnection = DBHelper.getConnection();
                 PreparedStatement selectStatement = dbConnection.prepareStatement(
-                "SELECT relatedRsrc FROM related WHERE rID = " + uniqueID);
+                "SELECT * FROM related WHERE rID = " + uniqueID + " OR relatedRsrc = " + uniqueID);
                 ResultSet related = selectStatement.executeQuery()) {
             
             while(related.next()) {
-                otherRelatedResources.add(Integer.valueOf(related.getInt(1)));
+                if(uniqueID == Integer.valueOf(related.getInt(1)))
+            	{
+                	otherRelatedResources.add(Integer.valueOf(related.getInt(2)));
+            	}
+            	else
+            	{
+            		otherRelatedResources.add(Integer.valueOf(related.getInt(1)));
+            	}       
             }
         } catch (SQLException e) {
             e.printStackTrace();

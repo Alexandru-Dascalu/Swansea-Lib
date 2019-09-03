@@ -182,15 +182,18 @@ public class RelatedRsrcController {
             CheckBox checkBox = (CheckBox) hbox.getChildren().get(hbox.getChildren().
                 size() - 1);
 
-            if (checkBox.isSelected()) {
+            if (checkBox.isSelected()) 
+            {
                 String table = null;
 
-                if (selectionMode.equals("same series")) {
+                if (selectionMode.equals("same series")) 
+                {
                     table = "resourceSeries";
                     originalResource.getSameSeriesResources().add(
                         Integer.valueOf(selectedResourceID));
                 }
-                else if (selectionMode.equals("other related")) {
+                else if (selectionMode.equals("other related")) 
+                {
                     table = "related";
                     originalResource.getOtherRelatedResources().add(
                         Integer.valueOf(selectedResourceID));
@@ -198,14 +201,15 @@ public class RelatedRsrcController {
 
                 try (Connection dbConnection = DBHelper.getConnection();
                         PreparedStatement insertStatement = dbConnection.prepareStatement(
-                            "INSERT INTO " + table + " VALUES (?, ?)")) {
-
+                            "INSERT INTO " + table + " VALUES (?, ?)")) 
+                {
                     insertStatement.setInt(1, originalResource.getUniqueID());
                     insertStatement.setInt(2, selectedResourceID);
                     insertStatement.executeUpdate();
 
                 }
-                catch (SQLException e) {
+                catch (SQLException e) 
+                {
                     e.printStackTrace();
                     AlertBox.showErrorAlert(e.getMessage());
                 }

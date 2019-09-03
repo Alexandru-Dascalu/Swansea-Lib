@@ -21,7 +21,7 @@ import model.Resource;
 public class ScreenManager {
 
 	private static Person currentUser;
-	private static LinkedList<Resource> resources;
+	private static ArrayList<Resource> resources;
 	private static Librarian currentLibrarian;
 
 	public static Resource currentResource;
@@ -86,7 +86,7 @@ public class ScreenManager {
 	* @param resources a list of resources.
 	*/
 	public static void setResources(ArrayList<Resource> resources) {
-		//ScreenManager.resources = resources;
+		ScreenManager.resources = resources;
 	}
 
 }
