@@ -31,8 +31,7 @@ public class GameTrailerView {
     
     /**The Youtube API key needed to access the API, written as an argument in
      * a URL.*/
-    private static final String YOUTUBE_API_KEY = "&key=AIzaSyBLyeidWvIxNFdvK" + 
-            "0Bl7fPZ_WqeXrI8cac";
+    private static final String YOUTUBE_API_KEY = "&key=AIzaSyDfj-NckIJGviJSAt5CHNfAhEknct4mSBo";
     
     /**The string added to the name of the video game so we will get a launch 
      * trailer of this game.*/
